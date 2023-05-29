@@ -4,85 +4,255 @@
     ViewData["Title"] = "UserRegistration";
 }
 
-<h1>UserRegistration</h1>
-
-<h4>User</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="UserRegistration">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<section class="vh-100 bg-image"
+         style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5">
+                            <h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
-            <div class="form-group">
-                <label asp-for="FisrtName" class="control-label"></label>
-                <input asp-for="FisrtName" class="form-control" />
-                <span asp-validation-for="FisrtName" class="text-danger"></span>
+                            <form asp-action="UserRegistration">
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="UserName" name="UserName" class="form-control form-control-lg" placeholder="Enter User Name"/>
+                                    <label class="form-label" for="UserName">User Name</label>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="email" id="EmailId" name="EmailId" class="form-control form-control-lg" placeholder="Enter EmailId"/>
+                                    <label class="form-label" for="EmailId">Your Email</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input type="" id="MobileNo" name="MobileNo" class="form-control form-control-lg" placeholder="Enter Mobile Number"/>
+                                    <label class="form-label" for="MobileNo">MobileNo</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input type="password" id="Password" name="Password" class="form-control form-control-lg" />
+                                    <label class="form-label" for="Password">Password</label>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="password" id="form3Example4cdg" class="form-control form-control-lg" />
+                                    <label class="form-label" for="form3Example4cdg">Repeat your password</label>
+                                </div>
+
+                                <div class="form-check d-flex justify-content-center mb-5">
+                                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
+                                    <label class="form-check-label" for="form2Example3g">
+                                        I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+                                    </label>
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit"
+                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
+                                        Register
+                                    </button>
+                                </div>
+
+                                <p class="text-center text-muted mt-5 mb-0">
+                                    Have already an account? <a href="#!"
+                                                                class="fw-bold text-body"><u>Login here</u></a>
+                                </p>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmailAddress" class="control-label"></label>
-                <input asp-for="EmailAddress" class="form-control" />
-                <span asp-validation-for="EmailAddress" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MobileNo" class="control-label"></label>
-                <input asp-for="MobileNo" class="form-control" />
-                <span asp-validation-for="MobileNo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateOfBirth" class="control-label"></label>
-                <input asp-for="DateOfBirth" class="form-control" />
-                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedBy" class="control-label"></label>
-                <input asp-for="CreatedBy" class="form-control" />
-                <span asp-validation-for="CreatedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedBy" class="control-label"></label>
-                <input asp-for="ModifiedBy" class="form-control" />
-                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedDate" class="control-label"></label>
-                <input asp-for="ModifiedDate" class="form-control" />
-                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</section>
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+                        <div class="mb-md-5 mt-md-4 pb-5">
+
+                            <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                            <p class="text-white-50 mb-5">Please enter your login and password!</p>
+
+                            <div class="form-outline form-white mb-4">
+                                <input type="email" id="typeEmailX" class="form-control form-control-lg" />
+                                <label class="form-label" for="typeEmailX">Email</label>
+                            </div>
+
+                            <div class="form-outline form-white mb-4">
+                                <input type="password" id="typePasswordX" class="form-control form-control-lg" />
+                                <label class="form-label" for="typePasswordX">Password</label>
+                            </div>
+
+                            <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
+
+                            <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+
+                            <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                                <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+                                <a href="#!" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
+                                <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <p class="mb-0">
+                                Don't have an account? <a href="#!" class="text-white-50 fw-bold">Sign Up</a>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="vh-100" style="background-color: #508bfc;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                        <h3 class="mb-5">Sign in</h3>
+
+                        <div class="form-outline mb-4">
+                            <input type="email" id="typeEmailX-2" class="form-control form-control-lg" />
+                            <label class="form-label" for="typeEmailX-2">Email</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="password" id="typePasswordX-2" class="form-control form-control-lg" />
+                            <label class="form-label" for="typePasswordX-2">Password</label>
+                        </div>
+
+                        <!-- Checkbox -->
+                        <div class="form-check d-flex justify-content-start mb-4">
+                            <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
+                            <label class="form-check-label" for="form1Example3"> Remember password </label>
+                        </div>
+
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+
+                        <hr class="my-4">
+
+                        <button class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;"
+                                type="submit">
+                            <i class="fab fa-google me-2"></i> Sign in with google
+                        </button>
+                        <button class="btn btn-lg btn-block btn-primary mb-2" style="background-color: #3b5998;"
+                                type="submit">
+                            <i class="fab fa-facebook-f me-2"></i>Sign in with facebook
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section: Design Block -->
+<section class="">
+    <!-- Jumbotron -->
+    <div class="px-4 py-5 px-md-5 text-center text-lg-start" style="background-color: hsl(0, 0%, 96%)">
+        <div class="container">
+            <div class="row gx-lg-5 align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <h1 class="my-5 display-3 fw-bold ls-tight">
+                        The best offer <br />
+                        <span class="text-primary">for your business</span>
+                    </h1>
+                    <p style="color: hsl(217, 10%, 50.8%)">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Eveniet, itaque accusantium odio, soluta, corrupti aliquam
+                        quibusdam tempora at cupiditate quis eum maiores libero
+                        veritatis? Dicta facilis sint aliquid ipsum atque?
+                    </p>
+                </div>
+
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="card">
+                        <div class="card-body py-5 px-md-5">
+                            <form>
+                                <!-- 2 column grid layout with text inputs for the first and last names -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="text" id="form3Example1" class="form-control" />
+                                            <label class="form-label" for="form3Example1">First name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-outline">
+                                            <input type="text" id="form3Example2" class="form-control" />
+                                            <label class="form-label" for="form3Example2">Last name</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Email input -->
+                                <div class="form-outline mb-4">
+                                    <input type="email" id="form3Example3" class="form-control" />
+                                    <label class="form-label" for="form3Example3">Email address</label>
+                                </div>
+
+                                <!-- Password input -->
+                                <div class="form-outline mb-4">
+                                    <input type="password" id="form3Example4" class="form-control" />
+                                    <label class="form-label" for="form3Example4">Password</label>
+                                </div>
+
+                                <!-- Checkbox -->
+                                <div class="form-check d-flex justify-content-center mb-4">
+                                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
+                                    <label class="form-check-label" for="form2Example33">
+                                        Subscribe to our newsletter
+                                    </label>
+                                </div>
+
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-primary btn-block mb-4">
+                                    Sign up
+                                </button>
+
+                                <!-- Register buttons -->
+                                <div class="text-center">
+                                    <p>or sign up with:</p>
+                                    <button type="button" class="btn btn-link btn-floating mx-1">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-link btn-floating mx-1">
+                                        <i class="fab fa-google"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-link btn-floating mx-1">
+                                        <i class="fab fa-twitter"></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-link btn-floating mx-1">
+                                        <i class="fab fa-github"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+</section>
+<!-- Section: Design Block -->
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

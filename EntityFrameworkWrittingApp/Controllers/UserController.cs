@@ -96,5 +96,56 @@ namespace EntityFrameworkWrittingApp.Controllers
                 return View();
             }
         }
+        [HttpPost]
+        public async Task<ActionResult> Login(UserLogInModel userloginmodel)
+        {
+            var user = await userasynrepo.UserLogIn(userloginmodel);
+            if (user != null)
+            {
+                if (user.Password == userloginmodel.Password)
+                {
+                    HttpContext.Session.SetString("userName", user.UserName);
+                    HttpContext.Session.SetString("userId", user.Id.ToString());
+                    HttpContext.Session.SetString("userRole", user.Role);
+                    HttpContext.Session.SetString("roleId", user.RoleId.ToString());
+                    ViewBag.user = user.UserName;
+
+                    if (user.Role == "Admin")
+                    {
+
+                        at.EmpId = user.Id;
+                        attendanceRepo.CheckInOut(at);
+
+                        return RedirectToAction("OrderContSales", "Product");
+                    }
+                    else
+                    {
+                        at.EmpId = user.Id;
+                        attendanceRepo.CheckInOut(at);
+
+                        return RedirectToAction("Index", "Product");
+                    }
+                }
+                else
+                    ViewBag.num = 1;
+                return View();
+            }
+            else
+            {
+                ViewBag.num = 1;
+                return View();
+            }
+        }
+
+        public IActionResult Logout()
+        {
+            var uId = HttpContext.Session.GetString("userId");
+            at.EmpId = Int32.Parse(uId);
+            attendanceRepo.CheckInOut(at);
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("LogIn");
+        }
+
     }
 }
