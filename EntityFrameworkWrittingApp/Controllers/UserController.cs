@@ -34,20 +34,21 @@ namespace EntityFrameworkWrittingApp.Controllers
         }
 
         // GET: UserController/Create
-        public ActionResult UserRegistration()
+        public async Task<ActionResult> UserRegistration()
         {
-            return View();
+            var user = await userAsync.GetAllUsersForRegistration();
+            return View(user);
         }
 
         // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> UserRegistration(User user)
+        public async Task<ActionResult> UserRegistration(UserRegistrationModel user)
         {
             try
             {
                 var result=await userAsync.UserRegistration(user);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(LogIn));
             }
             catch(Exception ex) 
             {
@@ -96,35 +97,35 @@ namespace EntityFrameworkWrittingApp.Controllers
                 return View();
             }
         }
-        [HttpPost]
-        public async Task<ActionResult> Login(UserLogInModel userloginmodel)
+        public ActionResult LogIn()
         {
-            var user = await userasynrepo.UserLogIn(userloginmodel);
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> LogIn(User user)
+        {
+            var loguser = await userAsync.UserLogIn(user);
             if (user != null)
             {
-                if (user.Password == userloginmodel.Password)
+                if (user.Password == loguser.Password)
                 {
-                    HttpContext.Session.SetString("userName", user.UserName);
-                    HttpContext.Session.SetString("userId", user.Id.ToString());
-                    HttpContext.Session.SetString("userRole", user.Role);
-                    HttpContext.Session.SetString("roleId", user.RoleId.ToString());
-                    ViewBag.user = user.UserName;
+         
 
-                    if (user.Role == "Admin")
+                    HttpContext.Session.SetString("userName", loguser.UserName);
+                    HttpContext.Session.SetString("userId", loguser.Id.ToString()); 
+                    HttpContext.Session.SetString("roleId", loguser.RoleId.ToString());
+                    ViewBag.user = loguser.UserName;
+
+                    var rid = HttpContext.Session.GetString("userId");
+                    var rd = Int32.Parse(rid);
+
+                    long Role = rd;
+                    if (loguser.RoleId ==1)
                     {
-
-                        at.EmpId = user.Id;
-                        attendanceRepo.CheckInOut(at);
-
-                        return RedirectToAction("OrderContSales", "Product");
+                        return RedirectToAction(nameof(Index));
                     }
-                    else
-                    {
-                        at.EmpId = user.Id;
-                        attendanceRepo.CheckInOut(at);
-
-                        return RedirectToAction("Index", "Product");
-                    }
+                  
                 }
                 else
                     ViewBag.num = 1;
@@ -139,9 +140,7 @@ namespace EntityFrameworkWrittingApp.Controllers
 
         public IActionResult Logout()
         {
-            var uId = HttpContext.Session.GetString("userId");
-            at.EmpId = Int32.Parse(uId);
-            attendanceRepo.CheckInOut(at);
+            var uId = HttpContext.Session.GetString("userId");        
             HttpContext.Session.Clear();
 
             return RedirectToAction("LogIn");
