@@ -13,6 +13,12 @@ namespace EntityFrameworkWrittingApp.Repository
             this.dbContext = dbContext;
         }
 
+        public async Task<List<PostModel>> GetAllPosts()
+        {
+           var posts=await dbContext.PostModels.ToListAsync();
+            return posts;
+        }
+
         public async Task<GetImagePostModel> GetImagesForPost()
         {
             GetImagePostModel postModel = new GetImagePostModel();
@@ -24,9 +30,18 @@ namespace EntityFrameworkWrittingApp.Repository
 
         public  async Task<long> PostPosts(PostModel post)
         {
+            long result = 0;
             dbContext.AddAsync(post);
 
-            var result=await dbContext.SaveChangesAsync();
+            try
+            {
+                 result = await dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
+           
 
             return result;
         }

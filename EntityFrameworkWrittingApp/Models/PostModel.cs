@@ -7,7 +7,7 @@ namespace EntityFrameworkWrittingApp.Models
     {
         //Id,PostContaint,ImageId
         public long Id { get; set; } 
-        public string PostContaint { get; set; } 
+        public string PostContent { get; set; } 
         public long ImagesId { get; set; } 
         
     }
@@ -21,7 +21,7 @@ namespace EntityFrameworkWrittingApp.Models
     {
         //Id,PostContaint,ImageId
         public long Id { get; set; }
-        public string PostContaint { get; set; }
+        public string PostContent { get; set; }
         public long ImagesId { get; set; }
         public List<ImageModel> Imagelist { get; set; }
 

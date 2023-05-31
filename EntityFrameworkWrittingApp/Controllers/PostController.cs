@@ -14,8 +14,9 @@ namespace EntityFrameworkWrittingApp.Controllers
         }
 
             // GET: PostController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            var result = await postAsync.GetAllPosts();
             return View();
         }
 
@@ -43,10 +44,13 @@ namespace EntityFrameworkWrittingApp.Controllers
         // POST: PostController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PostPosts(PostModel post)
+        public async Task<ActionResult> PostPosts(PostModel post)
         {
             try
             {
+               var uid= HttpContext.Session.GetString("roleId");
+                post.CreatedBy =Int32.Parse(uid);
+               var result=await postAsync.PostPosts(post);
                 return RedirectToAction(nameof(Index));
             }
             catch
