@@ -1,0 +1,101 @@
+﻿@model EntityFrameworkWrittingApp.Models.GetImagePostModel
+
+@{
+    ViewData["Title"] = "PostPosts";
+}
+
+<script>
+
+
+    function showElement() {
+        var element = document.getElementById("myElement");
+        element.style.display = "block";
+    }
+
+    function selectImage(imageId) {
+        if (selectedImageId) {
+            var previousSelectedImage = document.getElementById(selectedImageId);
+            previousSelectedImage.classList.remove("selected-image");
+        }
+        var id = imageId;
+        console.log(imageId);
+        var selectedImage = document.getElementById(imageId);
+        selectedImage.classList.add("selected-image");
+        selectedImageId = imageId;
+        document.getElementById("ImagesId").value = id;
+        console.log(document.getElementById("ImagesId").value);
+    }
+</script>
+
+<style>
+    .selected-image {
+        border: 2px solid red;
+    }
+</style>
+
+<!-- Rest of the code -->
+
+
+<section class="bg-image" id="one">
+    <div class="mask d-flex align-items-center gradient-custom-3">
+        <div class="container">
+            <div class="row d-flex justify-content-center align-items-center m-1">
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                    <div class="card" style="border-radius: 10px;">
+                        <div class="card-body p-0 text-center">
+                            <!-- Added "text-center" class -->
+                            <form asp-action="PostPosts">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <textarea name="PostContaint" rows="17" cols="55" placeholder="Write Something..!"></textarea>
+                                    <span asp-validation-for="PostContaint" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="ImagesId" class="form-control" hidden id="ImagesId" />
+                                    <span asp-validation-for="ImagesId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary" style="float:right" id="mmm" onclick="showElement()">Post</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@{
+    int cont = 0;
+}
+
+    <section class="bg-image" id="two" style="display: none;>
+        <div class="mask d-flex align-items-center gradient-custom-3">
+            <div class="container">
+                <div class="row d-flex justify-content-center align-items-center mt-2 mb-2">
+                    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="card" style="border-radius: 15px;">
+                            <div class="card-body p-0 text-center">
+
+                                <div class="row">
+                                    @foreach (var item in Model.Imagelist)
+                                    {
+                                        <div class="col-4">
+                                            <img src="@item.ImageUrl" id="@item.Id" width="140" height="270" class="mb-3" onclick="selectImage('@item.Id')" />
+                                        </div>
+                                    }
+                                </div>
+                                <button class="btn btn-primary" style="float:right" onclick="toggleSections1()">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+@section Scripts {
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
