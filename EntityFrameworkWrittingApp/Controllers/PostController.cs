@@ -19,8 +19,17 @@ namespace EntityFrameworkWrittingApp.Controllers
            
             try
             {
-                var result = await postAsync.GetAllPosts();
-                return View(result);
+                try
+                {
+                    var result = await postAsync.GetAllPosts();
+                    return View(result);
+                }
+                catch(Exception ex) 
+                { 
+                
+                }
+               
+                return View();
             }
             catch(Exception ex)
             {
@@ -61,6 +70,27 @@ namespace EntityFrameworkWrittingApp.Controllers
                 post.CreatedBy =Int32.Parse(uid);
                var result=await postAsync.PostPosts(post);
                 return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+      
+
+     
+        public async Task<ActionResult> LikePost(long id)
+        {
+            try
+            {
+                LikeModel likes = new LikeModel();
+                var uid = HttpContext.Session.GetString("userId");
+                likes.CreatedBy = Int32.Parse(uid);
+                likes.PostId = id;
+                likes.UserId = likes.CreatedBy;
+                likes.CreatedDate = DateTime.Now;
+                var result = await postAsync.PostLike(likes);
+                return View();
             }
             catch
             {

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<EntityFrameworkWrittingApp.Models.GetAllPostsModel>
+﻿@using System.Security.Policy;
+@model IEnumerable<EntityFrameworkWrittingApp.Models.GetAllPostsModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,11 +23,11 @@
         bottom: 0;
     }
 
-    .image-wrapper img {
-        object-fit: cover;
-        width: 122%;
-        height: 100%;
-    }
+        .image-wrapper img {
+            object-fit: cover;
+            width: 122%;
+            height: 100%;
+        }
 
     .card-img-content {
         position: absolute;
@@ -68,7 +69,7 @@
                     break;
                 }
             }
-            var btnId = con;
+            var btnId = $"likeButton_{con}"; // Generate unique IDs for each button
 
             <div class="card">
                 <div class="mails">
@@ -83,7 +84,7 @@
                             <div class="image-wrapper">
                                 <img class="card-img-top" src="@ite.ImageUrl" alt="Card image">
                                 <div class="card-img-content">
-                                    <p>
+                                    <p class="text-white">
                                         @foreach (var it in str)
                                         {
                                             @Html.Raw(it)
@@ -96,8 +97,7 @@
                     </div>
                 </div>
                 <div class="bottom-info">
-                    <i class="fa fa-heart" aria-hidden="true" style="font-size:36px;" id="@btnId"
-                   onclick="likefunction('@btnId')"></i>
+                    <button id="@btnId" class="fa fa-heart" onclick="likefunction('@btnId')" style="font-size: 36px;"></button>
 
                     <i class="fa fa-comments-o" style="font-size:36px;"></i>
                     <i class="fa fa-save ms-3" style="font-size:36px; float:right"></i>
@@ -117,5 +117,21 @@
         } else {
             elem.style.color = 'red';
         }
+
+        var postId = elemid.split("_")[1]; // Extract the postId from the element id
+
+        $.ajax({
+            url: '@Url.Action("LikePost")', // Replace "LikePost" with the actual name of your action method
+            type: 'POST', // Or 'GET' depending on your scenario
+            data: { id: postId }, // Pass any additional data required by the action method
+            success: function (response) {
+                // Handle the success response from the server here
+                // You can update the UI or perform any other actions as needed
+            },
+            error: function (xhr, status, error) {
+                // Handle the error response from the server here
+                // Display an error message or perform any other error handling
+            }
+        });
     }
 </script>

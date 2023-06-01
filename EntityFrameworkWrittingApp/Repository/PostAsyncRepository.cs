@@ -65,6 +65,22 @@ namespace EntityFrameworkWrittingApp.Repository
             return postModel;
         }
 
+        public async Task<long> PostLike(LikeModel likemodel)
+        {
+            var result = 0;
+            dbContext.AddAsync(likemodel);
+            try
+            {
+                result = await dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
+            return result;  
+        }
+
         public  async Task<long> PostPosts(PostModel post)
         {
             long result = 0;

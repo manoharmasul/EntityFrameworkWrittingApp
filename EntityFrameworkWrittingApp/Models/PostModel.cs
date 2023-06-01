@@ -37,4 +37,12 @@ namespace EntityFrameworkWrittingApp.Models
         public string ImageUrl { get; set; }
 
     }
+    [Table("tblLikes")]
+    public class LikeModel:BaseModel
+    {//Id,PostId,UserId,CreatedBy,CreateDate,ModifiedBy,ModifiedDate,IsDeleted
+
+        public long Id { get; set; }    
+        public long PostId { get; set; }    
+        public long UserId { get; set; }    
+    }
 }
