@@ -82,8 +82,8 @@
                             <form asp-action="PostPosts">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="form-group">
-                                    <textarea name="PostContent" rows="17" cols="55" placeholder="Write Something..!"></textarea>
-                                    <span asp-validation-for="PostContent" class="text-danger"></span>
+                                    <textarea name="PostContaint" rows="17" cols="55" placeholder="Write Something..!"></textarea>
+                                    <span asp-validation-for="PostContaint" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <input asp-for="ImagesId" class="form-control" hidden id="imidd" />
@@ -133,7 +133,8 @@
     </section>
 <input  class="form-control" hidden id="SelectedImageId" />
 
-
 @section Scripts {
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

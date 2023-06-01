@@ -7,7 +7,7 @@ namespace EntityFrameworkWrittingApp.Models
     {
         //Id,PostContaint,ImageId
         public long Id { get; set; } 
-        public string PostContent { get; set; } 
+        public string PostContaint { get; set; } 
         public long ImagesId { get; set; } 
         
     }
@@ -21,9 +21,20 @@ namespace EntityFrameworkWrittingApp.Models
     {
         //Id,PostContaint,ImageId
         public long Id { get; set; }
-        public string PostContent { get; set; }
+        public string PostContaint { get; set; }
         public long ImagesId { get; set; }
         public List<ImageModel> Imagelist { get; set; }
+
+    }
+    public class GetAllPostsModel
+    {
+        //CreateBy as UserId,UserName,Id as PostId,PostContaint,ImageUser
+        //Id,PostContaint,ImageId
+        public long UserId { get; set; }
+        public string UserName { get; set; }
+        public long PostId { get; set; }
+        public string PostContaint { get; set; }
+        public string ImageUrl { get; set; }
 
     }
 }

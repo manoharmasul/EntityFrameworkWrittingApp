@@ -16,8 +16,17 @@ namespace EntityFrameworkWrittingApp.Controllers
             // GET: PostController
         public async Task<ActionResult> Index()
         {
-            var result = await postAsync.GetAllPosts();
-            return View();
+           
+            try
+            {
+                var result = await postAsync.GetAllPosts();
+                return View(result);
+            }
+            catch(Exception ex)
+            {
+               return View();
+            }
+           
         }
 
         // GET: PostController/Details/5
@@ -48,7 +57,7 @@ namespace EntityFrameworkWrittingApp.Controllers
         {
             try
             {
-               var uid= HttpContext.Session.GetString("roleId");
+               var uid= HttpContext.Session.GetString("userId");
                 post.CreatedBy =Int32.Parse(uid);
                var result=await postAsync.PostPosts(post);
                 return RedirectToAction(nameof(Index));

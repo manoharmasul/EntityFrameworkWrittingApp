@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EntityFrameworkWrittingApp.styles.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <style>
         * {
             box-sizing: border-box;
@@ -581,11 +583,11 @@
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between ">
                         <ul class="navbar-nav flex-grow-1">
 
-                        
-                                <li class="nav-item collapse navbar-collapse justify-content-end">
-                                    <a class="nav-link  btn btn-outline-primary me-5" asp-area="" asp-controller="User" asp-action="LogOut"><i class="fa fa-power-off" aria-hidden="true"></i>LogOut</a>
-                                </li>
-                           
+
+                            <li class="nav-item collapse navbar-collapse justify-content-end">
+                                <a class="nav-link  btn btn-outline-primary me-5" asp-area="" asp-controller="User" asp-action="LogOut"><i class="fa fa-power-off" aria-hidden="true"></i>LogOut</a>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -607,7 +609,7 @@
         <script src="~/js/site.js" asp-append-version="true"></script>
         @await RenderSectionAsync("Scripts", required: false)
     }
-   
+
     @if (!String.IsNullOrEmpty(Context.Request.HttpContext.Session.GetString("userName")))
     {
         <div class="dashboard">
@@ -636,12 +638,12 @@
                             <img src="https://i.ibb.co/HgJrt1p/abilan.png" />
                         </div>
                         <a asp-action="PostPosts" asp-controller="Post">
-                        <button class="compose">
-                            New Post
-                            <span class="plus">
-                                <img src="https://i.ibb.co/v1HxGWj/add-1.png" />
-                            </span>
-                        </button>
+                            <button class="compose">
+                                New Post
+                                <span class="plus">
+                                    <img src="https://i.ibb.co/v1HxGWj/add-1.png" />
+                                </span>
+                            </button>
                         </a>
                         <div class="folders">Folders</div>
                         <div class="folder-icons">
@@ -757,7 +759,9 @@
                             <div class="big-inbox">
                                 Inbox
                             </div>
-
+                            <div class="top-bar-items">
+                                <a class="nav-link  btn btn-outline-primary me-5" asp-area="" asp-controller="User" asp-action="LogOut"><i class="fa fa-power-off" aria-hidden="true"></i>LogOut</a>
+                           </div>
                             <div class="top-bar-items">
                                 <div class="notif">
                                     <div class="online pink">
@@ -812,30 +816,96 @@
 
 
                 <div class="right-body">
-                    <div class="scroll-cards">                                     
-                            
-              
-                                <div class="container">
-                                    <main role="main" class="pb-3">
-                                        @RenderBody()
-                                    </main>
-                                </div>
-
-                              
-                                <script src="~/lib/jquery/dist/jquery.min.js"></script>
-                                <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-                                <script src="~/js/site.js" asp-append-version="true"></script>
-                                @await RenderSectionAsync("Scripts", required: false)
-
-                       
+                    <div class="scroll-cards">
 
 
+                        <div class="container">
+                            <main role="main" class="pb-3">
+                                @RenderBody()
+                            </main>
+                        </div>
+
+
+                        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+                        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+                        <script src="~/js/site.js" asp-append-version="true"></script>
+                        @await RenderSectionAsync("Scripts", required: false)
+
+
+
+
+                    </div>
+
+
+
+                    <div class="message">
+                        <div class="mes-date">
+                            Dec 1, 2018
+                        </div>
+                        <div class="title">
+                            Old Fashioned Recipe For Preventing Allergies And Chemical
+                            <div class="title-icons">
+                            </div>
+                        </div>
+                        <div class="from">
+                            <span class="who">From: </span>ashraf@glaze.com
+                        </div>
+                        <div class="message-from">
+                            Hello Malikan!
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, voluptas pariatur repellat veritatis atque, tempora quasi quas facere impedit aliquam libero qui iure cumque incidunt facilis soluta necessitatibus laboriosam nemo. Delectus architecto
+                                sed, excepturi natus iste vel quidem officia corrupti repudiandae!
+                            </p>
+                            <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Inventore, deleniti eaque eligendi minus maxime tempora eiusi.</p>
+                            <p>Have a nice day</p>
+                            <p>Ashraf</p>
+                        </div>
+                        <div class="attachment-last">
+                            <img src="https://i.ibb.co/FW9tsHK/attachment.png" />
+                            <div class="att-write">
+                                Attachment (80MB)
+                            </div>
+                            <button class="btn1 buton0">
+                                View All
+                                <span class="tag">
+                            </button>
+
+                            <button class="btn1 buton9">
+                                Download All
+                            </button>
+
+                        </div>
+                        <div class="son-images">
+                            <div class="inside-img">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60" />
+                                <img src="https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60" />
+                                <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60" />
+                                <img src="https://images.unsplash.com/photo-1450609283058-0ec52fa7eac4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60" />
+
+                            </div>
+                            <button class="son-buton">
+                                20+
+                            </button>
+                        </div>
+                        <button class="btn2 butona">
+                            Reply
+                            <span class="tag">
+                                <img src="https://i.ibb.co/GQf8frw/reply.png" />
+                            </span>
+                        </button>
+
+                        <button class="btn2 butonb">
+                            Forward
+                            <span class="tag">
+                                <img src="https://i.ibb.co/6W40kTg/forward-arrow.png" />
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-     
+
     }
-     
+
 </body>
 </html>

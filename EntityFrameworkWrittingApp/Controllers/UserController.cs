@@ -123,7 +123,7 @@ namespace EntityFrameworkWrittingApp.Controllers
                     long Role = rd;
                     if (loguser.RoleId ==1)
                     {
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction("Index", "Post");
                     }
                   
                 }
