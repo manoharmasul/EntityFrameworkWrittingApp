@@ -21,6 +21,8 @@ namespace EntityFrameworkWrittingApp.Controllers
             {
                 try
                 {
+                    var uid = HttpContext.Session.GetString("userId");
+                    ViewBag.User = Int32.Parse(uid);
                     var result = await postAsync.GetAllPosts();
                     return View(result);
                 }
@@ -49,6 +51,8 @@ namespace EntityFrameworkWrittingApp.Controllers
         {
             try {
 
+                var uid = HttpContext.Session.GetString("userId");
+                ViewBag.User = Int32.Parse(uid);              
                 var result = await postAsync.GetImagesForPost();
                 return View(result);
             }
@@ -97,6 +101,27 @@ namespace EntityFrameworkWrittingApp.Controllers
                 return View();
             }
         }
+
+        public async Task<ActionResult> PostComments(string Comments,long PostId)
+        {
+            try
+            {
+                CommentsModel comment = new CommentsModel();
+                var uid = HttpContext.Session.GetString("userId");
+                comment.CreatedBy = Int32.Parse(uid);
+                comment.PostId = PostId;
+                comment.UserId = comment.CreatedBy;
+                comment.UserId = comment.CreatedBy;
+                comment.Comments = Comments;
+                var result = await postAsync.PostComments(comment);
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
 
         // GET: PostController/Edit/5
         public ActionResult Edit(int id)

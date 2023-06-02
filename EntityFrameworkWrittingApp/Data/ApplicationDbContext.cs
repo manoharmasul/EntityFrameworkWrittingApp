@@ -14,5 +14,6 @@ namespace EntityFrameworkWrittingApp.Data
         public DbSet<ImageModel> ImageModel { get; set; }
         public DbSet<PostModel> PostModels { get; set; }
         public DbSet<LikeModel> LikeModel { get; set; }
+        public DbSet<CommentsModel> CommentsModel { get; set; }
     }
 }

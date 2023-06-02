@@ -8,6 +8,31 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 <style>
+    .modal-dialog {
+
+        height: 100vh;
+        max-height: 100%;
+        width: 100%;
+        margin: 0 auto;
+       padding: 15px;
+       
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+ 
+      
+    }
+
+    .modal-content {
+        height: 100%;
+        border-radius: 0;
+    }
+
+
+
+
+
     .image-container {
         position: relative;
         width: 122%;
@@ -52,10 +77,26 @@
     <div class="mx-auto" style="width: 70%;">
         @{
             var con = 1;
+          
         }
-
+        
         @foreach (var ite in Model)
         {
+            long myvar = 0;
+            long check= ViewBag.User;
+
+            @foreach(var atm in ite.likemodel)
+            {
+               
+                if (check == atm.UserId && ite.PostId==atm.PostId)
+                {
+                    if(atm.LikeOrDislike==true)
+                    {
+                        myvar = 1;
+
+                    }
+                }
+            }
             int counts = 0;
             string[] ptcon = (ite.PostContaint).Split("\r\n\r\n");
             List<string> str = new List<string>();
@@ -84,7 +125,7 @@
                             <div class="image-wrapper">
                                 <img class="card-img-top" src="@ite.ImageUrl" alt="Card image">
                                 <div class="card-img-content">
-                                    <p class="text-white">
+                                    <p class="text-black">
                                         @foreach (var it in str)
                                         {
                                             @Html.Raw(it)
@@ -96,26 +137,115 @@
                         </div>
                     </div>
                 </div>
-                <div class="bottom-info">
-                    <button id="@btnId" class="fa fa-heart" onclick="likefunction('@btnId')" style="font-size: 36px;"></button>
+                <div class="bottom-info">  
+                    @if(myvar==1)
+                    {
+                        <i id="@btnId" class="fa fa-heart" onclick="likefunction('@btnId')" style="font-size: 36px;color:red"></i>
+                    }
+                    else
+                    {
+                        <i id="@btnId" class="fa fa-heart-o" onclick="likefunction('@btnId')" style="font-size: 36px;"></i>
+                    }
+                    <i class="fa fa-comments-o" style="font-size:36px;" data-bs-toggle="modal" data-bs-target="#myModalone" onclick="setthisPostId('@ite.PostId')"></i>
 
-                    <i class="fa fa-comments-o" style="font-size:36px;"></i>
                     <i class="fa fa-save ms-3" style="font-size:36px; float:right"></i>
                 </div>
+
             </div>
 
             con++;
         }
+
     </div>
 </div>
 
+
+
+
+<div class="modal mb-5" id="myModalone">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="width: 90%;">
+            <!-- Modal Header -->
+            <div class="modal-header">
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body" style="padding: 0;">
+                <!-- Add your form elements here -->
+                <div style="display: flex; flex-direction: column; height: 100%;">
+                    <div style="flex-grow: 1;">
+                        @foreach (var ite in Model)
+                        {
+                            <!-- Your existing code for displaying posts here -->
+                        }
+                    </div>
+
+                    <div class="row mb-2">
+                        <form id="commentForm" class="d-flex align-items-center">
+                            <input type="number" id="PostId" name="PostId" hidden></input>
+                            <div class="col">
+                                <textarea class="form-control ms-1 me-0" rows="2" name="Comments" id="Comments" placeholder="Write something here..."></textarea>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn" onclick="submitForm()">
+                                    <i class="fa fa-chevron-circle-right" style="font-size: 46px; color: blue;"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <script>
+    function setthisPostId(id) {
+        var elem = document.getElementById('PostId');
+        elem.value = id;
+        console.log(elem.value + '  get');
+    }
+
+    function submitForm() {
+        var form = document.getElementById('commentForm');
+        var formData = new FormData(form);
+
+        $.ajax({
+            url: '@Url.Action("PostComments")', // Replace "PostComments" with the actual name of your action method
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                // Handle the success response from the server here
+                // You can update the UI or perform any other actions as needed
+
+                // Close the modal after successful form submission
+                $('#myModalone').modal('hide');
+            },
+            error: function (xhr, status, error) {
+                // Handle the error response from the server here
+                // Display an error message or perform any other error handling
+            }
+        });
+    }
+
+
+
+
     function likefunction(elemid) {
         var elem = document.getElementById(elemid);
         if (elem.style.color === 'red') {
             elem.style.color = 'black';
+            elem.className="fa fa-heart-o"
         } else {
+            elem.className = "fa fa-heart"
             elem.style.color = 'red';
+          
         }
 
         var postId = elemid.split("_")[1]; // Extract the postId from the element id

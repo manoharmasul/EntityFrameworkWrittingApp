@@ -1,6 +1,7 @@
 ﻿using EntityFrameworkWrittingApp.Data;
 using EntityFrameworkWrittingApp.Models;
 using EntityFrameworkWrittingApp.Repository.Interface;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkWrittingApp.Repository
@@ -16,6 +17,7 @@ namespace EntityFrameworkWrittingApp.Repository
         public async Task<List<GetAllPostsModel>> GetAllPosts()
         
         {
+
             List<GetAllPostsModel> getlist=new List<GetAllPostsModel>();
             /* from o in _myContext.Order
              join ur in _myContext.tblUser on o.CustomerId equals ur.Id
@@ -38,6 +40,8 @@ namespace EntityFrameworkWrittingApp.Repository
              };
             */
             //CreateBy as UserId,UserName,Id as PostId,PostContaint,ImageUser
+       
+
             var query = from u in dbContext.User
                        join p in dbContext.PostModels on u.Id equals p.CreatedBy
                        join i in dbContext.ImageModel on p.ImagesId equals i.Id
@@ -53,6 +57,13 @@ namespace EntityFrameworkWrittingApp.Repository
                            ImageUrl = i.ImageUrl
                        };
              getlist = await query.ToListAsync();
+            foreach(var post in getlist)
+            {
+             var liquery=from l in dbContext.LikeModel where l.IsDeleted==false && l.PostId==post.PostId  select l;
+            
+                var listre=await liquery.ToListAsync();
+                post.likemodel=listre;  
+            }
             return getlist;
         }
 
@@ -65,20 +76,43 @@ namespace EntityFrameworkWrittingApp.Repository
             return postModel;
         }
 
+        public async Task<long> PostComments(CommentsModel comments)
+        {
+            var query = dbContext.AddAsync(comments);
+            var result = await dbContext.SaveChangesAsync();
+            return result;
+        }
+
         public async Task<long> PostLike(LikeModel likemodel)
         {
+
             var result = 0;
-            dbContext.AddAsync(likemodel);
-            try
+            var checklike = from l in dbContext.LikeModel
+            where l.UserId == likemodel.UserId && l.IsDeleted == false && l.PostId == likemodel.PostId select l;
+
+            var likess = await checklike.SingleOrDefaultAsync();
+            if (likess == null)
             {
+                likemodel.LikeOrDislike = true;
+                dbContext.AddAsync(likemodel);
+
                 result = await dbContext.SaveChangesAsync();
             }
-            catch (Exception ex)
+            else if(likess.LikeOrDislike==true)
             {
 
+
+                likess.LikeOrDislike = false;
+
+                result=dbContext.SaveChanges();
+
             }
-            
-            return result;  
+            else
+            {
+                likess.LikeOrDislike = true;
+                result = dbContext.SaveChanges();
+            }
+            return result;
         }
 
         public  async Task<long> PostPosts(PostModel post)

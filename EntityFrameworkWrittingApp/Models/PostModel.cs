@@ -35,14 +35,29 @@ namespace EntityFrameworkWrittingApp.Models
         public long PostId { get; set; }
         public string PostContaint { get; set; }
         public string ImageUrl { get; set; }
+        public List<LikeModel> likemodel { get; set; }
 
     }
     [Table("tblLikes")]
     public class LikeModel:BaseModel
     {//Id,PostId,UserId,CreatedBy,CreateDate,ModifiedBy,ModifiedDate,IsDeleted
-
+        //PostId,UserId,CreatedBy,IsDeleted,LikeOrDislike
         public long Id { get; set; }    
         public long PostId { get; set; }    
         public long UserId { get; set; }    
+        public bool LikeOrDislike { get; set; }    
     }
+
+    [Table("tblComments")]
+    public class CommentsModel : BaseModel
+    {
+        ////Id,PostId,UserId,Comments,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,IsDeleted
+        //Id,PostId,UserId,CreatedBy,CreateDate,ModifiedBy,ModifiedDate,IsDeleted
+        //PostId,UserId,CreatedBy,IsDeleted,LikeOrDislike
+        public long Id { get; set; }
+        public long PostId { get; set; }
+        public long UserId { get; set; }
+        public string Comments { get; set; }
+    }
+
 }
