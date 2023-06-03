@@ -36,6 +36,7 @@ namespace EntityFrameworkWrittingApp.Models
         public string PostContaint { get; set; }
         public string ImageUrl { get; set; }
         public List<LikeModel> likemodel { get; set; }
+        public List<GetCommentsModel> commentsmodel { get; set; }
 
     }
     [Table("tblLikes")]
@@ -57,6 +58,17 @@ namespace EntityFrameworkWrittingApp.Models
         public long Id { get; set; }
         public long PostId { get; set; }
         public long UserId { get; set; }
+        public string Comments { get; set; }
+    }
+    public class GetCommentsModel 
+    {
+        ////Id,PostId,UserId,Comments,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,IsDeleted
+        //Id,PostId,UserId,CreatedBy,CreateDate,ModifiedBy,ModifiedDate,IsDeleted
+        //PostId,UserId,CreatedBy,IsDeleted,LikeOrDislike
+        public long Id { get; set; }
+        public long PostId { get; set; }
+        public long UserId { get; set; }
+        public string UserName { get; set; }
         public string Comments { get; set; }
     }
 

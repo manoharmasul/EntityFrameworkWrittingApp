@@ -40,31 +40,56 @@ namespace EntityFrameworkWrittingApp.Repository
              };
             */
             //CreateBy as UserId,UserName,Id as PostId,PostContaint,ImageUser
-       
-
-            var query = from u in dbContext.User
-                       join p in dbContext.PostModels on u.Id equals p.CreatedBy
-                       join i in dbContext.ImageModel on p.ImagesId equals i.Id
-                       where u.IsDeleted ==false
-                     
-
-                       select new GetAllPostsModel
-                       {
-                          UserId=u.Id,
-                          UserName=u.UserName,
-                          PostId=p.Id,
-                          PostContaint=p.PostContaint,
-                           ImageUrl = i.ImageUrl
-                       };
-             getlist = await query.ToListAsync();
-            foreach(var post in getlist)
+            try
             {
-             var liquery=from l in dbContext.LikeModel where l.IsDeleted==false && l.PostId==post.PostId  select l;
-            
-                var listre=await liquery.ToListAsync();
-                post.likemodel=listre;  
+                var query = from u in dbContext.User
+                            join p in dbContext.PostModels on u.Id equals p.CreatedBy
+                            join i in dbContext.ImageModel on p.ImagesId equals i.Id
+                            where u.IsDeleted == false
+
+
+                            select new GetAllPostsModel
+                            {
+                                UserId = u.Id,
+                                UserName = u.UserName,
+                                PostId = p.Id,
+                                PostContaint = p.PostContaint,
+                                ImageUrl = i.ImageUrl
+                            };
+                getlist = await query.ToListAsync();
+                foreach (var post in getlist)
+                {
+                    var liquery = from l in dbContext.LikeModel where l.IsDeleted == false && l.PostId == post.PostId select l;
+
+                    var listre = await liquery.ToListAsync();
+                    post.likemodel = listre;
+
+                    var commentsnewquery = from u in dbContext.User
+                                           join c in dbContext.CommentsModel on u.Id equals c.UserId                                         
+                                           select new GetCommentsModel
+                                           {
+                                               Id = c.Id,
+                                               PostId = c.PostId,
+                                               UserId = c.UserId,
+                                               UserName = u.UserName,
+                                               Comments = c.Comments
+                                           };
+
+
+
+                    var commentlist = await commentsnewquery.ToListAsync();
+                    post.commentsmodel = commentlist;
+
+                }
+                return getlist;
+
             }
-            return getlist;
+            catch (Exception ex)
+            {
+                return getlist;
+            }
+
+            
         }
 
         public async Task<GetImagePostModel> GetImagesForPost()
