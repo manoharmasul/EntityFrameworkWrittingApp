@@ -72,7 +72,8 @@ namespace EntityFrameworkWrittingApp.Repository
                                                PostId = c.PostId,
                                                UserId = c.UserId,
                                                UserName = u.UserName,
-                                               Comments = c.Comments
+                                               Comments = c.Comments,
+                                               UserProfile=u.UserProfile
                                            };
 
 

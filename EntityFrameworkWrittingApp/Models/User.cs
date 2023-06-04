@@ -12,6 +12,9 @@ namespace EntityFrameworkWrittingApp.Models
         public long Id { get; set; }
         public string UserName { get; set; }
         public string EmailId { get; set; }
+        public string? UserProfile { get; set; }
+        public string? Bio { get; set; }
+        public string? Links { get; set; }
         public string MobileNo { get; set; }
         public string Password { get; set; }
         public long RoleId { get; set; }
@@ -48,4 +51,13 @@ namespace EntityFrameworkWrittingApp.Models
         public long MobileNo { get; set; }
         public string Password { get; set; }
      }
+    public class GetUserProfileModel
+    {
+        public long UserId { get; set; }
+        public string UserName { get; set; }
+        public string UserProfile { get; set; }
+        public string Bio { get; set; }
+        public string Links { get; set; }
+        public List<GetAllPostsModel> GetAllPosts{ get; set; }
+    }
 }

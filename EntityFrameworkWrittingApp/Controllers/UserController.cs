@@ -26,6 +26,40 @@ namespace EntityFrameworkWrittingApp.Controllers
             }
             
         }
+        public async Task<ActionResult> GetUserProfile()
+        {
+            try
+            {
+                var uid = HttpContext.Session.GetString("userId");
+                var userid = Int32.Parse(uid);
+                ViewBag.User = userid;
+                var result = await userAsync.GetUserProfile(userid);
+
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
+
+        }
+        public async Task<ActionResult> UpdateUserProfile(User user)
+        {
+            try
+            {
+                var uid = HttpContext.Session.GetString("userId");
+                var userid = Int32.Parse(uid);
+              user.Id = userid;             
+                var result = await userAsync.UpdateUserProfile(user);
+
+                return RedirectToAction(nameof(GetUserProfile));
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+
+        }
 
         // GET: UserController/Details/5
         public ActionResult Details(int id)

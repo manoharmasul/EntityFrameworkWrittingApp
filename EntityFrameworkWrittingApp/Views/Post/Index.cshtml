@@ -265,10 +265,6 @@
 
 </style>
 
-<br />
-<br />
-<br />
-<br />
 
 <div class="container">
     <div class="mx-auto" style="width: 70%;" id="changeId">
@@ -372,7 +368,7 @@
         
         <div class="border-1 mt-5 mb-2 bg-white" id="newcard" style=" margin: 0;top: 2%;width:25%;height: 3000px;">
 
-            <div class="" id="mycardid" style=" margin: 0;top: 2%;width:25%;margin-top: 7rem;margin-bottom: 5rem;">
+            <div class="" id="mycardid" style=" margin: 0;top: 2%;width:25%;margin-top: 7rem;margin-bottom: 4rem;">
 
                 <div id="myDIV-content" style="height: calc(100% - 50px);overflow-y: scroll;">
                  <button type="button" onclick="chengefunction()" class="btn-close" aria-label="Close" style="float:right;position: fixed;"></button>
@@ -443,12 +439,35 @@
 
     comlist.forEach(function (item) {
       
-
+        if(item.userProfile)
+        {
+            var uprofile=item.userProfile;
+        
         if (item.postId == id) {
             console.log(item.postId);
             console.log(thisids);
             console.log(id + 'getit');
-
+            html += '<main class="msger-chat">';
+            html += '<div class="msg left-msg">';
+            html += '<div class="msg-img" style="background-image: url(' + uprofile + ')"></div>'          
+            html += '<div class="msg-bubble">';
+            html += '<div class="msg-info">';
+            html += '<div class="msg-info-name">' + item.userName + '</div>';
+            html += '<div class="msg-info-time">12:45</div>';
+            html += '</div>';
+            html += '<div class="msg-text">';
+            html += item.comments + ' 😄';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '</main>';
+        }
+        }
+        else{
+              if (item.postId == id) {
+            console.log(item.postId);
+            console.log(thisids);
+            console.log(id + 'getit');
             html += '<main class="msger-chat">';
             html += '<div class="msg left-msg">';
             html += '<div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"></div>';
@@ -463,6 +482,7 @@
             html += '</div>';
             html += '</div>';
             html += '</main>';
+        }
         }
     });
 

@@ -32,6 +32,7 @@ namespace EntityFrameworkWrittingApp.Models
         //Id,PostContaint,ImageId
         public long UserId { get; set; }
         public string UserName { get; set; }
+        public string UserProfile { get; set; }
         public long PostId { get; set; }
         public string PostContaint { get; set; }
         public string ImageUrl { get; set; }
@@ -70,6 +71,7 @@ namespace EntityFrameworkWrittingApp.Models
         public long UserId { get; set; }
         public string UserName { get; set; }
         public string Comments { get; set; }
+        public string UserProfile { get; set; }
     }
 
 }
