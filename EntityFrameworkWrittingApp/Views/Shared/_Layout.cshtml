@@ -70,7 +70,7 @@
         }
 
         .navigation {
-            width: 270px;
+            width: 250px;
             border-right: 1px solid #ddd;
         }
 
@@ -220,7 +220,7 @@
         .right-side {
             background-color: #f2f3f7;
             width: 100%;
-            padding: 8px 30px;
+        
             display: flex;
             flex-direction: column;
         }
@@ -354,7 +354,7 @@
         }
 
         .scroll-cards {
-            width: 600px;
+            width: 470px;
         @* ////////////////////////////////////////////////////////////////////////////////////////////////////// *@ height: 100%;
             overflow: auto;
             padding: 20px 0px 5px 0px;
@@ -561,8 +561,7 @@
         ::-webkit-scrollbar-thumb {
             background: #888;
         }
-
-            /* Handle on hover */
+position     /* Handle on hover */
             ::-webkit-scrollbar-thumb:hover {
                 background: #555;
             }
@@ -574,7 +573,7 @@
     @if (String.IsNullOrEmpty(Context.Request.HttpContext.Session.GetString("userName")))
     {
         <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white text-black border-bottom box-shadow mb-3">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white text-black border-bottom box-shadow mb-3  border-dark">
                 <div class="container-fluid">
                     <a class="navbar-brand" asp-area="" asp-controller="User" asp-action="LogIn">Write Somethig</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -645,26 +644,14 @@
                                     <img src="https://i.ibb.co/v1HxGWj/add-1.png" />
                                 </span>
                             </button>
-                        </a>
-                        <a asp-action="GetUserProfile" asp-controller="User">
-                            <button class="compose">
-                                Profile
-                                <span class="plus">
-                                    <img src="https://i.ibb.co/v1HxGWj/add-1.png" />
-                                </span>
-                            </button>
-                        </a>
+                        </a>                       
                         <div class="folders">Folders</div>
                         <div class="folder-icons">
-                            <div class="icon1">
-                                <img src="https://i.ibb.co/qdgf3TJ/envelope.png" />
-                            </div>
-                            <div class="icon-name1">
-                                Profile
-                                <button class="buton-span">
-                                    20
-                                </button>
-                            </div>
+                            <a asp-action="GetUserProfile" asp-controller="User">
+                              <div class="icon1 text-black">
+                                    <i class="fa fa-user" aria-hidden="true" style='font-size:18px'><span class="ms-2">Profile</span></i>
+                            </div> 
+                            </a>                            
                         </div>
                         <div class="folder-icons">
                             <div class="icon1">
@@ -762,14 +749,20 @@
                 </div>
             </div>
             <div class="right-side">
-                <div class="right-header">
+                <div class="right-header border-bottom border-dark">
                     <div class="top-bar">
-                        <div class="top-bar-justify">
-                            <div class="big-inbox">
+                        <div class="top-bar-justify mb-3 mt-3">
+                            <div class="big-inbox ms-3">
                                 Inbox
                             </div>
                             <div class="top-bar-items">
-                                <a class="nav-link  btn btn-outline-primary me-5" asp-area="" asp-controller="User" asp-action="LogOut"><i class="fa fa-power-off" aria-hidden="true"></i>LogOut</a>
+                                <a class="nav-link btn btn-outline-light" asp-area="" asp-controller="User" asp-action="LogOut">
+                                   <div class="text-black ">
+                                        <i class="fa fa-power-off mt-1 mb-1" aria-hidden="true">LogOut</i>
+                                   </div>
+                                    
+                                    
+                                </a>
                            </div>
                             <div class="top-bar-items">
                                 <div class="notif">
@@ -793,7 +786,7 @@
 
 
                 <div class="right-body">
-                    <div class="scroll-cards" id="classid">
+                    <div class="scroll-cards" id="classid" style="">
 
 
                         <div class="container">

@@ -27,6 +27,26 @@ namespace EntityFrameworkWrittingApp.Repository
             return ur;
         }
 
+        public async Task<List<GetCommentsModel>> GetCommentsById(long id)
+        {
+           
+            var joinquery = from u in dbContext.User
+                            join c in dbContext.CommentsModel on u.Id equals c.UserId
+                            where c.PostId == id
+                            select new GetCommentsModel
+                            {
+                                Id = c.Id,
+                                UserId = u.Id,
+                                PostId = c.PostId,
+                                UserName = u.UserName,
+                                Comments = c.Comments,
+                                UserProfile = u.UserProfile
+                            };
+            var result=await joinquery.ToListAsync();
+            return result;
+            
+        }
+
         public async Task<GetUserProfileModel> GetUserProfile(long userId)
         {
             List<GetAllPostsModel> getlist = new List<GetAllPostsModel>();
@@ -111,6 +131,7 @@ namespace EntityFrameworkWrittingApp.Repository
 
                              where s.UserName == user.UserName && s.Password == user.Password   
                        select s;
+
             var userlognin = await userlong.SingleOrDefaultAsync();
             return userlognin;
           

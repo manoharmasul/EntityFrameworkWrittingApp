@@ -7,6 +7,7 @@ namespace EntityFrameworkWrittingApp.Repository.Interface
         Task<long> UserRegistration(UserRegistrationModel user); 
         Task<long> UpdateUserProfile(User user); 
         Task<List<User>> GetAllUsers();
+        Task<List<GetCommentsModel>> GetCommentsById(long id);
         Task<GetUserProfileModel> GetUserProfile(long userId); 
         Task<UserRegistrationModel> GetAllUsersForRegistration(); 
         Task<User> UserLogIn(User user); 

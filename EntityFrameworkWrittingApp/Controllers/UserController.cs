@@ -26,6 +26,20 @@ namespace EntityFrameworkWrittingApp.Controllers
             }
             
         }
+        public async Task<ActionResult> GetCommentsById(long id)
+        {
+            try
+            {
+                var result = await userAsync.GetCommentsById(id);
+
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
+
+        }
         public async Task<ActionResult> GetUserProfile()
         {
             try

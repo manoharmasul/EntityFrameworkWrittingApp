@@ -1,4 +1,4 @@
-﻿@using System.Security.Policy;
+﻿﻿@using System.Security.Policy;
 @model IEnumerable<EntityFrameworkWrittingApp.Models.GetAllPostsModel>
 
 @{
@@ -8,9 +8,9 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 @{
     List<GetCommentsModel> comentmod = new List<GetCommentsModel>();
-    foreach(var mastermodel in Model.ToList())
+    foreach (var mastermodel in Model.ToList())
     {
-        
+
         comentmod = mastermodel.commentsmodel;
         break;
     }
@@ -30,7 +30,7 @@
         width: 30%;
         height: 480px;
         overflow: visible;
-        position:absolute;
+        position: absolute;
     }
 
     :root {
@@ -53,7 +53,7 @@
         box-sizing: inherit;
     }
 
-  
+
 
     .msger {
         display: flex;
@@ -203,21 +203,19 @@
 
 
 
-   
-    .modal-dialog {
 
+    .modal-dialog {
         height: 100vh;
         max-height: 100%;
         width: 100%;
         margin: 0 auto;
-       padding: 15px;
-         position: fixed;
+        padding: 15px;
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
         margin: 0 auto;
-      
     }
 
     .modal-content {
@@ -267,145 +265,142 @@
 
 
 <div class="container">
-    <div class="mx-auto" style="width: 70%;" id="changeId">
+    <div class="mx-auto" style="width: 390px;" id="changeId">
         <div id="oldid">
-                    @{
-                        var con = 1;
-          
+            @{
+                var con = 1;
+
+            }
+
+            @foreach (var ite in Model)
+            {
+                long myvar = 0;
+                long check = ViewBag.User;
+
+                @foreach (var atm in ite.likemodel)
+                {
+
+                    if (check == atm.UserId && ite.PostId == atm.PostId)
+                    {
+                        if (atm.LikeOrDislike == true)
+                        {
+                            myvar = 1;
+
+                        }
                     }
-        
-         @foreach (var ite in Model)
-         {
-                        long myvar = 0;
-                        long check= ViewBag.User;
+                }
+                int counts = 0;
+                string[] ptcon = (ite.PostContaint).Split("\r\n\r\n");
+                List<string> str = new List<string>();
+                for (int i = 0; i < ptcon.Length; i++)
+                {
+                    str.Add(ptcon[i]);
 
-                        @foreach(var atm in ite.likemodel)
-                        {
-               
-                            if (check == atm.UserId && ite.PostId==atm.PostId)
-                            {
-                                if(atm.LikeOrDislike==true)
-                                {
-                                    myvar = 1;
+                    counts++;
+                    if (counts == 14)
+                    {
+                        break;
+                    }
+                }
+                var btnId = $"likeButton_{con}"; // Generate unique IDs for each button
 
-                                }
-                            }
-                        }
-                        int counts = 0;
-                        string[] ptcon = (ite.PostContaint).Split("\r\n\r\n");
-                        List<string> str = new List<string>();
-                        for (int i = 0; i < ptcon.Length; i++)
-                        {
-                            str.Add(ptcon[i]);
-
-                            counts++;
-                            if (counts == 14)
-                            {
-                                break;
-                            }
-                        }
-                        var btnId = $"likeButton_{con}"; // Generate unique IDs for each button
-
-                        <div class="card">
-                            <div class="mails">
-                                <span class="person border3">H</span>
-                                <div class="mail-names">
-                                    @ite.UserName
-                                </div>
-                            </div>
-                            <div class="mail-info">
-                                <div class="card-image">
-                                    <div class="image-container">
-                                        <div class="image-wrapper">
-                                            <img class="card-img-top" src="@ite.ImageUrl" alt="Card image">
-                                            <div class="card-img-content">
-                                                <p class="text-black">
-                                                    @foreach (var it in str)
-                                                    {
-                                                        @Html.Raw(it)
-                                                        <br />
-                                                    }
-                                                </p>
-                                            </div>
-                                        </div>
+                <div class="card">
+                    <div class="mails">
+                        <span class="person border3">H</span>
+                        <div class="mail-names">
+                            @ite.UserName
+                        </div>
+                    </div>
+                    <div class="mail-info">
+                        <div class="card-image">
+                            <div class="image-container">
+                                <div class="image-wrapper">
+                                    <img class="card-img-top" src="@ite.ImageUrl" alt="Card image">
+                                    <div class="card-img-content">
+                                        <p class="text-black">
+                                            @foreach (var it in str)
+                                            {
+                                                @Html.Raw(it)
+                                                <br />
+                                            }
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="bottom-info">  
-                                @if(myvar==1)
-                                {
-                                    <i id="@btnId" class="fa fa-heart" onclick="likefunction('@btnId')" style="font-size: 36px;color:red"></i>
-                                }
-                                else
-                                {
-                                    <i id="@btnId" class="fa fa-heart-o" onclick="likefunction('@btnId')" style="font-size: 36px;"></i>
-                                }
-                               @{ var iteId=@ite.PostId;
-                                    <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
-
-                                <i class="fa fa-save ms-3" style="font-size:36px; float:right"></i>
-                                }
-                            </div>
-
                         </div>
+                    </div>
+                    <div class="bottom-info">
+                        @if (myvar == 1)
+                        {
+                            <i id="@btnId" class="fa fa-heart" onclick="likefunction('@btnId')" style="font-size: 36px;color:red"></i>
+                        }
+                        else
+                        {
+                            <i id="@btnId" class="fa fa-heart-o" onclick="likefunction('@btnId')" style="font-size: 36px;"></i>
+                        }
+                        @{
+                            var iteId = @ite.PostId;
+                            <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
 
-                        con++;
-                      
+                            <i class="fa fa-save ms-3" style="font-size:36px; float:right"></i>
+                        }
+                    </div>
 
-         }
+                </div>
 
-       </div>
+                con++;
+
+
+            }
+
+        </div>
     </div>
 
     <div id="hidden11" hidden>
-
-
     </div>
 
     <div id="xid"></div>
 
     <div id="cn" hidden>
-        
+
         <div class="border-1 mt-5 mb-2 bg-white" id="newcard" style=" margin: 0;top: 2%;width:25%;height: 3000px;">
 
             <div class="" id="mycardid" style=" margin: 0;top: 2%;width:25%;margin-top: 7rem;margin-bottom: 4rem;">
 
                 <div id="myDIV-content" style="height: calc(100% - 50px);overflow-y: scroll;">
-                 <button type="button" onclick="chengefunction()" class="btn-close" aria-label="Close" style="float:right;position: fixed;"></button>
-                  <div style="flex-grow: 1;" id="getid" class="mb-5">
+                    <button type="button" onclick="chengefunction()" class="btn-close" aria-label="Close" style="float:right;position: fixed;"></button>
+                    <div style="flex-grow: 1;" id="getid" class="mb-5">
+                    </div>
+                </div>
 
+                <div class="row mb-2">
 
-                  </div>
-                  </div>
-
-                            <div class="row mb-2">
-                               
-                                <form id="commentForm" class="d-flex align-items-center" style="position: absolute;bottom: 0;left: 0;width: 85%;background-color: white center;">
-                                <input type="number" id="PostId" name="PostId" hidden>
-                                <div class="col">
-                                    <textarea class="form-control ms-2 me-0" rows="2" name="Comments" id="Comments" placeholder="Write something here..." style="width:100%"></textarea>
-                                </div>
-                                <div class="col-1">
-                                        <button type="button" class="btn" onclick="submitForm()" style="flex: 1; background-color: transparent;border: none;">
-                                        <i class="fa fa-chevron-circle-right" style="font-size: 46px; color: blue;"></i>
-                                    </button>
-                                </div>
-                            </form>
+                    <form id="commentForm" class="d-flex align-items-center" style="position: absolute;bottom: 0;left: 0;width: 85%;background-color: white center;">
+                        <input type="number" id="PostId" name="PostId" hidden>
+                        <div class="col">
+                            <textarea class="form-control ms-2 me-0" rows="2" name="Comments" id="Comments" placeholder="Write something here..." style="width:100%"></textarea>
                         </div>
+                        <div class="col-1">
+                            <button type="button" class="btn" onclick="submitForm()" style="flex: 1; background-color: transparent;border: none;">
+                                <i class="fa fa-chevron-circle-right" style="font-size: 46px; color: blue;"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
 
-                    
 
-                
-            
+
+
+
+
+            </div>
+
 
         </div>
 
 
+
     </div>
- 
-
-
-</div>
 
 
 
@@ -415,154 +410,153 @@
 
 
 
-<script>
+    <script>
         document.getElementById("mycardid").style.overflow = "scroll";
-    function setthisPostId(id) {
-        var thisids=id;
+        function setthisPostId(id) {
+            var thisids = id;
 
 
-        var demo = document.getElementById('changeId');
-       
-        var storeElem = demo;
-       
+            var demo = document.getElementById('changeId');
+
+            var storeElem = demo;
 
 
-        var elemgetid = document.getElementById('xid');
-        elemgetid.value = id;
-       
 
-       var comlist = @Html.Raw(Json.Serialize(comentmod));
+            var elemgetid = document.getElementById('xid');
+            elemgetid.value = id;
 
-       var html1='';
 
-    var html = '';
+            var comlist = @Html.Raw(Json.Serialize(comentmod));
 
-    comlist.forEach(function (item) {
-      
-        if(item.userProfile)
-        {
-            var uprofile=item.userProfile;
-        
-        if (item.postId == id) {
-            console.log(item.postId);
-            console.log(thisids);
-            console.log(id + 'getit');
-            html += '<main class="msger-chat">';
-            html += '<div class="msg left-msg">';
-            html += '<div class="msg-img" style="background-image: url(' + uprofile + ')"></div>'          
-            html += '<div class="msg-bubble">';
-            html += '<div class="msg-info">';
-            html += '<div class="msg-info-name">' + item.userName + '</div>';
-            html += '<div class="msg-info-time">12:45</div>';
-            html += '</div>';
-            html += '<div class="msg-text">';
-            html += item.comments + ' 😄';
-            html += '</div>';
-            html += '</div>';
-            html += '</div>';
-            html += '</main>';
+            var html1 = '';
+
+            var html = '';
+
+            comlist.forEach(function (item) {
+
+                if (item.userProfile) {
+                    var uprofile = item.userProfile;
+
+                    if (item.postId == id) {
+                        console.log(item.postId);
+                        console.log(thisids);
+                        console.log(id + 'getit');
+                        html += '<main class="msger-chat">';
+                        html += '<div class="msg left-msg">';
+                        html += '<div class="msg-img" style="background-image: url(' + uprofile + ')"></div>'
+                        html += '<div class="msg-bubble">';
+                        html += '<div class="msg-info">';
+                        html += '<div class="msg-info-name">' + item.userName + '</div>';
+                        html += '<div class="msg-info-time">12:45</div>';
+                        html += '</div>';
+                        html += '<div class="msg-text">';
+                        html += item.comments + ' 😄';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</main>';
+                    }
+                }
+                else {
+                    if (item.postId == id) {
+                        console.log(item.postId);
+                        console.log(thisids);
+                        console.log(id + 'getit');
+                        html += '<main class="msger-chat">';
+                        html += '<div class="msg left-msg">';
+                        html += '<div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"></div>';
+                        html += '<div class="msg-bubble">';
+                        html += '<div class="msg-info">';
+                        html += '<div class="msg-info-name">' + item.userName + '</div>';
+                        html += '<div class="msg-info-time">12:45</div>';
+                        html += '</div>';
+                        html += '<div class="msg-text">';
+                        html += item.comments + ' 😄';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</main>';
+                    }
+                }
+            });
+
+            var els = document.getElementById('getid');
+
+            var hiele = document.getElementById('hidden11');
+            var elsess = document.getElementById('changeId');
+            els.innerHTML = html;
+            hiele.innerHTML = elsess.innerHTML;
+            var newcardelem = document.getElementById('cn');
+            elsess.innerHTML = newcardelem.innerHTML
+            newcardelem.innerHTML = storeElem.innerHTML;
+
+
         }
+
+        function submitForm() {
+
+            document.getElementById('PostId').value = document.getElementById('xid').value;
+            var eeeee = document.getElementById('PostId').value;
+
+            var form = document.getElementById('commentForm');
+            var formData = new FormData(form);
+
+            $.ajax({
+                url: '@Url.Action("PostComments")', // Replace "PostComments" with the actual name of your action method
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    // Handle the success response from the server here
+                    // You can update the UI or perform any other actions as needed
+
+                    // Close the modal after successful form submission
+                    $('#myModalone').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response from the server here
+                    // Display an error message or perform any other error handling
+                }
+            });
+            document.getElementById("commentForm").reset();
+
+
+
         }
-        else{
-              if (item.postId == id) {
-            console.log(item.postId);
-            console.log(thisids);
-            console.log(id + 'getit');
-            html += '<main class="msger-chat">';
-            html += '<div class="msg left-msg">';
-            html += '<div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"></div>';
-            html += '<div class="msg-bubble">';
-            html += '<div class="msg-info">';
-            html += '<div class="msg-info-name">' + item.userName + '</div>';
-            html += '<div class="msg-info-time">12:45</div>';
-            html += '</div>';
-            html += '<div class="msg-text">';
-            html += item.comments + ' 😄';
-            html += '</div>';
-            html += '</div>';
-            html += '</div>';
-            html += '</main>';
+
+        function chengefunction() {
+            var chid = document.getElementById('changeId');
+            var tochange = document.getElementById('hidden11');
+            chid.innerHTML = tochange.innerHTML;
         }
-        }
-    });
 
-    var els = document.getElementById('getid');
 
-        var hiele = document.getElementById('hidden11');
-    var elsess = document.getElementById('changeId');
-    els.innerHTML = html;
-        hiele.innerHTML = elsess.innerHTML;
-        var newcardelem = document.getElementById('cn');
-        elsess.innerHTML = newcardelem.innerHTML
-        newcardelem.innerHTML = storeElem.innerHTML;
-      
+        function likefunction(elemid) {
+            var elem = document.getElementById(elemid);
+            if (elem.style.color === 'red') {
+                elem.style.color = 'black';
+                elem.className = "fa fa-heart-o"
+            } else {
+                elem.className = "fa fa-heart"
+                elem.style.color = 'red';
 
-}
-
-    function submitForm() {
-        
-        document.getElementById('PostId').value=document.getElementById('xid').value;
-        var eeeee=document.getElementById('PostId').value;
-       
-        var form = document.getElementById('commentForm');
-        var formData = new FormData(form);
-
-        $.ajax({
-            url: '@Url.Action("PostComments")', // Replace "PostComments" with the actual name of your action method
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                // Handle the success response from the server here
-                // You can update the UI or perform any other actions as needed
-
-                // Close the modal after successful form submission
-                $('#myModalone').modal('hide');
-            },
-            error: function (xhr, status, error) {
-                // Handle the error response from the server here
-                // Display an error message or perform any other error handling
             }
-        });
-        document.getElementById("commentForm").reset();
-     
-      
 
-    }
+            var postId = elemid.split("_")[1]; // Extract the postId from the element id
 
-    function chengefunction(){
-        var chid = document.getElementById('changeId');
-        var tochange = document.getElementById('hidden11');
-        chid.innerHTML=tochange.innerHTML;
-    }
-
-
-    function likefunction(elemid) {
-        var elem = document.getElementById(elemid);
-        if (elem.style.color === 'red') {
-            elem.style.color = 'black';
-            elem.className="fa fa-heart-o"
-        } else {
-            elem.className = "fa fa-heart"
-            elem.style.color = 'red';
-          
+            $.ajax({
+                url: '@Url.Action("LikePost")', // Replace "LikePost" with the actual name of your action method
+                type: 'POST', // Or 'GET' depending on your scenario
+                data: { id: postId }, // Pass any additional data required by the action method
+                success: function (response) {
+                    // Handle the success response from the server here
+                    // You can update the UI or perform any other actions as needed
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response from the server here
+                    // Display an error message or perform any other error handling
+                }
+            });
         }
-
-        var postId = elemid.split("_")[1]; // Extract the postId from the element id
-
-        $.ajax({
-            url: '@Url.Action("LikePost")', // Replace "LikePost" with the actual name of your action method
-            type: 'POST', // Or 'GET' depending on your scenario
-            data: { id: postId }, // Pass any additional data required by the action method
-            success: function (response) {
-                // Handle the success response from the server here
-                // You can update the UI or perform any other actions as needed
-            },
-            error: function (xhr, status, error) {
-                // Handle the error response from the server here
-                // Display an error message or perform any other error handling
-            }
-        });
-    }
-</script>
+    </script>
