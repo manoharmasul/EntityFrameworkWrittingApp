@@ -2,15 +2,18 @@
 using EntityFrameworkWrittingApp.Repository.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 
 namespace EntityFrameworkWrittingApp.Controllers
 {
     public class UserController : Controller
     {
         private readonly IUserAsyncRepository userAsync;
-        public UserController(IUserAsyncRepository userAsync)
+        private readonly IPostAsyncRepository postAsync;
+        public UserController(IUserAsyncRepository userAsync,IPostAsyncRepository postAsync)
         {
             this.userAsync = userAsync; 
+            this.postAsync = postAsync; 
         }
         // GET: UserController
         public async Task<ActionResult> Index()
@@ -26,13 +29,27 @@ namespace EntityFrameworkWrittingApp.Controllers
             }
             
         }
-        public async Task<ActionResult> GetCommentsById(long id)
+        public async Task<ActionResult> GetCommentsById(long id,string comment)
         {
             try
             {
+                CommentsModel comments = new CommentsModel();
+                var uid = HttpContext.Session.GetString("userId");
+                comments.CreatedBy = Int32.Parse(uid);
+                comments.PostId = id;
+                comments.Comments = comment;
+                comments.UserId = comments.CreatedBy;
+                comments.UserId = comments.CreatedBy;
+               
+                var result11 = await postAsync.PostComments(comments);
+
+
+
+                
+
                 var result = await userAsync.GetCommentsById(id);
 
-                return View(result);
+                return Json(result);
             }
             catch (Exception ex)
             {

@@ -104,9 +104,17 @@ namespace EntityFrameworkWrittingApp.Repository
 
         public async Task<long> PostComments(CommentsModel comments)
         {
-            var query = dbContext.AddAsync(comments);
-            var result = await dbContext.SaveChangesAsync();
-            return result;
+            try
+            {
+                var query = dbContext.AddAsync(comments);
+                var result = await dbContext.SaveChangesAsync();
+                return result;
+            }
+            catch(Exception ex) 
+            {
+                return 1;
+            }
+            
         }
 
         public async Task<long> PostLike(LikeModel likemodel)

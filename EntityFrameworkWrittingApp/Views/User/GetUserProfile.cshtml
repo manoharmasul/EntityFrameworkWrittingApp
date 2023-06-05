@@ -388,17 +388,17 @@
                 <!-- Content goes here -->
             </div>
             <div class="row" style="position: absolute; bottom: 0; left: 0; width: 85%;">
-                <form id="commentForm" class="d-flex align-items-center mb-1 ms-3">
-                    <input type="number" id="PostId" name="PostId" hidden>
-                    <div class="col">
-                        <textarea class="form-control ms-2 me-0" rows="2" name="Comments" id="Comments" placeholder="Write something here..." style="width: 100%;"></textarea>
-                    </div>
-                    <div class="col-1">
-                        <button type="button" class="btn" onclick="submitForm()" style="flex: 1; background-color: transparent; border: none;">
-                            <i class="fa fa-chevron-circle-right" style="font-size: 46px; color: blue;"></i>
-                        </button>
-                    </div>
-                </form>
+            <form id="commentForm" class="d-flex align-items-center mb-1 ms-3">
+                <input type="number" id="PostId" name="PostId" hidden>
+                <div class="col">
+                    <textarea class="form-control ms-2 me-0" rows="2" name="Comments" id="Comments" placeholder="Write something here..." style="width: 100%;"></textarea>
+                </div>
+                <div class="col-1">
+                    <button type="button" class="btn" onclick="submitForm()" style="flex: 1; background-color: transparent; border: none;">
+                        <i class="fa fa-chevron-circle-right" style="font-size: 46px; color: blue;"></i>
+                    </button>
+                </div>
+            </form>
             </div>
          </div>
 
@@ -448,7 +448,13 @@
                     </div>
                 </form>
             </div>
+    
+
         </div>
+
+
+
+        <div id="commentvar" hidden></div>
 
 
 
@@ -456,12 +462,115 @@
 
 
         <div id="demstore" hidden></div>
+
+
+
         <div id="oldstore" hidden></div>
 
         <div id="hidden11" hidden>
         </div>
 
         <script>
+    var comlist = @Html.Raw(Json.Serialize(comentmod));
+    var com=comlist;
+
+
+    function submitForm() {
+        document.getElementById('PostId').value = document.getElementById('xid').value;
+        var eeeee = document.getElementById('PostId').value;
+
+
+        // Send AJAX request to the desired action
+
+
+        var comment = document.getElementById('Comments').value;
+        console.log(comment);
+
+        $.ajax({
+            url: '/User/GetCommentsById', // Replace with the actual URL of your MVC action
+            type: 'GET',
+            data: { id: eeeee, comment: comment }, // Pass the ID as a parameter
+            dataType: 'json',
+            success: function (result) {
+                // Handle the result returned from the action
+
+                com.push(result[result.length-1]);
+                var ht = '';
+
+                result.forEach(function (elet) {
+
+                    if (elet.userProfile) {
+                        var uprof = elet.userProfile;
+
+                        if (elet.postId == eeeee) {
+
+                            ht += '<main class="msger-chat">';
+                            ht += '<div class="msg left-msg">';
+                            ht += '<div class="msg-img" style="background-image: url(' + uprof + ')"></div>'
+                            ht += '<div class="msg-bubble">';
+                            ht += '<div class="msg-info">';
+                            ht += '<div class="msg-info-name">' + elet.userName + '</div>';
+                            ht += '<div class="msg-info-time">12:45</div>';
+                            ht += '</div>';
+                            ht += '<div class="msg-text">';
+                            ht += elet.comments + ' 😄';
+                            ht += '</div>';
+                            ht += '</div>';
+                            ht += '</div>';
+                            ht += '</main>';
+                        }
+                    }
+                    else {
+                        if (elet.postId == eeeee) {
+
+                            ht += '<main class="msger-chat">';
+                            ht += '<div class="msg left-msg">';
+                            ht += '<div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"></div>';
+                            ht += '<div class="msg-bubble">';
+                            ht += '<div class="msg-info">';
+                            ht += '<div class="msg-info-name">' + elet.userName + '</div>';
+                            ht += '<div class="msg-info-time">12:45</div>';
+                            ht += '</div>';
+                            ht += '<div class="msg-text">';
+                            ht += elet.comments + ' 😄';
+                            ht += '</div>';
+                            ht += '</div>';
+                            ht += '</div>';
+                            ht += '</main>';
+                        }
+                    }
+                });
+                var elst = document.getElementById('getid');
+                elst.innerHTML = ht;
+
+
+
+                console.log(result);
+                console.log('chek//////////////')
+            },
+            error: function (xhr, status, error) {
+                // Handle the error if the AJAX request fails
+                console.log('Error:', error);
+                console.log(result);
+                console.log('chek//////////////')
+            }
+        });
+        document.getElementById("commentForm").reset();
+    }
+
+
+
+
+    var inboxInputelem = document.getElementById('inboxxx');
+    var userInputelem = '';
+
+    inboxInputelem.addEventListener('input', function (event) {
+        userInputelem = event.target.value;
+        // You can perform further operations with the captured data here
+        console.log('///////////////');
+        console.log(userInputelem);
+    });
+
 
             function updateprofilefunc() {
                 var eleup = document.getElementById('dcardid');
@@ -505,13 +614,14 @@
                 elemgetid.value = id;
 
 
-                var comlist = @Html.Raw(Json.Serialize(comentmod));
+              
+
 
                 var html1 = '';
 
                 var html = '';
 
-                comlist.forEach(function (item) {
+                com.forEach(function (item) {
 
                     if (item.userProfile) {
                         var uprofile = item.userProfile;
@@ -578,34 +688,12 @@
                 
 
 
-            }                
-            function submitForm() {
-                  document.getElementById('PostId').value = document.getElementById('xid').value;
-                  var eeeee = document.getElementById('PostId').value;
-                  var form = document.getElementById('commentForm');
-                  var formData = new FormData(form);
+            }
 
-                        // Send AJAX request to the desired action
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('POST', '/Post/PostComments', true);
-                        xhr.onload = function () {
-                            if (xhr.status === 200) {
-                                // Handle the success response from the server
-                                // You can update the UI or perform any other actions as needed
-                                console.log('Form submitted successfully!');
-                            } else {
-                                // Handle the error response from the server
-                                console.error('Error submitting form: ' + xhr.statusText);
-                            }
-                        };
-                        xhr.onerror = function () {
-                            // Handle any network errors
-                            console.error('Network error occurred while submitting form.');
-                        };
-                        xhr.send(formData);
-                         document.getElementById("commentForm").reset();
-                    }
+                  
 
+    
+            
 
             function chengefunction() 
             {

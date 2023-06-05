@@ -102,25 +102,6 @@ namespace EntityFrameworkWrittingApp.Controllers
             }
         }
 
-        public async Task<ActionResult> PostComments(string Comments,long PostId)
-        {
-            try
-            {
-                CommentsModel comment = new CommentsModel();
-                var uid = HttpContext.Session.GetString("userId");
-                comment.CreatedBy = Int32.Parse(uid);
-                comment.PostId = PostId;
-                comment.UserId = comment.CreatedBy;
-                comment.UserId = comment.CreatedBy;
-                comment.Comments = Comments;
-                var result = await postAsync.PostComments(comment);
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
 
         // GET: PostController/Edit/5
