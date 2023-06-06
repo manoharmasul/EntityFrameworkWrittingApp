@@ -9,7 +9,7 @@ namespace EntityFrameworkWrittingApp.Repository
     public class UserAsyncRepository:IUserAsyncRepository
     {
         private readonly ApplicationDbContext dbContext;
-      public UserAsyncRepository(ApplicationDbContext dbContext)
+        public UserAsyncRepository(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -62,7 +62,7 @@ namespace EntityFrameworkWrittingApp.Repository
                 var query = from u in dbContext.User
                             join p in dbContext.PostModels on u.Id equals p.CreatedBy
                             join i in dbContext.ImageModel on p.ImagesId equals i.Id
-                            where u.IsDeleted == false
+                            where u.IsDeleted == false && u.Id== userId 
 
 
                             select new GetAllPostsModel

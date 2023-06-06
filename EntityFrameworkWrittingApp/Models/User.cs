@@ -11,6 +11,7 @@ namespace EntityFrameworkWrittingApp.Models
         //Id,FisrtName,LastName,UserName,EmailAddress,MobileNo,Password,DateOfBirth
         public long Id { get; set; }
         public string UserName { get; set; }
+        public string? Name { get; set; }
         public string EmailId { get; set; }
         public string? UserProfile { get; set; }
         public string? Bio { get; set; }
@@ -60,4 +61,5 @@ namespace EntityFrameworkWrittingApp.Models
         public string Links { get; set; }
         public List<GetAllPostsModel> GetAllPosts{ get; set; }
     }
+   
 }

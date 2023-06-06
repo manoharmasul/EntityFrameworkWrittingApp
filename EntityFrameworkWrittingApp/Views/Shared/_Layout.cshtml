@@ -654,16 +654,19 @@ position     /* Handle on hover */
                             </a>                            
                         </div>
                         <div class="folder-icons">
-                            <div class="icon1">
-                                <img src="https://i.ibb.co/2yLfX9W/sent-mail.png" />
-                            </div>
-                            <div class="icon-name">Send Mail</div>
+                             <a asp-action="Index" asp-controller="Post">
+                               <div class="icon1 text-black">
+                                    <i class="fa fa-home" aria-hidden="true" style='font-size:18px'><span class="ms-2">Home</span></i>
+                               </div> 
+                            </a>    
+                         
                         </div>
                         <div class="folder-icons">
-                            <div class="icon1">
-                                <img src="https://i.ibb.co/6ZH9kK3/star.png" />
-                            </div>
-                            <div class="icon-name">Important</div>
+                            <a asp-action="GetUserListFollow" asp-controller="FollowUnfollow">
+                               <div class="icon1 text-black">
+                                   <i class="fa fa-users" aria-hidden="true"><span class="ms-2">Follow</span></i>
+                               </div> 
+                            </a>   
                         </div>
                         <div class="folder-icons">
                             <div class="icon1">
