@@ -10,14 +10,15 @@ namespace EntityFrameworkWrittingApp.Models
         public long Id { get; set; }
         public long FollowedId { get; set; }
         public long FollowingId { get; set; }      
-        public bool IsFollow { get; set; }      
+        public bool? IsFollow { get; set; }      
     }
     public class GetUserFollowModel
     {
-        public long  Id { get; set; }
+        public long  UserId { get; set; }
         public string UserName { get; set; }
         public string UserProfile { get; set; }
         public string? Name { get; set; }
+        public bool? IsFollow { get; set; }
       
     }
 }

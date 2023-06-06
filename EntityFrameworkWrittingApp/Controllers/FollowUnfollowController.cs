@@ -17,7 +17,9 @@ namespace EntityFrameworkWrittingApp.Controllers
         {           
             try
             {
-                var userlist = await followAsync.GetUserListFollow(userid, username, name);
+                var uid = HttpContext.Session.GetString("userId");
+                var usersid = Int32.Parse(uid);
+                var userlist = await followAsync.GetUserListFollow(usersid, username, name);
                 return View(userlist);
             }
             catch (Exception ex)

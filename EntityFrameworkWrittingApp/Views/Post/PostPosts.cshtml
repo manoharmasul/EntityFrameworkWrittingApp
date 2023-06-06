@@ -117,8 +117,8 @@
                                 @foreach (var item in Model.Imagelist)
                                 {
                                     var ids = item.Id;
-                                    <div class="col-4">
-                                        <img src="@item.ImageUrl" id="@item.Id" width="140" height="270" class="mb-3 image-thumbnail" onclick="selectImage('@ids')" value="@ids" />
+                                    <div class="col ms-1">
+                                        <img src="@item.ImageUrl" id="@item.Id"  height="200" class="mb-3 image-thumbnail" onclick="selectImage('@ids')" value="@ids" />
                                     </div>
                                 }
 

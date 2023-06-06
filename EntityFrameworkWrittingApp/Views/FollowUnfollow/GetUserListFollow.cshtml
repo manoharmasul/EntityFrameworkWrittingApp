@@ -31,7 +31,7 @@
 <div class="card parentelem" style="width: 370px; height: 600px; display: flex; flex-direction: column;" id="getparentId">
     @foreach (var item in Model.ToList())
     {
-        var useid = item.Id;
+        var useid = item.UserId;
         <div class="alert alert-secondary" role="alert">
             <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
@@ -49,7 +49,14 @@
                     </div>
                 </div>
                 <div class="ms-4 text-end">
-                    <span class="badge rounded-pill bg-primary tbn ms-3 follow-button" onclick="followfunc('@useid')" id="@useid">Follow</span>
+                    @if(item.IsFollow==null || item.IsFollow==false)
+                    {
+                        <span class="badge rounded-pill bg-primary tbn ms-3 follow-button" onclick="followfunc('@useid')" id="@useid">Follow</span>
+                    }
+                    else
+                    {
+                        <span class="badge rounded-pill bg-secondary tbn ms-3 follow-button" onclick="followfunc('@useid')" id="@useid">Following</span>
+                    }
                 </div>
             </div>
         </div>

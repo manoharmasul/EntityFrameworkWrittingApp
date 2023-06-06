@@ -271,17 +271,26 @@
             <div class="card custom-card mx-auto" style="height:100%;width:400px">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
-                        <img class="card-img-top" src="@Model.UserProfile" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
+                        @if(Model.UserProfile==null)
+                        {
+                            <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
+
+                        }
+                        else
+                        {
+                            <img class="card-img-top" src="@Model.UserProfile" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
+
+                        }
                         <div class="ml-3 ms-5 text-center">
-                            <div>100</div>
+                            <div>@Model.NoOfPosts</div>
                             <div>Posts</div>
                         </div>
                         <div class="ml-3 ms-3 text-center">
-                            <div>2000</div>
+                            <div>@Model.NoOfFollower</div>
                             <div>Followers</div>
                         </div>
                         <div class="ml-3 ms-3 text-center">
-                            <div>500</div>
+                            <div>@Model.NoOfFollowing</div>
                             <div>Following</div>
                         </div>
                     </div>
@@ -322,23 +331,23 @@
 
                         }
                     }
-                }
-                int counts = 0;
-                string[] ptcon = (ite.PostContaint).Split("\r\n\r\n");
-                List<string> str = new List<string>();
-                for (int i = 0; i < ptcon.Length; i++)
-                {
-                    str.Add(ptcon[i]);
-
-                    counts++;
-                    if (counts == 14)
-                    {
-                        break;
                     }
-                }
-                var btnId = $"likeButton_{con}"; // Generate unique IDs for each button
+                    int counts = 0;
+                    string[] ptcon = (ite.PostContaint).Split("\r\n\r\n");
+                    List<string> str = new List<string>();
+                    for (int i = 0; i < ptcon.Length; i++)
+                    {
+                        str.Add(ptcon[i]);
 
-                <div class="card">
+                        counts++;
+                        if (counts == 14)
+                        {
+                            break;
+                        }
+                    }
+                    var btnId = $"likeButton_{con}"; // Generate unique IDs for each button
+                    var pId = ite.PostId;
+                    <div class="card">
                     <div class="mails">
                         <span class="person border3">H</span>
                         <div class="mail-names">
@@ -366,11 +375,11 @@
                     <div class="bottom-info">
                         @if (myvar == 1)
                         {
-                            <i id="@btnId" class="fa fa-heart" onclick="likefunction('@btnId')" style="font-size: 36px;color:red"></i>
+                                <i id="@pId" class="fa fa-heart" onclick="likefunction('@pId')" style="font-size: 36px;color:red"></i>
                         }
                         else
                         {
-                            <i id="@btnId" class="fa fa-heart-o" onclick="likefunction('@btnId')" style="font-size: 36px;"></i>
+                                <i id="@pId" class="fa fa-heart-o" onclick="likefunction('@pId')" style="font-size: 36px;"></i>
                         }
                         @{
                             var iteId = @ite.PostId;
@@ -701,35 +710,10 @@
                 mid.innerHTML=elsolds.innerHTML;
             }
 
-    function likeFunction(elemid) {
-        var elem = document.getElementById(elemid);
-        if (elem.style.color === 'red') {
-            elem.style.color = 'black';
-            elem.className = "fa fa-heart-o";
-        } else {
-            elem.className = "fa fa-heart";
-            elem.style.color = 'red';
-        }
-
-        var postId = elemid.split("_")[1]; // Extract the postId from the element id
-
-        var form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '/Post/LikePost'; // Replace with the actual URL of your controller action
-
-        var postIdInput = document.createElement('input');
-        postIdInput.type = 'hidden';
-        postIdInput.name = 'id';
-        postIdInput.value = postId;
-        form.appendChild(postIdInput);
-
-        document.body.appendChild(form);
-        form.submit();
-    }
-
+   
     function likefunction(elemid) 
     {
-      
+      console.log(elemid)
       var elem = document.getElementById(elemid);
         if (elem.style.color === 'red') {
             elem.style.color = 'black';
@@ -742,12 +726,11 @@
 
         }
 
-        var postId = elemid.split("_")[1]; // Extract the postId from the element id
 
         $.ajax({
               url: '@Url.Action("LikePost", "Post")', // Replace "LikePost" with the actual name of your action method, and "ControllerName" with the name of the other controller
               type: 'POST', // Or 'GET' depending on your scenario
-              data: { id: postId }, // Pass any additional data required by the action method
+            data: { id: elemid }, // Pass any additional data required by the action method
               success: function (response) {
                    // Handle the success response from the server here
                    // You can update the UI or perform any other actions as needed

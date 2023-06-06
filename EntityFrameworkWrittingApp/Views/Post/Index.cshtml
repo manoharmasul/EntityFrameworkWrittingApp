@@ -632,31 +632,7 @@
         mid.innerHTML = elsolds.innerHTML;
     }
 
-    function likeFunction(elemid) {
-        var elem = document.getElementById(elemid);
-        if (elem.style.color === 'red') {
-            elem.style.color = 'black';
-            elem.className = "fa fa-heart-o";
-        } else {
-            elem.className = "fa fa-heart";
-            elem.style.color = 'red';
-        }
-
-        var postId = elemid.split("_")[1]; // Extract the postId from the element id
-
-        var form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '/Post/LikePost'; // Replace with the actual URL of your controller action
-
-        var postIdInput = document.createElement('input');
-        postIdInput.type = 'hidden';
-        postIdInput.name = 'id';
-        postIdInput.value = postId;
-        form.appendChild(postIdInput);
-
-        document.body.appendChild(form);
-        form.submit();
-    }
+    
 
     function likefunction(elemid) {
         likefunction

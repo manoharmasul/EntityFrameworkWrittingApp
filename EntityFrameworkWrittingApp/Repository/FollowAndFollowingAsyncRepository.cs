@@ -61,12 +61,32 @@ namespace EntityFrameworkWrittingApp.Repository
           
             var query = from u in dbContext.User where u.IsDeleted == false select new GetUserFollowModel 
             {
-                Id=u.Id,
+                UserId=u.Id,
                 UserName=u.UserName,
                 Name=u.Name,
                 UserProfile=u.UserProfile,
             };
+
             var userlist = await query.ToListAsync();
+            var getfollowquery = from f in dbContext.FollowerModel where f.FollowingId == Id select f;
+            var followedlist=await getfollowquery.ToListAsync();
+
+            if(followedlist.Count > 0 )
+            {
+                foreach (var item in userlist)
+                {
+                    foreach (var f in followedlist)
+                    {
+                        if(item.UserId==f.FollowedId)
+                        {
+                            item.IsFollow = f.IsFollow;
+                        }
+
+                    }
+                }
+            }
+
+           
             return userlist;
            
            

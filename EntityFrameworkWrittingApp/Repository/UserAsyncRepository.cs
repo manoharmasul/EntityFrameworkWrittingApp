@@ -99,6 +99,23 @@ namespace EntityFrameworkWrittingApp.Repository
                     post.commentsmodel = commentlist;
 
                 }
+
+                var followerCountQuery = from f in dbContext.FollowerModel where f.FollowedId == userId && f.IsFollow == true select f;
+                var  followerresult=await followerCountQuery.ToListAsync();
+                var followerCount= followerresult.Count();
+
+                
+
+                var followingCountQuery =from f in dbContext.FollowerModel where f.FollowingId==userId  select f;    
+                var followingresult=await followingCountQuery.ToListAsync();
+
+                var followingCount= followingresult.Count();
+
+                userprofile.NoOfFollower = followerCount;
+                userprofile.NoOfFollowing = followingCount;
+                userprofile.NoOfPosts= getlist.Count();
+
+
                 userprofile.GetAllPosts = getlist;
                 return userprofile;
 

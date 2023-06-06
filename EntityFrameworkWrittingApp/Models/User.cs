@@ -60,6 +60,9 @@ namespace EntityFrameworkWrittingApp.Models
         public string Bio { get; set; }
         public string Links { get; set; }
         public List<GetAllPostsModel> GetAllPosts{ get; set; }
+        public long NoOfFollower { get; set; }  
+        public long NoOfFollowing { get; set; }  
+        public long NoOfPosts { get; set; }  
     }
    
 }
