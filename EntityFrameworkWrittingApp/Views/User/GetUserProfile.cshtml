@@ -282,16 +282,16 @@
 
                         }
                         <div class="ml-3 ms-5 text-center">
-                            <div>@Model.NoOfPosts</div>
-                            <div>Posts</div>
+                            <div style="font-weight: bold;">@Model.NoOfPosts</div>
+                            <div style="font-weight: bold;">Posts</div>
                         </div>
                         <div class="ml-3 ms-3 text-center">
-                            <div>@Model.NoOfFollower</div>
-                            <div>Followers</div>
+                            <div style="font-weight: bold;">@Model.NoOfFollower</div>
+                            <div style="font-weight: bold;">Followers</div>
                         </div>
                         <div class="ml-3 ms-3 text-center">
-                            <div>@Model.NoOfFollowing</div>
-                            <div>Following</div>
+                            <div style="font-weight: bold;">@Model.NoOfFollowing</div>
+                            <div style="font-weight: bold;">Following</div>
                         </div>
                     </div>
                 </div>
@@ -383,9 +383,9 @@
                         }
                         @{
                             var iteId = @ite.PostId;
-                                                    <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
+                                                                    <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
 
-                                                    <i class="fa fa-save ms-3" style="font-size:36px; float:right"></i>
+                                                                    <i class="fa fa-save ms-3" style="font-size:36px; float:right"></i>
                         }
                     </div>
 
@@ -441,9 +441,13 @@
 
  <div id="myccId" hidden>
      <div class="card custom-card mx-auto" style="height:100%;width:400px">
-         <div class="card-body">
+         <div class="card-body text-center">
            <img class="card-img-top" src="@Model.UserProfile" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
          </div>
+          <button class="mt-3">
+                    <div class="card-footer text-center" onclick="UpdateProfilePhoto()">Edit</div>
+          </button>
+          <div id="propelem2" class="mt-2 mb-2"></div>
          <form asp-action="UpdateUserProfile">
              <div class="form-control">
                  <div class="mb-2">
@@ -480,6 +484,15 @@
 
 
 
+<div id="propelem" hidden>
+    @using (Html.BeginForm("UploadBackgroundImages", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="imageFile" accept="image/*" />
+    <input type="submit" value="Upload" />
+}
+</div>
+
+
 <div id="commentvar" hidden></div>
 <div id="newstore" hidden></div>
 <div id="demstore" hidden></div>
@@ -488,6 +501,15 @@
 
 
  <script>
+     function UpdateProfilePhoto()
+     {
+         var pelem1=document.getElementById('propelem');
+         var pelem2=document.getElementById('propelem2');
+        pelem2.innerHTML=pelem1.innerHTML;
+     }
+
+
+
     var comlist = @Html.Raw(Json.Serialize(comentmod));
     var com=comlist;
 

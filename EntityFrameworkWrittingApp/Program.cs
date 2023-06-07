@@ -16,6 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 builder.Services.AddScoped<IUserAsyncRepository, UserAsyncRepository>();
 builder.Services.AddScoped<IPostAsyncRepository, PostAsyncRepository>();
 builder.Services.AddScoped<IFollowAndFollowingAsyncRepository, FollowAndFollowingAsyncRepository>();
+builder.Services.AddScoped<IImagesAsyncRepository, ImagesAsyncRepository>();
 
 
 builder.Services.AddSession(options => {

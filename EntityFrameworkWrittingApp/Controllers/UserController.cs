@@ -98,6 +98,38 @@ namespace EntityFrameworkWrittingApp.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<ActionResult> UploadBackgroundImages(IFormFile imageFile)
+        {
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var filename = Path.GetFileName(imageFile.FileName);
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await imageFile.CopyToAsync(memoryStream);
+                    var imageData = memoryStream.ToArray();
+                    var uid = HttpContext.Session.GetString("userId");
+                    var usersid = Int32.Parse(uid);
+                    var image = new UserProfileImages
+                    {
+                        Filename = filename,
+                        ImageData = imageData,
+                        CreatedBy = usersid,
+                        UserId= usersid,
+                    };
+
+                    // Save the image to the database using your preferred database access method
+                    // Replace 'SaveImageToDatabase' with the appropriate logic to save the image
+                    var result = await userAsync.UpdateUserProfile(image);
+                }
+
+                return RedirectToAction("GetUserProfile"); // Redirect to a view or action after successful upload
+            }
+
+            return View();
+        }
+
         // GET: UserController/Create
         public async Task<ActionResult> UserRegistration()
         {

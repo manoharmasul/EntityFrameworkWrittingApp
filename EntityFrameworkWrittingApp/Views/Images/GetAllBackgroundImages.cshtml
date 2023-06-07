@@ -1,0 +1,25 @@
+﻿@model IEnumerable<EntityFrameworkWrittingApp.Models.ImagesModel>
+
+@{
+    ViewData["Title"] = "GetAllBackgroundImages";
+}
+
+<h1>GetAllBackgroundImages</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class="card" style="border-radius: 15px;">
+    <div class="card-body p-0 text-center">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+               <div class="col ms-1 mt-1">     
+                  <img src="data:image;base64,@Convert.ToBase64String(@item.ImageData)" alt="Image" height="200" width="100"  class="ms-1" />
+                </div>
+            }
+        </div>
+        <button class="btn btn-primary" style="float:right" onclick="showElement()">Next</button>
+    </div>
+</div>

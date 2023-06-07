@@ -142,6 +142,33 @@ namespace EntityFrameworkWrittingApp.Repository
 
         }
 
+        public async Task<long> UpdateUserProfile(UserProfileImages userProfile)
+        {
+
+         var querycheck = from p in dbContext.UserProfileImages where p.UserId == userProfile.UserId select p;
+          var resultcheck=await querycheck.FirstOrDefaultAsync();
+            if(resultcheck==null)
+            {
+                userProfile.IsDeleted = false;
+               var insertquery= dbContext.UserProfileImages.Add(userProfile);
+               long resutlinsert=await dbContext.SaveChangesAsync();
+                return resutlinsert;
+            }
+            else 
+            {
+                resultcheck.ModifiedBy = userProfile.ModifiedBy;
+                resultcheck.ModifiedDate = DateTime.Now;    
+                resultcheck.UserId = userProfile.UserId;
+                resultcheck.ImageData = userProfile.ImageData;
+                resultcheck.Filename=userProfile.Filename;
+                var queryup = dbContext.UserProfileImages.Update(resultcheck);
+                var upresult = await dbContext.SaveChangesAsync();
+                return upresult;
+
+            }
+            
+        }
+
         public async Task<User> UserLogIn(User user)
         {
             var userlong = from s in dbContext.User

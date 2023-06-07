@@ -9,7 +9,10 @@ namespace EntityFrameworkWrittingApp.Repository.Interface
         Task<List<User>> GetAllUsers();
         Task<List<GetCommentsModel>> GetCommentsById(long id);
         Task<GetUserProfileModel> GetUserProfile(long userId); 
-        Task<UserRegistrationModel> GetAllUsersForRegistration(); 
+        Task<UserRegistrationModel> GetAllUsersForRegistration();
+
+        Task<long> UpdateUserProfile(UserProfileImages userPorfile);
+
         Task<User> UserLogIn(User user); 
     }
 }

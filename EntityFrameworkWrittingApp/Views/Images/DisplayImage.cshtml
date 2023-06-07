@@ -1,0 +1,13 @@
+﻿@model IEnumerable<EntityFrameworkWrittingApp.Models.ImageModels>
+
+<h2>Image Gallery</h2>
+
+
+@foreach(var item in Model.ToList())
+{
+        <div>
+        <h4>@item.Filename</h4>
+        <img src="data:image;base64,@Convert.ToBase64String(@item.ImageData)" alt="Image" width="30%" height="50%"/>
+    </div>
+}
+

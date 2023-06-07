@@ -12,6 +12,9 @@ namespace EntityFrameworkWrittingApp.Data
 
         public DbSet<User> User { get; set; }
         public DbSet<ImageModel> ImageModel { get; set; }
+        public DbSet<ImageModels> ImageModels { get; set; }
+        public DbSet<ImagesModel> ImagesModelss { get; set; }
+        public DbSet<UserProfileImages> UserProfileImages { get; set; }
         public DbSet<PostModel> PostModels { get; set; }
         public DbSet<LikeModel> LikeModel { get; set; }
         public DbSet<CommentsModel> CommentsModel { get; set; }

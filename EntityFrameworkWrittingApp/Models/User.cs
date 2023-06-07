@@ -14,12 +14,13 @@ namespace EntityFrameworkWrittingApp.Models
         public string? Name { get; set; }
         public string EmailId { get; set; }
         public string? UserProfile { get; set; }
+
         public string? Bio { get; set; }
         public string? Links { get; set; }
         public string MobileNo { get; set; }
         public string Password { get; set; }
         public long RoleId { get; set; }
-       
+
     }
     public class UserRegistrationModel : BaseModel
     {
@@ -29,9 +30,9 @@ namespace EntityFrameworkWrittingApp.Models
         public string? MobileNo { get; set; }
         public string? Password { get; set; }
         public long? RoleId { get; set; }
-         public List<User> userlists { get; set; }
+        public List<User> userlists { get; set; }
     }
-    public class GetUserModel:BaseModel
+    public class GetUserModel : BaseModel
     {
         public long Id { get; set; }
         public string UserName { get; set; }
@@ -39,11 +40,11 @@ namespace EntityFrameworkWrittingApp.Models
         public string MobileNo { get; set; }
         public string Password { get; set; }
         public long RoleId { get; set; }
-       
+
     }
-     public class UserLogIn : BaseModel
-     {
-     //   Id,UserName,EmailId,MobileNo,Passoword,RoleId,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,IsDeleted
+    public class UserLogIn : BaseModel
+    {
+        //   Id,UserName,EmailId,MobileNo,Passoword,RoleId,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,IsDeleted
 
         //Id,FisrtName,LastName,UserName,EmailAddress,MobileNo,Password,DateOfBirth
         public long Id { get; set; }
@@ -51,7 +52,7 @@ namespace EntityFrameworkWrittingApp.Models
         public string EmailId { get; set; }
         public long MobileNo { get; set; }
         public string Password { get; set; }
-     }
+    }
     public class GetUserProfileModel
     {
         public long UserId { get; set; }
@@ -59,10 +60,18 @@ namespace EntityFrameworkWrittingApp.Models
         public string UserProfile { get; set; }
         public string Bio { get; set; }
         public string Links { get; set; }
-        public List<GetAllPostsModel> GetAllPosts{ get; set; }
-        public long NoOfFollower { get; set; }  
-        public long NoOfFollowing { get; set; }  
-        public long NoOfPosts { get; set; }  
+        public List<GetAllPostsModel> GetAllPosts { get; set; }
+        public long NoOfFollower { get; set; }
+        public long NoOfFollowing { get; set; }
+        public long NoOfPosts { get; set; }
     }
-   
+    [Table("tblUserProfile")]
+    public class UserProfileImages : BaseModel
+    {
+        public long Id { get; set; }
+        public long UserId { get; set; }
+        public string Filename { get; set; }
+        public byte[] ImageData { get; set; }
+    }
+
 }
