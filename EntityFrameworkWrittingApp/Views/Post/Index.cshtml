@@ -310,7 +310,15 @@
 
                     <div class="card">
                         <div class="mails">
-                            <span class="person border3">H</span>
+                          
+                                @if (ite.ImageData != null)
+                                {
+                                    <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(ite.ImageData)" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
+                                }
+                                else
+                                {
+                                    <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
+                                }
                             <div class="mail-names">
                                 @ite.UserName
                             </div>
@@ -336,17 +344,52 @@
                         <div class="bottom-info">
                             @if (myvar == 1)
                             {
-                                <i id="@btnId" class="fa fa-heart" onclick="likefunction('@btnId')" style="font-size: 36px;color:red"></i>
+                                
+                               <div class="row">                                   
+                              
+                                   <div class="col">
+
+                                       <i id="@btnId" class="fa fa-heart" onclick="likefunction('@btnId')" style="font-size: 36px;color:red"></i>
+                                       <spam class="ms-1" style="font-size: 25px;">@ite.NoOfLikes</spam>
+
+                                  </div>                                                                    
+                                  
+                               </div>
+                            
                             }
                             else
                             {
-                                <i id="@btnId" class="fa fa-heart-o" onclick="likefunction('@btnId')" style="font-size: 36px;"></i>
+                               <div class="row">                                   
+                                  <div class="col">
+
+                                    <i id="@btnId" class="fa fa-heart-o" onclick="likefunction('@btnId')" style="font-size: 36px;"></i>
+                                    <spam style="font-size: 25px;">@ite.NoOfLikes</spam>
+ 
+                                  </div>                                                                                                     
+                               </div>
+                       
                             }
                             @{
-                                var iteId = @ite.PostId;
-                                <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
 
-                                <i class="fa fa-save ms-3" style="font-size:36px; float:right"></i>
+                            var iteId = @ite.PostId;
+
+                            <div class="row">
+                               <div class="col">
+
+                                  <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
+                                   <spam class="ms-1" style="font-size: 25px;">@ite.NoOfComments</spam>
+
+                               </div>
+                            </div>
+
+                             <div class="row">
+                                 <div class="col">
+                                     <i class="fa fa-save " style="font-size:36px; "></i>
+                                      <spam class="" style="font-size: 25px;">Save</spam>
+
+                                  </div>
+                             </div>                                                   
+                                
                             }
                         </div>
 
@@ -438,15 +481,15 @@
                 var ht = '';
 
                 result.forEach(function (elet) {
-
-                    if (elet.userProfile) {
-                        var uprof = elet.userProfile;
+             console.log(elet);
+                    if (elet.imageData!=null) {
+                        var uprof = elet.imageData;
 
                         if (elet.postId == eeeee) {
 
                             ht += '<main class="msger-chat">';
                             ht += '<div class="msg left-msg">';
-                            ht += '<div class="msg-img" style="background-image: url(' + uprof + ')"></div>'
+                            ht += '<div class="msg-img" style="background-image: url(data:image;base64,' + uprof + ')"></div>';
                             ht += '<div class="msg-bubble">';
                             ht += '<div class="msg-info">';
                             ht += '<div class="msg-info-name">' + elet.userName + '</div>';
@@ -552,14 +595,14 @@
 
         com.forEach(function (item) {
 
-            if (item.userProfile) {
-                var uprofile = item.userProfile;
+            if (item.imageData!=null) {
+                var uprofile = item.imageData;
 
                 if (item.postId == id) {
 
                     html += '<main class="msger-chat">';
                     html += '<div class="msg left-msg">';
-                    html += '<div class="msg-img" style="background-image: url(' + uprofile + ')"></div>'
+                    html += '<div class="msg-img" style="background-image: url(data:image;base64,' + uprofile + ')"></div>';
                     html += '<div class="msg-bubble">';
                     html += '<div class="msg-info">';
                     html += '<div class="msg-info-name">' + item.userName + '</div>';

@@ -64,6 +64,8 @@ namespace EntityFrameworkWrittingApp.Models
         public long NoOfFollower { get; set; }
         public long NoOfFollowing { get; set; }
         public long NoOfPosts { get; set; }
+        public byte[] ImageData { get; set; }
+
     }
     [Table("tblUserProfile")]
     public class UserProfileImages : BaseModel
@@ -71,7 +73,11 @@ namespace EntityFrameworkWrittingApp.Models
         public long Id { get; set; }
         public long UserId { get; set; }
         public string Filename { get; set; }
-        public byte[] ImageData { get; set; }
+        public byte[]? ImageData { get; set; }
+    }
+    public class UserModelIds
+    {
+        public long UserId { get; set; }      
     }
 
 }

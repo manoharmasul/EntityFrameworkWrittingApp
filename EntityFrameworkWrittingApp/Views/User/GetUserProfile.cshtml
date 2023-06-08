@@ -262,37 +262,50 @@
         width: 90%;
         margin: 0 auto;
     }
+    .card-body .img-profile{
+            height: 50px;
+    min-width: 50px;
+    object-fit: fill;
+    border-radius: 50%;
+    border: 1.5px solid #05042b;
+    }
+    .card-bod .btn{}
 
 </style>
 
 <div class="container">
   <div id="masterid">
     <div id="dcardid">
-            <div class="card custom-card mx-auto" style="height:100%;width:400px">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        @if(Model.UserProfile==null)
-                        {
-                            <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
-
-                        }
-                        else
-                        {
-                            <img class="card-img-top" src="@Model.UserProfile" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
-
-                        }
-                        <div class="ml-3 ms-5 text-center">
-                            <div style="font-weight: bold;">@Model.NoOfPosts</div>
-                            <div style="font-weight: bold;">Posts</div>
-                        </div>
-                        <div class="ml-3 ms-3 text-center">
-                            <div style="font-weight: bold;">@Model.NoOfFollower</div>
-                            <div style="font-weight: bold;">Followers</div>
-                        </div>
-                        <div class="ml-3 ms-3 text-center">
+       <div class="card custom-card mx-auto" style="height:100%;width:400px">
+           <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between">
+                       
+                 @if(@Model.ImageData!=null)
+                 {
+                   <img class="img-profile" src="data:image;base64,@Convert.ToBase64String(@Model.ImageData)" alt="Card image"/>
+                 }
+                 else
+                 {
+                  <img class="img-profile" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" />
+                 }
+                     
+                            <div class="ml-2  text-center ms-3">                         
+                                 <div style="font-weight: bold;">@Model.NoOfPosts</div>
+                                 <div style="font-weight: bold;">Posts</div>                                                 
+                            </div>
+                     
+                        <a asp-action="" class="text-decoration-none text-black">
+                                <div class="ml  text-center">
+                                    <div style="font-weight: bold;">@Model.NoOfFollower</div>
+                                    <div style="font-weight: bold;">Followers</div>
+                                </div>
+                        </a>
+                        <a asp-action="" class="text-decoration-none text-black">
+                        <div class="ml text-center">
                             <div style="font-weight: bold;">@Model.NoOfFollowing</div>
                             <div style="font-weight: bold;">Following</div>
                         </div>
+                        </a>
                     </div>
                 </div>
                 <div class="text-secondary mt-2">username</div>
@@ -375,17 +388,47 @@
                     <div class="bottom-info">
                         @if (myvar == 1)
                         {
-                                <i id="@pId" class="fa fa-heart" onclick="likefunction('@pId')" style="font-size: 36px;color:red"></i>
+
+                           <div class="row">                                   
+                              <div class="col">
+
+                                        <i id="@pId" class="fa fa-heart" onclick="likefunction('@pId')" style="font-size: 36px;color:red"><span class="ms-1" style="font-size: 25px;"></i>
+                                        <spam class="ms-1" style="font-size: 25px;">@ite.NoOfLikes</spam>
+                              </div>                                                                    
+                                  
+                           </div>
                         }
                         else
                         {
+                           <div class="row">                                   
+                              <div class="col">
+
                                 <i id="@pId" class="fa fa-heart-o" onclick="likefunction('@pId')" style="font-size: 36px;"></i>
+                                <spam style="font-size: 25px;">@ite.NoOfLikes</spam>
+
+                              </div>                                                                                                     
+                           </div>
                         }
                         @{
                             var iteId = @ite.PostId;
-                                                                    <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
 
-                                                                    <i class="fa fa-save ms-3" style="font-size:36px; float:right"></i>
+                                         <div class="row">                                   
+                                          <div class="col">
+
+                                                    <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
+                                                    <spam class="ms-1" style="font-size: 25px;">@ite.NoOfComments</spam>
+
+                                          </div>                                                                                                     
+                                       </div>
+                                  
+                                       <div class="row">                                   
+                                          <div class="col">
+                                               <i class="fa fa-save " style="font-size:36px; "></i>
+                                               <spam class="" style="font-size: 25px;">Save</spam>   
+                                               
+                                          </div>   
+                                       </div>
+                         
                         }
                     </div>
 
@@ -442,7 +485,15 @@
  <div id="myccId" hidden>
      <div class="card custom-card mx-auto" style="height:100%;width:400px">
          <div class="card-body text-center">
-           <img class="card-img-top" src="@Model.UserProfile" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
+             @if(@Model.ImageData!=null)
+             {
+                <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(@Model.ImageData)" alt="Card image" style="height:65px;width:65px;border-radius: 50%;" />
+
+             }
+             else
+             {
+                <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:65px;width:65px;border-radius: 50%;" />
+             }
          </div>
           <button class="mt-3">
                     <div class="card-footer text-center" onclick="UpdateProfilePhoto()">Edit</div>
@@ -538,14 +589,14 @@
 
                 result.forEach(function (elet) {
 
-                    if (elet.userProfile) {
-                        var uprof = elet.userProfile;
+                    if (elet.imageData!=null) {
+                        var uprof = elet.imageData;
 
                         if (elet.postId == eeeee) {
 
                             ht += '<main class="msger-chat">';
                             ht += '<div class="msg left-msg">';
-                            ht += '<div class="msg-img" style="background-image: url(' + uprof + ')"></div>'
+                            ht += '<div class="msg-img" style="background-image: url(data:image;base64,' + uprof + ')"></div>';
                             ht += '<div class="msg-bubble">';
                             ht += '<div class="msg-info">';
                             ht += '<div class="msg-info-name">' + elet.userName + '</div>';
@@ -651,14 +702,14 @@
 
                 com.forEach(function (item) {
 
-                    if (item.userProfile) {
-                        var uprofile = item.userProfile;
+                    if (item.imageData!=null) {
+                        var uprofile = item.imageData;
 
                         if (item.postId == id) {
                            
                             html += '<main class="msger-chat">';
                             html += '<div class="msg left-msg">';
-                            html += '<div class="msg-img" style="background-image: url(' + uprofile + ')"></div>'
+                    html += '<div class="msg-img" style="background-image: url(data:image;base64,' + uprofile + ')"></div>';
                             html += '<div class="msg-bubble">';
                             html += '<div class="msg-info">';
                             html += '<div class="msg-info-name">' + item.userName + '</div>';

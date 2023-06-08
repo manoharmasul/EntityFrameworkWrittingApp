@@ -35,13 +35,13 @@
         <div class="alert alert-secondary" role="alert">
             <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
-                    @if (item.UserProfile == null)
+                    @if (item.ImageData == null)
                     {
                         <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
                     }
                     else
                     {
-                        <img class="card-img-top" src="@item.UserProfile" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
+                        <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(item.ImageData)" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
                     }
                     <div class="ml-3 ms-5 text-center">
                         <div>@item.UserName</div>

@@ -19,6 +19,7 @@ namespace EntityFrameworkWrittingApp.Models
         public string UserProfile { get; set; }
         public string? Name { get; set; }
         public bool? IsFollow { get; set; }
+        public byte[]? ImageData { get; set; }
       
     }
 }

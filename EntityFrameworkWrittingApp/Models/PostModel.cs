@@ -38,6 +38,9 @@ namespace EntityFrameworkWrittingApp.Models
         public string ImageUrl { get; set; }
         public List<LikeModel> likemodel { get; set; }
         public List<GetCommentsModel> commentsmodel { get; set; }
+        public byte[]? ImageData { get; set; }
+        public long NoOfLikes { get; set; }
+        public long NoOfComments { get; set; }
 
     }
     [Table("tblLikes")]
@@ -72,6 +75,8 @@ namespace EntityFrameworkWrittingApp.Models
         public string UserName { get; set; }
         public string Comments { get; set; }
         public string UserProfile { get; set; }
+        public byte[]? ImageData { get; set; }
+
     }
 
 }

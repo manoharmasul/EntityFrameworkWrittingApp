@@ -42,6 +42,8 @@ namespace EntityFrameworkWrittingApp.Repository
             //CreateBy as UserId,UserName,Id as PostId,PostContaint,ImageUser
             try
             {
+                var uprof = await dbContext.UserProfileImages.ToListAsync();
+
                 var query = from u in dbContext.User
                             join p in dbContext.PostModels on u.Id equals p.CreatedBy
                             join i in dbContext.ImageModel on p.ImagesId equals i.Id
@@ -57,6 +59,36 @@ namespace EntityFrameworkWrittingApp.Repository
                                 ImageUrl = i.ImageUrl
                             };
                 getlist = await query.ToListAsync();
+
+
+                foreach(var it in getlist)
+                {
+                    //No Of Comment Count......
+
+                    var getcommetncount=from c in dbContext.CommentsModel where c.PostId==it.PostId && c.IsDeleted==false select c;
+                    var comcount = await getcommetncount.ToListAsync();
+                    it.NoOfComments=comcount.Count();
+
+                    //No of Likes Count......
+
+                    var getlikecount=from l in dbContext.LikeModel where l.PostId==it.PostId && l.IsDeleted==false select l;
+                    var likecount=await getlikecount.ToListAsync();
+                    it.NoOfLikes = likecount.Count();
+                    
+                }
+
+
+                foreach(var post in getlist)
+                {
+                    foreach(var p in uprof)
+                    {
+                        if(post.UserId==p.UserId)
+                        {
+                            post.ImageData = p.ImageData;
+                        }
+                    }
+                }
+
                 foreach (var post in getlist)
                 {
                     var liquery = from l in dbContext.LikeModel where l.IsDeleted == false && l.PostId == post.PostId select l;
@@ -65,7 +97,8 @@ namespace EntityFrameworkWrittingApp.Repository
                     post.likemodel = listre;
 
                     var commentsnewquery = from u in dbContext.User
-                                           join c in dbContext.CommentsModel on u.Id equals c.UserId                                         
+                                           join c in dbContext.CommentsModel on u.Id equals c.UserId 
+                                      
                                            select new GetCommentsModel
                                            {
                                                Id = c.Id,
@@ -73,14 +106,25 @@ namespace EntityFrameworkWrittingApp.Repository
                                                UserId = c.UserId,
                                                UserName = u.UserName,
                                                Comments = c.Comments,
-                                               UserProfile=u.UserProfile
+                                               UserProfile=u.UserProfile,
+                                               
                                            };
 
 
 
                     var commentlist = await commentsnewquery.ToListAsync();
+                    foreach (var c in commentlist)
+                    {
+                        foreach (var p in uprof)
+                        {
+                            if (c.UserId == p.UserId)
+                            {
+                                c.ImageData = p.ImageData;
+                            }
+                        }
+                    }
                     post.commentsmodel = commentlist;
-
+                   
                 }
                 return getlist;
 

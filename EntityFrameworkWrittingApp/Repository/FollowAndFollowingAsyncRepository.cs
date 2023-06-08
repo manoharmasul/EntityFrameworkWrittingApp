@@ -2,6 +2,7 @@
 using EntityFrameworkWrittingApp.Models;
 using EntityFrameworkWrittingApp.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace EntityFrameworkWrittingApp.Repository
 {
@@ -58,14 +59,32 @@ namespace EntityFrameworkWrittingApp.Repository
 
         public async Task<List<GetUserFollowModel>> GetUserListFollow(long? Id, string? username, string? name)
         {
-          
-            var query = from u in dbContext.User where u.IsDeleted == false select new GetUserFollowModel 
-            {
-                UserId=u.Id,
-                UserName=u.UserName,
-                Name=u.Name,
-                UserProfile=u.UserProfile,
-            };
+            List<long> ids = new List<long>();
+
+            var queryIds = from u in dbContext.FollowerModel
+
+                           where u.IsDeleted == false && u.FollowingId == Id
+
+                           && u.IsFollow==true
+
+                           select new UserModelIds
+                           {
+                               UserId = u.FollowedId,
+                           };
+
+            long[] id = await queryIds.Select(x => x.UserId).ToArrayAsync();
+
+            var query = from u in dbContext.User
+                        where u.IsDeleted == false && u.Id != Id && !id.Contains(u.Id)
+                        select new GetUserFollowModel
+                        {
+                            UserId = u.Id,
+                            UserName = u.UserName,
+                            Name = u.Name,
+                            UserProfile = u.UserProfile
+                        };
+
+
 
             var userlist = await query.ToListAsync();
             var getfollowquery = from f in dbContext.FollowerModel where f.FollowingId == Id select f;
@@ -83,6 +102,16 @@ namespace EntityFrameworkWrittingApp.Repository
                         }
 
                     }
+                }
+            }
+            foreach(var item in userlist)
+            {
+                var prop=from p in dbContext.UserProfileImages where p.UserId == item.UserId select p;
+                var profile=await prop.SingleOrDefaultAsync();   
+
+                if(profile != null)
+                {
+                    item.ImageData=profile.ImageData;
                 }
             }
 

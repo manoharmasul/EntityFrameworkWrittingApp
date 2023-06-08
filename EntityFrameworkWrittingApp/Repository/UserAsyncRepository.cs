@@ -2,6 +2,7 @@
 using EntityFrameworkWrittingApp.Models;
 using EntityFrameworkWrittingApp.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System.Security.Cryptography;
 
 namespace EntityFrameworkWrittingApp.Repository
@@ -31,7 +32,7 @@ namespace EntityFrameworkWrittingApp.Repository
         {
            
             var joinquery = from u in dbContext.User
-                            join c in dbContext.CommentsModel on u.Id equals c.UserId
+                            join c in dbContext.CommentsModel on u.Id equals c.UserId                          
                             where c.PostId == id
                             select new GetCommentsModel
                             {
@@ -40,9 +41,22 @@ namespace EntityFrameworkWrittingApp.Repository
                                 PostId = c.PostId,
                                 UserName = u.UserName,
                                 Comments = c.Comments,
-                                UserProfile = u.UserProfile
+                                UserProfile = u.UserProfile,                             
                             };
+
+            
             var result=await joinquery.ToListAsync();
+
+            foreach(var r in result)
+            {
+                var query = from p in dbContext.UserProfileImages where p.UserId == r.UserId && p.IsDeleted == false select p;
+                var prolist = await query.FirstOrDefaultAsync();
+                if (prolist != null)
+                {
+                    r.ImageData = prolist.ImageData;
+                }
+            }
+
             return result;
             
         }
@@ -54,6 +68,12 @@ namespace EntityFrameworkWrittingApp.Repository
             try
             {
                 var Userobj = await dbContext.User.FindAsync(userId);
+                var proobje = await dbContext.UserProfileImages.FindAsync(userId);
+                var profililist = await dbContext.UserProfileImages.ToListAsync();
+                if (proobje != null)
+                {
+                    userprofile.ImageData = proobje.ImageData;
+                }
                 userprofile.UserId = Userobj.Id;
                 userprofile.UserName = Userobj.UserName;
                 userprofile.Bio = Userobj.Bio;
@@ -61,19 +81,19 @@ namespace EntityFrameworkWrittingApp.Repository
                 userprofile.UserProfile = Userobj.UserProfile;
                 var query = from u in dbContext.User
                             join p in dbContext.PostModels on u.Id equals p.CreatedBy
-                            join i in dbContext.ImageModel on p.ImagesId equals i.Id
+                            join i in dbContext.ImageModel on p.ImagesId equals i.Id                            
                             where u.IsDeleted == false && u.Id== userId 
-
-
                             select new GetAllPostsModel
                             {
                                 UserId = u.Id,
                                 UserName = u.UserName,
                                 PostId = p.Id,
                                 PostContaint = p.PostContaint,
-                                ImageUrl = i.ImageUrl
+                                ImageUrl = i.ImageUrl,                              
                             };
                 getlist = await query.ToListAsync();
+            
+
                 foreach (var post in getlist)
                 {
                     var liquery = from l in dbContext.LikeModel where l.IsDeleted == false && l.PostId == post.PostId select l;
@@ -82,7 +102,7 @@ namespace EntityFrameworkWrittingApp.Repository
                     post.likemodel = listre;
 
                     var commentsnewquery = from u in dbContext.User
-                                           join c in dbContext.CommentsModel on u.Id equals c.UserId
+                                           join c in dbContext.CommentsModel on u.Id equals c.UserId                                      
                                            select new GetCommentsModel
                                            {
                                                Id = c.Id,
@@ -90,16 +110,36 @@ namespace EntityFrameworkWrittingApp.Repository
                                                UserId = c.UserId,
                                                UserName = u.UserName,
                                                Comments = c.Comments,
-                                               UserProfile = u.UserProfile
+                                               UserProfile = u.UserProfile,
+                                              
                                            };
 
 
 
                     var commentlist = await commentsnewquery.ToListAsync();
+                    foreach (var comment in commentlist)
+                    {
+                        foreach (var p in profililist)
+                        {
+                            if(comment.UserId==p.UserId)
+                            {
+                                comment.ImageData = p.ImageData;
+                            }
+                        }    
+                    }
                     post.commentsmodel = commentlist;
-
                 }
 
+                foreach(var po in getlist)
+                {
+                    foreach(var prof in profililist)
+                    {
+                        if(po.UserId==prof.UserId)
+                        {
+                            po.ImageData = prof.ImageData;
+                        }
+                    }
+                }
                 var followerCountQuery = from f in dbContext.FollowerModel where f.FollowedId == userId && f.IsFollow == true select f;
                 var  followerresult=await followerCountQuery.ToListAsync();
                 var followerCount= followerresult.Count();
@@ -114,6 +154,41 @@ namespace EntityFrameworkWrittingApp.Repository
                 userprofile.NoOfFollower = followerCount;
                 userprofile.NoOfFollowing = followingCount;
                 userprofile.NoOfPosts= getlist.Count();
+
+
+
+                foreach(var g in getlist)
+                {
+                    //No Of Comments Count Code here...........
+                    var querycomments = from p in dbContext.PostModels
+                                     join c in dbContext.CommentsModel on p.Id equals c.PostId
+                                     where c.IsDeleted == false && p.IsDeleted == false && p.Id==g.PostId
+                                     select c;
+
+                    var commentqueryresult = await querycomments.ToArrayAsync();
+                    g.NoOfComments = commentqueryresult.Count();
+                   
+                    //No Of Likes Count code here ..............
+                    var querylike = from p in dbContext.PostModels
+                                        join l in dbContext.LikeModel on p.Id equals l.PostId
+                                        where p.IsDeleted == false && l.LikeOrDislike == true && l.IsDeleted == false && p.Id == g.PostId
+                                        select l;
+                    var likequeryresult= await querylike.ToArrayAsync();
+                    g.NoOfLikes=likequeryresult.Count();
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 userprofile.GetAllPosts = getlist;
