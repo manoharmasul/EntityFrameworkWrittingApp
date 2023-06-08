@@ -6,5 +6,6 @@ namespace EntityFrameworkWrittingApp.Repository.Interface
     {
         Task<long> FollowAndUnfollow(FollowersAndFollowingModel followandfollowing);
         Task<List<GetUserFollowModel>> GetUserListFollow(long? Id, string? username, string? name);
+        Task<List<GetUserFollowModel>> GetFollowerAndFollowingList(long? Id, long flagid);
     }
 }

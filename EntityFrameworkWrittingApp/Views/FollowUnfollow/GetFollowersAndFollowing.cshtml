@@ -1,0 +1,104 @@
+﻿@using System.Security.Policy;
+@model IEnumerable<EntityFrameworkWrittingApp.Models.GetUserFollowModel>
+
+@{
+    ViewData["Title"] = "GetUserListFollow";
+}
+
+<style>
+    .parentelem {
+        width: 680px;
+        scroll-snap-type: y mandatory;
+        scroll-snap-stop: always;
+        overflow-y: scroll;
+    }
+
+    .stop {
+        scroll-snap-stop: always;
+    }
+
+    /* Hide the scrollbar */
+    .parentelem::-webkit-scrollbar {
+        width: 0.5em;
+        background-color: transparent;
+    }
+
+    .parentelem::-webkit-scrollbar-thumb {
+        background-color: transparent;
+    }
+</style>
+
+<div class="card parentelem" style="width: 370px; height: 600px; display: flex; flex-direction: column;" id="getparentId">
+    @foreach (var item in Model.ToList())
+    {
+        var useid = item.UserId;
+        <div class="alert alert-secondary" role="alert">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    @if (item.ImageData == null)
+                    {
+                        <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
+                    }
+                    else
+                    {
+                        <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(item.ImageData)" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
+                    }
+                    <div class="ml-3 ms-5 text-center">
+                        <div>@item.UserName</div>
+                        <div>@item.Name</div>
+                    </div>
+                </div>
+                <div class="ms-4 text-end">
+                    @if (item.IsFollow == null || item.IsFollow == false)
+                    {
+                        <span class="badge rounded-pill bg-primary tbn ms-3 follow-button" onclick="followfunc('@useid')" id="@useid">Follow</span>
+                    }
+                    else
+                    {
+                        <span class="badge rounded-pill bg-secondary tbn ms-3 follow-button" onclick="followfunc('@useid')" id="@useid">Following</span>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function followfunc(elemid) {
+        var elem = document.getElementById(elemid);
+        console.log(elem.innerText + 'inner text');
+        console.log(elem.value);
+        if (elem.innerText === 'Follow') {
+            elem.innerText = 'Following';
+            elem.classList.remove('bg-primary');
+            // Add the new style class
+            elem.classList.add('bg-secondary');
+        }
+        else {
+            elem.innerText = 'Follow';
+            elem.classList.remove("bg-secondary");
+            elem.classList.add('bg-primary');
+        }
+        console.log(elemid + '//////////////////');
+        $.ajax({
+            url: '@Url.Action("FollowAndUnfollow", "FollowUnfollow")',
+            // Replace "LikePost" with the actual name of your action method, and "ControllerName" with the name of the other controller
+            type: 'POST', // Or 'GET' depending on your scenario
+            data: { id: elemid }, // Pass any additional data required by the action method
+            success: function (response) {
+                // Handle the success response from the server here
+                // You can update the UI or perform any other actions as needed
+            },
+            error: function (xhr, status, error) {
+                // Handle the error response from the server here
+                // Display an error message or perform any other error handling
+            }
+        });
+    }
+
+    var fid = document.getElementById('classid');
+    fid.classList.remove("scroll-cards");
+
+
+</script>

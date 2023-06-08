@@ -10,11 +10,11 @@ namespace EntityFrameworkWrittingApp.Controllers
         private readonly IFollowAndFollowingAsyncRepository followAsync;
         public FollowUnfollowController(IFollowAndFollowingAsyncRepository followAsync)
         {
-            this.followAsync = followAsync; 
+            this.followAsync = followAsync;
         }
         // GET: FollowUnfollowController
-        public async Task<ActionResult> GetUserListFollow(long? userid,string? username,string? name)
-        {           
+        public async Task<ActionResult> GetUserListFollow(long? userid, string? username, string? name)
+        {
             try
             {
                 var uid = HttpContext.Session.GetString("userId");
@@ -36,7 +36,23 @@ namespace EntityFrameworkWrittingApp.Controllers
             return View();
         }
 
-   
+        public async Task<ActionResult> GetFollowersAndFollowing(long id, long flagId)
+        {
+            try
+            {
+
+
+                var result = await followAsync.GetFollowerAndFollowingList(id, flagId);
+
+                return View(result);
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
         public async Task<ActionResult> FollowAndUnfollow(long id)
         {
             try
@@ -45,11 +61,11 @@ namespace EntityFrameworkWrittingApp.Controllers
                 var userid = Int32.Parse(uid);
                 FollowersAndFollowingModel followed = new FollowersAndFollowingModel();
                 followed.FollowedId = id;
-                followed.FollowingId= userid;
+                followed.FollowingId = userid;
                 followed.CreatedBy = userid;
                 followed.CreatedDate = DateTime.Now;
 
-                var result=await followAsync.FollowAndUnfollow(followed);   
+                var result = await followAsync.FollowAndUnfollow(followed);
 
                 return RedirectToAction(nameof(Index));
             }

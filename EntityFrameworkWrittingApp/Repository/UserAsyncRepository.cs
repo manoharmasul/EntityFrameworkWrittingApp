@@ -68,11 +68,12 @@ namespace EntityFrameworkWrittingApp.Repository
             try
             {
                 var Userobj = await dbContext.User.FindAsync(userId);
-                var proobje = await dbContext.UserProfileImages.FindAsync(userId);
+                var proobje = from p in dbContext.UserProfileImages where p.UserId == userId select p;
+                var pofile=await proobje.SingleOrDefaultAsync();
                 var profililist = await dbContext.UserProfileImages.ToListAsync();
-                if (proobje != null)
+                if (pofile != null)
                 {
-                    userprofile.ImageData = proobje.ImageData;
+                    userprofile.ImageData = pofile.ImageData;
                 }
                 userprofile.UserId = Userobj.Id;
                 userprofile.UserName = Userobj.UserName;

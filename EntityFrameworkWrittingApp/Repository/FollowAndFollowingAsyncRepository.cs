@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EntityFrameworkWrittingApp.Repository
 {
-    public class FollowAndFollowingAsyncRepository: IFollowAndFollowingAsyncRepository
+    public class FollowAndFollowingAsyncRepository : IFollowAndFollowingAsyncRepository
     {
         private readonly ApplicationDbContext dbContext;
         public FollowAndFollowingAsyncRepository(ApplicationDbContext dbContext)
@@ -16,14 +16,14 @@ namespace EntityFrameworkWrittingApp.Repository
 
         public async Task<long> FollowAndUnfollow(FollowersAndFollowingModel followandfollowing)
         {
-            var queryfollower=from f in dbContext.FollowerModel 
-            where f.FollowedId== followandfollowing.FollowedId
-             && f.FollowingId==followandfollowing.FollowingId
-             select f;
+            var queryfollower = from f in dbContext.FollowerModel
+                                where f.FollowedId == followandfollowing.FollowedId
+                                 && f.FollowingId == followandfollowing.FollowingId
+                                select f;
 
             var follower = await queryfollower.SingleOrDefaultAsync();
 
-            if(follower==null)
+            if (follower == null)
             {
                 followandfollowing.IsFollow = true;
                 var queryadd = dbContext.AddAsync(followandfollowing);
@@ -32,7 +32,7 @@ namespace EntityFrameworkWrittingApp.Repository
             }
             else
             {
-                if(follower.IsFollow==true)
+                if (follower.IsFollow == true)
                 {
                     follower.IsFollow = false;
                     follower.ModifiedBy = followandfollowing.CreatedBy;
@@ -50,11 +50,82 @@ namespace EntityFrameworkWrittingApp.Repository
                     var result = dbContext.SaveChanges();
                     return result;
                 }
-               
+
 
             }
 
-           
+
+        }
+
+
+        public async Task<List<GetUserFollowModel>> GetFollowerAndFollowingList(long? Id, long flagid)
+        {
+
+            if (flagid == 1)
+            {
+
+                var query = from u in dbContext.User
+                            join f in dbContext.FollowerModel on u.Id equals f.FollowingId
+                            where u.IsDeleted == false && f.FollowedId == Id
+                            select new GetUserFollowModel
+                            {
+                                UserId = u.Id,
+                                UserName = u.UserName,
+                                Name = u.Name,
+                                UserProfile = u.UserProfile,
+                                IsFollow = f.IsFollow
+                            };
+
+
+
+                var userlist = await query.ToListAsync();
+
+                foreach (var item in userlist)
+                {
+                    var prop = from p in dbContext.UserProfileImages where p.UserId == item.UserId select p;
+                    var profile = await prop.SingleOrDefaultAsync();
+
+                    if (profile != null)
+                    {
+                        item.ImageData = profile.ImageData;
+                    }
+                }
+
+
+                return userlist;
+            }
+            else
+            {
+                var query = from u in dbContext.User
+                            join f in dbContext.FollowerModel on u.Id equals f.FollowedId
+                            where u.IsDeleted == false && f.FollowingId == Id
+                            select new GetUserFollowModel
+                            {
+                                UserId = u.Id,
+                                UserName = u.UserName,
+                                Name = u.Name,
+                                UserProfile = u.UserProfile,
+                                IsFollow = f.IsFollow
+                            };
+
+
+
+                var userlist = await query.ToListAsync();
+
+
+
+                foreach (var item in userlist)
+                {
+                    var prop = from p in dbContext.UserProfileImages where p.UserId == item.UserId select p;
+                    var profile = await prop.SingleOrDefaultAsync();
+
+                    if (profile != null)
+                    {
+                        item.ImageData = profile.ImageData;
+                    }
+                }
+                return userlist;
+            }
         }
 
         public async Task<List<GetUserFollowModel>> GetUserListFollow(long? Id, string? username, string? name)
@@ -65,7 +136,7 @@ namespace EntityFrameworkWrittingApp.Repository
 
                            where u.IsDeleted == false && u.FollowingId == Id
 
-                           && u.IsFollow==true
+                           && u.IsFollow == true
 
                            select new UserModelIds
                            {
@@ -88,15 +159,15 @@ namespace EntityFrameworkWrittingApp.Repository
 
             var userlist = await query.ToListAsync();
             var getfollowquery = from f in dbContext.FollowerModel where f.FollowingId == Id select f;
-            var followedlist=await getfollowquery.ToListAsync();
+            var followedlist = await getfollowquery.ToListAsync();
 
-            if(followedlist.Count > 0 )
+            if (followedlist.Count > 0)
             {
                 foreach (var item in userlist)
                 {
                     foreach (var f in followedlist)
                     {
-                        if(item.UserId==f.FollowedId)
+                        if (item.UserId == f.FollowedId)
                         {
                             item.IsFollow = f.IsFollow;
                         }
@@ -104,21 +175,21 @@ namespace EntityFrameworkWrittingApp.Repository
                     }
                 }
             }
-            foreach(var item in userlist)
+            foreach (var item in userlist)
             {
-                var prop=from p in dbContext.UserProfileImages where p.UserId == item.UserId select p;
-                var profile=await prop.SingleOrDefaultAsync();   
+                var prop = from p in dbContext.UserProfileImages where p.UserId == item.UserId select p;
+                var profile = await prop.SingleOrDefaultAsync();
 
-                if(profile != null)
+                if (profile != null)
                 {
-                    item.ImageData=profile.ImageData;
+                    item.ImageData = profile.ImageData;
                 }
             }
 
-           
+
             return userlist;
-           
-           
+
+
         }
     }
 }

@@ -13,10 +13,8 @@
 }
 <style>
     .parent111 {
-       
         width: 680px;
         scroll-snap-type: y mandatory;
-      
         scroll-snap-stop: always;
         overflow-y: scroll;
     }
@@ -262,50 +260,59 @@
         width: 90%;
         margin: 0 auto;
     }
-    .card-body .img-profile{
-            height: 50px;
-    min-width: 50px;
-    object-fit: fill;
-    border-radius: 50%;
-    border: 1.5px solid #05042b;
+
+    .card-body .img-profile {
+        height: 50px;
+        min-width: 50px;
+        object-fit: fill;
+        border-radius: 50%;
+        border: 1.5px solid #05042b;
     }
-    .card-bod .btn{}
+
+    .card-bod .btn {
+    }
 
 </style>
 
 <div class="container">
-  <div id="masterid">
-    <div id="dcardid">
-       <div class="card custom-card mx-auto" style="height:100%;width:400px">
-           <div class="card-body">
-              <div class="d-flex align-items-center justify-content-between">
-                       
-                 @if(@Model.ImageData!=null)
-                 {
-                   <img class="img-profile" src="data:image;base64,@Convert.ToBase64String(@Model.ImageData)" alt="Card image"/>
-                 }
-                 else
-                 {
-                  <img class="img-profile" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" />
-                 }
-                     
-                            <div class="ml-2  text-center ms-3">                         
-                                 <div style="font-weight: bold;">@Model.NoOfPosts</div>
-                                 <div style="font-weight: bold;">Posts</div>                                                 
-                            </div>
-                     
-                        <a asp-action="" class="text-decoration-none text-black">
-                                <div class="ml  text-center">
-                                    <div style="font-weight: bold;">@Model.NoOfFollower</div>
-                                    <div style="font-weight: bold;">Followers</div>
-                                </div>
-                        </a>
-                        <a asp-action="" class="text-decoration-none text-black">
-                        <div class="ml text-center">
-                            <div style="font-weight: bold;">@Model.NoOfFollowing</div>
-                            <div style="font-weight: bold;">Following</div>
+    <div id="masterid">
+        <div id="dcardid">
+            <div class="card custom-card mx-auto" style="height:100%;width:400px">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+
+                        @{
+                            long uid = Model.UserId;
+                        }
+
+                        @if (Model.ImageData != null)
+                        {
+                            <img class="img-profile" src="data:image;base64,@Convert.ToBase64String(@Model.ImageData)" alt="Card image" />
+                        }
+                        else
+                        {
+                            <img class="img-profile" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" />
+                        }
+
+                        <div class="ml-2  text-center ms-3">
+                            <div style="font-weight: bold;">@Model.NoOfPosts</div>
+                            <div style="font-weight: bold;">Posts</div>
                         </div>
+
+                        <a asp-action="GetFollowersAndFollowing" asp-controller="FollowUnfollow" asp-route-id="@Model.UserId" asp-route-flagId="1" class="text-decoration-none text-black">
+                            <div class="ml text-center">
+                                <div style="font-weight: bold;">@Model.NoOfFollower</div>
+                                <div style="font-weight: bold;">Followers</div>
+                            </div>
                         </a>
+
+                        <a asp-action="GetFollowersAndFollowing" asp-controller="FollowUnfollow" asp-route-id="@Model.UserId" asp-route-flagId="2" class="text-decoration-none text-black">
+                            <div class="ml text-center">
+                                <div style="font-weight: bold;">@Model.NoOfFollowing</div>
+                                <div style="font-weight: bold;">Following</div>
+                            </div>
+                        </a>
+
                     </div>
                 </div>
                 <div class="text-secondary mt-2">username</div>
@@ -320,30 +327,30 @@
             </div>
 
 
-    </div>
-    <div class="mx-auto" style="width: 400px;" id="changeId">
-        <div id="oldid">
-            @{
-                var con = 1;
+        </div>
+        <div class="mx-auto" style="width: 400px;" id="changeId">
+            <div id="oldid">
+                @{
+                    var con = 1;
 
-            }
+                }
 
-            @foreach (var ite in Model.GetAllPosts)
-            {
-                long myvar = 0;
-                long check = ViewBag.User;
-
-                @foreach (var atm in ite.likemodel)
+                @foreach (var ite in Model.GetAllPosts)
                 {
+                    long myvar = 0;
+                    long check = ViewBag.User;
 
-                    if (check == atm.UserId && ite.PostId == atm.PostId)
+                    @foreach (var atm in ite.likemodel)
                     {
-                        if (atm.LikeOrDislike == true)
-                        {
-                            myvar = 1;
 
+                        if (check == atm.UserId && ite.PostId == atm.PostId)
+                        {
+                            if (atm.LikeOrDislike == true)
+                            {
+                                myvar = 1;
+
+                            }
                         }
-                    }
                     }
                     int counts = 0;
                     string[] ptcon = (ite.PostContaint).Split("\r\n\r\n");
@@ -361,104 +368,104 @@
                     var btnId = $"likeButton_{con}"; // Generate unique IDs for each button
                     var pId = ite.PostId;
                     <div class="card">
-                    <div class="mails">
-                        <span class="person border3">H</span>
-                        <div class="mail-names">
-                            @ite.UserName
+                        <div class="mails">
+                            <span class="person border3">H</span>
+                            <div class="mail-names">
+                                @ite.UserName
+                            </div>
                         </div>
-                    </div>
-                    <div class="mail-info">
-                        <div class="card-image">
-                            <div class="image-container">
-                                <div class="image-wrapper">
-                                    <img class="card-img-top" src="@ite.ImageUrl" alt="Card image">
-                                    <div class="card-img-content">
-                                        <p class="text-black">
-                                            @foreach (var it in str)
-                                            {
-                                                @Html.Raw(it)
-                                                <br />
-                                            }
-                                        </p>
+                        <div class="mail-info">
+                            <div class="card-image">
+                                <div class="image-container">
+                                    <div class="image-wrapper">
+                                        <img class="card-img-top" src="@ite.ImageUrl" alt="Card image">
+                                        <div class="card-img-content">
+                                            <p class="text-black">
+                                                @foreach (var it in str)
+                                                {
+                                                    @Html.Raw(it)
+                                                    <br />
+                                                }
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="bottom-info">
-                        @if (myvar == 1)
-                        {
+                        <div class="bottom-info">
+                            @if (myvar == 1)
+                            {
 
-                           <div class="row">                                   
-                              <div class="col">
+                                <div class="row">
+                                    <div class="col">
 
                                         <i id="@pId" class="fa fa-heart" onclick="likefunction('@pId')" style="font-size: 36px;color:red"><span class="ms-1" style="font-size: 25px;"></i>
                                         <spam class="ms-1" style="font-size: 25px;">@ite.NoOfLikes</spam>
-                              </div>                                                                    
-                                  
-                           </div>
-                        }
-                        else
-                        {
-                           <div class="row">                                   
-                              <div class="col">
+                                    </div>
 
-                                <i id="@pId" class="fa fa-heart-o" onclick="likefunction('@pId')" style="font-size: 36px;"></i>
-                                <spam style="font-size: 25px;">@ite.NoOfLikes</spam>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col">
 
-                              </div>                                                                                                     
-                           </div>
-                        }
-                        @{
-                            var iteId = @ite.PostId;
+                                        <i id="@pId" class="fa fa-heart-o" onclick="likefunction('@pId')" style="font-size: 36px;"></i>
+                                        <spam style="font-size: 25px;">@ite.NoOfLikes</spam>
 
-                                         <div class="row">                                   
-                                          <div class="col">
+                                    </div>
+                                </div>
+                            }
+                            @{
+                                var iteId = @ite.PostId;
 
-                                                    <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
-                                                    <spam class="ms-1" style="font-size: 25px;">@ite.NoOfComments</spam>
+                                <div class="row">
+                                    <div class="col">
 
-                                          </div>                                                                                                     
-                                       </div>
-                                  
-                                       <div class="row">                                   
-                                          <div class="col">
-                                               <i class="fa fa-save " style="font-size:36px; "></i>
-                                               <spam class="" style="font-size: 25px;">Save</spam>   
-                                               
-                                          </div>   
-                                       </div>
-                         
-                        }
+                                        <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
+                                        <spam class="ms-1" style="font-size: 25px;">@ite.NoOfComments</spam>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fa fa-save " style="font-size:36px; "></i>
+                                        <spam class="" style="font-size: 25px;">Save</spam>
+
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+
                     </div>
 
-                </div>
-
-                con++;
+                    con++;
 
 
-            }
+                }
 
+            </div>
         </div>
-    </div>
     </div>
 </div>
 
 
 
-    <div id="hidden11" hidden>
-    </div>
+<div id="hidden11" hidden>
+</div>
 
-        <div id="xid"></div>
+<div id="xid"></div>
 
-      <div id="cn" hidden>
-   
-         <div class="card" style="width: 370px; height: 550px; display: flex; flex-direction: column;">
-            <button type="button" onclick="chengefunction()" class="btn-close" aria-label="Close" style="align-self: flex-end; margin-top: 10px;"></button>
-            <div style="flex-grow: 1; height: 550px;" id="getid" class="parent111 mb-5">
-                <!-- Content goes here -->
-            </div>
-            <div class="row" style="position: absolute; bottom: 0; left: 0; width: 85%;">
+<div id="cn" hidden>
+
+    <div class="card" style="width: 370px; height: 550px; display: flex; flex-direction: column;">
+        <button type="button" onclick="chengefunction()" class="btn-close" aria-label="Close" style="align-self: flex-end; margin-top: 10px;"></button>
+        <div style="flex-grow: 1; height: 550px;" id="getid" class="parent111 mb-5">
+            <!-- Content goes here -->
+        </div>
+        <div class="row" style="position: absolute; bottom: 0; left: 0; width: 85%;">
             <form id="commentForm" class="d-flex align-items-center mb-1 ms-3">
                 <input type="number" id="PostId" name="PostId" hidden>
                 <div class="col">
@@ -470,77 +477,77 @@
                     </button>
                 </div>
             </form>
-            </div>
-         </div>
+        </div>
+    </div>
 
-     </div>
-
-
+</div>
 
 
 
 
 
 
- <div id="myccId" hidden>
-     <div class="card custom-card mx-auto" style="height:100%;width:400px">
-         <div class="card-body text-center">
-             @if(@Model.ImageData!=null)
-             {
+
+
+<div id="myccId" hidden>
+    <div class="card custom-card mx-auto" style="height:100%;width:400px">
+        <div class="card-body text-center">
+            @if (@Model.ImageData != null)
+            {
                 <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(@Model.ImageData)" alt="Card image" style="height:65px;width:65px;border-radius: 50%;" />
 
-             }
-             else
-             {
+            }
+            else
+            {
                 <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:65px;width:65px;border-radius: 50%;" />
-             }
-         </div>
-          <button class="mt-3">
-                    <div class="card-footer text-center" onclick="UpdateProfilePhoto()">Edit</div>
-          </button>
-          <div id="propelem2" class="mt-2 mb-2"></div>
-         <form asp-action="UpdateUserProfile">
-             <div class="form-control">
-                 <div class="mb-2">
+            }
+        </div>
+        <button class="mt-3">
+            <div class="card-footer text-center" onclick="UpdateProfilePhoto()">Edit</div>
+        </button>
+        <div id="propelem2" class="mt-2 mb-2"></div>
+        <form asp-action="UpdateUserProfile">
+            <div class="form-control">
+                <div class="mb-2">
                     <label for="UserName">User Name</label>
                     <input type="text" name="UserName" id="UserName" class="form-control" value="@Model.UserName" />
-                 </div>
-                 <div class="mb-2">
+                </div>
+                <div class="mb-2">
                     <label for="Bio">Bio</label>
                     <textarea data-expandable class="form-control" name="Bio" id="Bio" style="">@Model.Bio</textarea>
-                 </div>
-                 <div class="mb-2">
-                     <label for="Links">Links</label>
-                     <input type="text" name="Links" id="Links" class="form-control" value="@Model.Links" />
-                 </div>
-                 <div class="mb-2">
-                     <div class="row">
-                         <div class="col">
-                             <button type="" class="btn " style="float:right" onclick="cancelupdate()">
-                                 Cancel
-                             </button>
-                         </div>
-                         <div class="col"></div>
-                          <div class="col">
-                              <button type="submit" class="btn " style="float:right" value="UpdateUserProfile">
-                                  Save
-                              </button>
-                          </div>
-                     </div>
-                 </div>
-             </div>
-         </form>
-     </div>
- </div>
+                </div>
+                <div class="mb-2">
+                    <label for="Links">Links</label>
+                    <input type="text" name="Links" id="Links" class="form-control" value="@Model.Links" />
+                </div>
+                <div class="mb-2">
+                    <div class="row">
+                        <div class="col">
+                            <button type="" class="btn " style="float:right" onclick="cancelupdate()">
+                                Cancel
+                            </button>
+                        </div>
+                        <div class="col"></div>
+                        <div class="col">
+                            <button type="submit" class="btn " style="float:right" value="UpdateUserProfile">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 
 
 <div id="propelem" hidden>
     @using (Html.BeginForm("UploadBackgroundImages", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <input type="file" name="imageFile" accept="image/*" />
-    <input type="submit" value="Upload" />
-}
+    {
+        <input type="file" name="imageFile" accept="image/*" />
+        <input type="submit" value="Upload" />
+    }
 </div>
 
 
@@ -551,18 +558,17 @@
 <div id="hidden11" hidden></div>
 
 
- <script>
-     function UpdateProfilePhoto()
-     {
-         var pelem1=document.getElementById('propelem');
-         var pelem2=document.getElementById('propelem2');
-        pelem2.innerHTML=pelem1.innerHTML;
-     }
+<script>
+    function UpdateProfilePhoto() {
+        var pelem1 = document.getElementById('propelem');
+        var pelem2 = document.getElementById('propelem2');
+        pelem2.innerHTML = pelem1.innerHTML;
+    }
 
 
 
     var comlist = @Html.Raw(Json.Serialize(comentmod));
-    var com=comlist;
+    var com = comlist;
 
 
     function submitForm() {
@@ -584,12 +590,12 @@
             success: function (result) {
                 // Handle the result returned from the action
 
-                com.push(result[result.length-1]);
+                com.push(result[result.length - 1]);
                 var ht = '';
 
                 result.forEach(function (elet) {
 
-                    if (elet.imageData!=null) {
+                    if (elet.imageData != null) {
                         var uprof = elet.imageData;
 
                         if (elet.postId == eeeee) {
@@ -662,157 +668,154 @@
     });
 
 
-            function updateprofilefunc() {
-                var eleup = document.getElementById('dcardid');
-                var newstoreelem = document.getElementById('newstore');
-                var updateform = document.getElementById('myccId');
-                newstoreelem.innerHTML = eleup.innerHTML;
-                eleup.innerHTML = updateform.innerHTML;
-            }
+    function updateprofilefunc() {
+        var eleup = document.getElementById('dcardid');
+        var newstoreelem = document.getElementById('newstore');
+        var updateform = document.getElementById('myccId');
+        newstoreelem.innerHTML = eleup.innerHTML;
+        eleup.innerHTML = updateform.innerHTML;
+    }
 
-            function cancelupdate() {
-                var eleup = document.getElementById('dcardid');
-                var newstoreelem = document.getElementById('newstore');
-                eleup.innerHTML = newstoreelem.innerHTML;
-            }
-
-
-
-
-            $('body').on('keydown input', 'textarea[data-expandable]', function () {
-                //Auto-expanding textarea
-                this.style.removeProperty('height');
-                this.style.height = (this.scrollHeight + 2) + 'px';
-            }).on('mousedown focus', 'textarea[data-expandable]', function () {
-                //Do this on focus, to allow textarea to animate to height...
-                this.style.removeProperty('height');
-                this.style.height = (this.scrollHeight + 2) + 'px';
-            });
+    function cancelupdate() {
+        var eleup = document.getElementById('dcardid');
+        var newstoreelem = document.getElementById('newstore');
+        eleup.innerHTML = newstoreelem.innerHTML;
+    }
 
 
 
-            document.getElementById("mycardid").style.overflow = "scroll";
-            function setthisPostId(id) {
-                var thisids = id;
-                var elemgetid = document.getElementById('xid');
-                elemgetid.value = id;
 
-                var html1 = '';
-                var html = '';
+    $('body').on('keydown input', 'textarea[data-expandable]', function () {
+        //Auto-expanding textarea
+        this.style.removeProperty('height');
+        this.style.height = (this.scrollHeight + 2) + 'px';
+    }).on('mousedown focus', 'textarea[data-expandable]', function () {
+        //Do this on focus, to allow textarea to animate to height...
+        this.style.removeProperty('height');
+        this.style.height = (this.scrollHeight + 2) + 'px';
+    });
 
-                com.forEach(function (item) {
 
-                    if (item.imageData!=null) {
-                        var uprofile = item.imageData;
 
-                        if (item.postId == id) {
-                           
-                            html += '<main class="msger-chat">';
-                            html += '<div class="msg left-msg">';
+    document.getElementById("mycardid").style.overflow = "scroll";
+    function setthisPostId(id) {
+        var thisids = id;
+        var elemgetid = document.getElementById('xid');
+        elemgetid.value = id;
+
+        var html1 = '';
+        var html = '';
+
+        com.forEach(function (item) {
+
+            if (item.imageData != null) {
+                var uprofile = item.imageData;
+
+                if (item.postId == id) {
+
+                    html += '<main class="msger-chat">';
+                    html += '<div class="msg left-msg">';
                     html += '<div class="msg-img" style="background-image: url(data:image;base64,' + uprofile + ')"></div>';
-                            html += '<div class="msg-bubble">';
-                            html += '<div class="msg-info">';
-                            html += '<div class="msg-info-name">' + item.userName + '</div>';
-                            html += '<div class="msg-info-time">12:45</div>';
-                            html += '</div>';
-                            html += '<div class="msg-text">';
-                            html += item.comments + ' 😄';
-                            html += '</div>';
-                            html += '</div>';
-                            html += '</div>';
-                            html += '</main>';
-                        }
-                    }
-                    else {
-                        if (item.postId == id) {
-                           
-                            html += '<main class="msger-chat">';
-                            html += '<div class="msg left-msg">';
-                            html += '<div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"></div>';
-                            html += '<div class="msg-bubble">';
-                            html += '<div class="msg-info">';
-                            html += '<div class="msg-info-name">' + item.userName + '</div>';
-                            html += '<div class="msg-info-time">12:45</div>';
-                            html += '</div>';
-                            html += '<div class="msg-text">';
-                            html += item.comments + ' 😄';
-                            html += '</div>';
-                            html += '</div>';
-                            html += '</div>';
-                            html += '</main>';
-                        }
-                    }
-                });
-   
-                var els = document.getElementById('getid'); 
-                els.innerHTML = html;
-                var oldele = document.getElementById('demstore');
-                var fid = document.getElementById('classid');
-       
-               fid.classList.remove("scroll-cards");
-       
-        
-                var newele=document.getElementById('oldid');
-       
-                var elemtchange=document.getElementById('masterid');
-       
-                var commentelem = document.getElementById('cn')
-                      console.log(elemtchange)
-                oldele.innerHTML=elemtchange.innerHTML;
-
-                newele.innerHTML=commentelem.innerHTML;
-
-                elemtchange.innerHTML = commentelem.innerHTML;
-
-                commentelem.innerHTML = oldele.innerHTML;
+                    html += '<div class="msg-bubble">';
+                    html += '<div class="msg-info">';
+                    html += '<div class="msg-info-name">' + item.userName + '</div>';
+                    html += '<div class="msg-info-time">12:45</div>';
+                    html += '</div>';
+                    html += '<div class="msg-text">';
+                    html += item.comments + ' 😄';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</main>';
+                }
             }
+            else {
+                if (item.postId == id) {
 
-                  
-
-    
-            
-
-            function chengefunction() 
-            {
-                var getelemid=document.getElementById('classid')
-                getelemid.className="scroll-cards";
-                var elsolds = document.getElementById('demstore');
-                var mid = document.getElementById('masterid');
-                var elemcom= document.getElementById('cn');
-                elemcom.innerHTML=mid.innerHTML;
-                mid.innerHTML=elsolds.innerHTML;
+                    html += '<main class="msger-chat">';
+                    html += '<div class="msg left-msg">';
+                    html += '<div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"></div>';
+                    html += '<div class="msg-bubble">';
+                    html += '<div class="msg-info">';
+                    html += '<div class="msg-info-name">' + item.userName + '</div>';
+                    html += '<div class="msg-info-time">12:45</div>';
+                    html += '</div>';
+                    html += '<div class="msg-text">';
+                    html += item.comments + ' 😄';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</main>';
+                }
             }
+        });
 
-   
-    function likefunction(elemid) 
-    {
-      console.log(elemid)
-      var elem = document.getElementById(elemid);
+        var els = document.getElementById('getid');
+        els.innerHTML = html;
+        var oldele = document.getElementById('demstore');
+        var fid = document.getElementById('classid');
+
+        fid.classList.remove("scroll-cards");
+
+
+        var newele = document.getElementById('oldid');
+
+        var elemtchange = document.getElementById('masterid');
+
+        var commentelem = document.getElementById('cn')
+        console.log(elemtchange)
+        oldele.innerHTML = elemtchange.innerHTML;
+
+        newele.innerHTML = commentelem.innerHTML;
+
+        elemtchange.innerHTML = commentelem.innerHTML;
+
+        commentelem.innerHTML = oldele.innerHTML;
+    }
+
+
+
+
+
+
+    function chengefunction() {
+        var getelemid = document.getElementById('classid')
+        getelemid.className = "scroll-cards";
+        var elsolds = document.getElementById('demstore');
+        var mid = document.getElementById('masterid');
+        var elemcom = document.getElementById('cn');
+        elemcom.innerHTML = mid.innerHTML;
+        mid.innerHTML = elsolds.innerHTML;
+    }
+
+
+    function likefunction(elemid) {
+        console.log(elemid)
+        var elem = document.getElementById(elemid);
         if (elem.style.color === 'red') {
             elem.style.color = 'black';
             elem.className = "fa fa-heart-o";
-        } 
-        else 
-        {
-             elem.className = "fa fa-heart";
-             elem.style.color = 'red';
+        }
+        else {
+            elem.className = "fa fa-heart";
+            elem.style.color = 'red';
 
         }
 
 
         $.ajax({
-              url: '@Url.Action("LikePost", "Post")', // Replace "LikePost" with the actual name of your action method, and "ControllerName" with the name of the other controller
-              type: 'POST', // Or 'GET' depending on your scenario
+            url: '@Url.Action("LikePost", "Post")', // Replace "LikePost" with the actual name of your action method, and "ControllerName" with the name of the other controller
+            type: 'POST', // Or 'GET' depending on your scenario
             data: { id: elemid }, // Pass any additional data required by the action method
-              success: function (response) {
-                   // Handle the success response from the server here
-                   // You can update the UI or perform any other actions as needed
-              },
-              error: function (xhr, status, error) {
+            success: function (response) {
+                // Handle the success response from the server here
+                // You can update the UI or perform any other actions as needed
+            },
+            error: function (xhr, status, error) {
                 // Handle the error response from the server here
-                 // Display an error message or perform any other error handling
-              }
-       });
+                // Display an error message or perform any other error handling
+            }
+        });
     }
 
- </script>
+</script>
