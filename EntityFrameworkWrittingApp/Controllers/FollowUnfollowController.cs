@@ -19,6 +19,8 @@ namespace EntityFrameworkWrittingApp.Controllers
             {
                 var uid = HttpContext.Session.GetString("userId");
                 var usersid = Int32.Parse(uid);
+                ViewBag.UserId = userid;    
+
                 var userlist = await followAsync.GetUserListFollow(usersid, username, name);
                 return View(userlist);
             }

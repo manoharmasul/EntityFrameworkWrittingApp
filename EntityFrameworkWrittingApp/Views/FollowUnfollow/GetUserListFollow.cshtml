@@ -7,10 +7,10 @@
 
 <style>
     .parentelem {
-        width: 680px;
-        scroll-snap-type: y mandatory;
-        scroll-snap-stop: always;
+        width: 370px;
+        height: 600px;
         overflow-y: scroll;
+        position: relative;
     }
 
     .stop {
@@ -26,44 +26,109 @@
     .parentelem::-webkit-scrollbar-thumb {
         background-color: transparent;
     }
-</style>
 
-<div class="card parentelem" style="width: 370px; height: 600px; display: flex; flex-direction: column;" id="getparentId">
-    @foreach (var item in Model.ToList())
-    {
-        var useid = item.UserId;
-        <div class="alert alert-secondary" role="alert">
-            <div class="d-flex align-items-center justify-content-between">
-                <div class="d-flex align-items-center">
-                    @if (item.ImageData == null)
-                    {
-                        <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
-                    }
-                    else
-                    {
-                        <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(item.ImageData)" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
-                    }
-                    <div class="ml-3 ms-5 text-center">
-                        <div>@item.UserName</div>
-                        <div>@item.Name</div>
-                    </div>
-                </div>
-                <div class="ms-4 text-end">
-                    @if(item.IsFollow==null || item.IsFollow==false)
-                    {
-                        <span class="badge rounded-pill bg-primary tbn ms-3 follow-button" onclick="followfunc('@useid')" id="@useid">Follow</span>
-                    }
-                    else
-                    {
-                        <span class="badge rounded-pill bg-secondary tbn ms-3 follow-button" onclick="followfunc('@useid')" id="@useid">Following</span>
-                    }
-                </div>
-            </div>
-        </div>
+    .search-bar {
+        position: sticky;
+        top: 0;
+        background-color: #ffffff;
+        z-index: 1;
     }
+</style>
+<div class="search-bar d-flex mb-1 mt-2">
+    <input type="search" class="form-control rounded mb-1" id="searchInput" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+    <button type="button" class="btn btn-primary ms-1" onclick="search()">Search</button>
 </div>
 
+<div id="changeit" >
+    <div class="card parentelem" style="width: 370px; display: flex; flex-direction: column;" id="getparentId">
+
+        <div class="content">
+            @foreach (var item in Model.ToList())
+            {
+                if (item.IsFollow == null || item.IsFollow == false)
+                {
+
+                    var useid = item.UserId;
+                    <div class="alert alert-secondary" role="alert">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center">
+                                @if (item.ImageData == null)
+                                {
+                                    <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
+                                }
+                                else
+                                {
+                                    <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(item.ImageData)" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
+                                }
+                                <div class="ml-3 ms-5 text-center">
+                                    <div>@item.UserName</div>
+                                    <div>@item.Name</div>
+                                </div>
+                            </div>
+                            <div class="ms-4 text-end">
+                                @if (item.IsFollow == null || item.IsFollow == false)
+                                {
+                                    <span class="badge rounded-pill bg-primary tbn ms-3 follow-button" onclick="followfunc('@useid')" id="@useid">Follow</span>
+                                }
+                                else
+                                {
+                                    <span class="badge rounded-pill bg-secondary tbn ms-3 follow-button" onclick="followfunc('@useid')" id="@useid">Following</span>
+                                }
+                            </div>
+                    </div>
+                </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<div id="changid" hidden>
+<div class="card parentelem" style="width: 370px; display: flex; flex-direction: column;" id="getparentId">
+   
+    <div class="content">
+        @foreach (var item in Model.ToList())
+        {
+            var useid = item.UserId;
+            <div class="alert alert-secondary changeclass" role="alert">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        @if (item.ImageData == null)
+                        {
+                            <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:30%;width:22%;border-radius: 50%;" />
+                        }
+                        else
+                        {
+                            <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(item.ImageData)" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
+                        }
+                        <div class="ml-3 ms-5 text-center">
+                            <div>@item.UserName</div>
+                            <div>@item.Name</div>
+                        </div>
+                    </div>
+                    <div class="ms-4 text-end">
+                        @if (item.IsFollow == null || item.IsFollow == false)
+                        {
+                            <span class="badge rounded-pill bg-primary tbn ms-3 follow-button" onclick="followfunc('@useid')" id="@useid">Follow</span>
+                        }
+                        else
+                        {
+                            <span class="badge rounded-pill bg-secondary tbn ms-3 follow-button" onclick="followfunc('@useid')" id="@useid">Following</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+</div>
+
+<div id="valueid" hidden>1</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
 <script>
     function followfunc(elemid) {
         var elem = document.getElementById(elemid);
@@ -74,7 +139,7 @@
             elem.classList.remove('bg-primary');
             // Add the new style class
             elem.classList.add('bg-secondary');
-        } 
+        }
         else {
             elem.innerText = 'Follow';
             elem.classList.remove("bg-secondary");
@@ -100,5 +165,47 @@
     var fid = document.getElementById('classid');
     fid.classList.remove("scroll-cards");
 
+
+
+
+
+
  
+    document.getElementById("searchInput").addEventListener('input', function () {
+        console.log('yesssssss');
+        var idss = document.getElementById('valueid').innerText;
+        if (idss == 1) {
+            document.getElementById('changeit').innerHTML = document.getElementById('changid').innerHTML;
+            document.getElementById('valueid').innerText = 2;
+        }
+        var input = document.getElementById("searchInput").value.toLowerCase();
+        var cards = document.getElementsByClassName("changeclass");
+
+        for (var i = 0; i < cards.length; i++) {
+            var username = cards[i].querySelector(".text-center div:first-child").innerText.toLowerCase();
+            var name = cards[i].querySelector(".text-center div:last-child").innerText.toLowerCase();
+
+            if (username.includes(input) || name.includes(input)) {
+                cards[i].style.display = "block";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+    });
+
+    function search() {
+        var input = document.getElementById("searchInput").value.toLowerCase();
+        var cards = document.getElementsByClassName("changeclass");
+
+        for (var i = 0; i < cards.length; i++) {
+            var username = cards[i].querySelector(".text-center div:first-child").innerText.toLowerCase();
+            var name = cards[i].querySelector(".text-center div:last-child").innerText.toLowerCase();
+
+            if (username.includes(input) || name.includes(input)) {
+                cards[i].style.display = "block";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+    }
 </script>

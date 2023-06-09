@@ -130,23 +130,33 @@ namespace EntityFrameworkWrittingApp.Repository
 
         public async Task<List<GetUserFollowModel>> GetUserListFollow(long? Id, string? username, string? name)
         {
-            List<long> ids = new List<long>();
+            /* List<long> ids = new List<long>();
 
-            var queryIds = from u in dbContext.FollowerModel
+             var queryIds = from u in dbContext.FollowerModel
 
-                           where u.IsDeleted == false && u.FollowingId == Id
+                            where u.IsDeleted == false && u.FollowingId == Id
 
-                           && u.IsFollow == true
+                            && u.IsFollow == true
 
-                           select new UserModelIds
-                           {
-                               UserId = u.FollowedId,
-                           };
+                            select new UserModelIds
+                            {
+                                UserId = u.FollowedId,
+                            };
 
-            long[] id = await queryIds.Select(x => x.UserId).ToArrayAsync();
+             long[] id = await queryIds.Select(x => x.UserId).ToArrayAsync();
 
+             var query = from u in dbContext.User
+                         where u.IsDeleted == false && u.Id != Id && !id.Contains(u.Id)
+                         select new GetUserFollowModel
+                         {
+                             UserId = u.Id,
+                             UserName = u.UserName,
+                             Name = u.Name,
+                             UserProfile = u.UserProfile
+                         };
+             */
             var query = from u in dbContext.User
-                        where u.IsDeleted == false && u.Id != Id && !id.Contains(u.Id)
+                        where u.IsDeleted == false && u.Id != Id 
                         select new GetUserFollowModel
                         {
                             UserId = u.Id,
@@ -154,7 +164,6 @@ namespace EntityFrameworkWrittingApp.Repository
                             Name = u.Name,
                             UserProfile = u.UserProfile
                         };
-
 
 
             var userlist = await query.ToListAsync();
