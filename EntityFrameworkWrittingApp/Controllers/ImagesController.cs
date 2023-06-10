@@ -59,7 +59,7 @@ namespace EntityFrameworkWrittingApp.Controllers
                     var imageData = memoryStream.ToArray();
                     var uid = HttpContext.Session.GetString("userId");
                     var usersid = Int32.Parse(uid);
-                    var image = new ImagesModel
+                    var image = new ImagesBackground
                     {
                         Filename = filename,
                         ImageData = imageData,

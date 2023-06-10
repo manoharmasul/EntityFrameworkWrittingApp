@@ -46,7 +46,7 @@ namespace EntityFrameworkWrittingApp.Repository
 
                 var query = from u in dbContext.User
                             join p in dbContext.PostModels on u.Id equals p.CreatedBy
-                            join i in dbContext.ImageModel on p.ImagesId equals i.Id
+                            join i in dbContext.ImagesBackground on p.ImagesId equals i.Id
                             where u.IsDeleted == false
 
 
@@ -56,7 +56,7 @@ namespace EntityFrameworkWrittingApp.Repository
                                 UserName = u.UserName,
                                 PostId = p.Id,
                                 PostContaint = p.PostContaint,
-                                ImageUrl = i.ImageUrl
+                                ImageDatabg = i.ImageData
                             };
                 getlist = await query.ToListAsync();
 
@@ -141,7 +141,7 @@ namespace EntityFrameworkWrittingApp.Repository
         {
             GetImagePostModel postModel = new GetImagePostModel();
 
-            var imagesurls = dbContext.ImageModel.ToList();
+            var imagesurls = dbContext.ImagesBackground.ToList();
             postModel.Imagelist = imagesurls;
             return postModel;
         }

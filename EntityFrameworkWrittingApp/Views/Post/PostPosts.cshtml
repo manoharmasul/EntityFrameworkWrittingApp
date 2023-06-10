@@ -118,7 +118,7 @@
                                 {
                                     var ids = item.Id;
                                     <div class="col ms-1">
-                                        <img src="@item.ImageUrl" id="@item.Id"  height="200" class="mb-3 image-thumbnail" onclick="selectImage('@ids')" value="@ids" />
+                                        <img src="data:image;base64,@Convert.ToBase64String(item.ImageData)" id="@item.Id" height="200" class="mb-3 image-thumbnail" onclick="selectImage('@ids')" value="@ids" />
                                     </div>
                                 }
 

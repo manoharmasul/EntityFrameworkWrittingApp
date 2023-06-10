@@ -82,7 +82,7 @@ namespace EntityFrameworkWrittingApp.Repository
                 userprofile.UserProfile = Userobj.UserProfile;
                 var query = from u in dbContext.User
                             join p in dbContext.PostModels on u.Id equals p.CreatedBy
-                            join i in dbContext.ImageModel on p.ImagesId equals i.Id                            
+                            join i in dbContext.ImagesBackground on p.ImagesId equals i.Id                            
                             where u.IsDeleted == false && u.Id== userId 
                             select new GetAllPostsModel
                             {
@@ -90,7 +90,7 @@ namespace EntityFrameworkWrittingApp.Repository
                                 UserName = u.UserName,
                                 PostId = p.Id,
                                 PostContaint = p.PostContaint,
-                                ImageUrl = i.ImageUrl,                              
+                                ImageDatabg = i.ImageData,                              
                             };
                 getlist = await query.ToListAsync();
             

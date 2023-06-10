@@ -26,9 +26,20 @@
     .parentelem::-webkit-scrollbar-thumb {
         background-color: transparent;
     }
-</style>
 
+    .search-bar {
+        position: sticky;
+        top: 0;
+        background-color: #ffffff;
+        z-index: 1;
+    }
+</style>
+<div class="search-bar d-flex mb-1 mt-2">
+    <input type="search" class="form-control rounded mb-1" id="searchInput" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+    <button type="button" class="btn btn-primary ms-1" onclick="search()">Search</button>
+</div>
 <div class="card parentelem" style="width: 370px; height: 600px; display: flex; flex-direction: column;" id="getparentId">
+
     @foreach (var item in Model.ToList())
     {
         var useid = item.UserId;
@@ -99,6 +110,26 @@
 
     var fid = document.getElementById('classid');
     fid.classList.remove("scroll-cards");
+
+
+    document.getElementById("searchInput").addEventListener('input', function () {
+        console.log('yesssssss');
+
+        var input = document.getElementById("searchInput").value.toLowerCase();
+        var cards = document.getElementsByClassName("alert");
+
+        for (var i = 0; i < cards.length; i++) {
+            var username = cards[i].querySelector(".text-center div:first-child").innerText.toLowerCase();
+            var name = cards[i].querySelector(".text-center div:last-child").innerText.toLowerCase();
+
+            if (username.includes(input) || name.includes(input)) {
+                cards[i].style.display = "block";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+    });
+
 
 
 </script>

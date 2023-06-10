@@ -327,7 +327,7 @@
                             <div class="card-image">
                                 <div class="image-container">
                                     <div class="image-wrapper">
-                                        <img class="card-img-top" src="@ite.ImageUrl" alt="Card image">
+                                        <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(ite.ImageDatabg)" alt="Card image">
                                         <div class="card-img-content">
                                             <p class="text-black">
                                                 @foreach (var it in str)

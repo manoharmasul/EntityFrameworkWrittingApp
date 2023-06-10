@@ -13,9 +13,9 @@ namespace EntityFrameworkWrittingApp.Repository
             this.applicationDbContext = applicationDbContext;
         }
 
-        public async Task<List<ImagesModel>> GetAllBackgroundImages()
+        public async Task<List<ImagesBackground>> GetAllBackgroundImages()
         {
-            var backgroundimages = await applicationDbContext.ImagesModelss.ToListAsync();
+            var backgroundimages = await applicationDbContext.ImagesBackground.ToListAsync();
             return backgroundimages;    
 
         }
@@ -26,7 +26,7 @@ namespace EntityFrameworkWrittingApp.Repository
             return imges;
         }
 
-        public async Task<long> UpLoadBackgroundImages(ImagesModel imgs)
+        public async Task<long> UpLoadBackgroundImages(ImagesBackground imgs)
         {
             imgs.CreatedDate= DateTime.Now;
             var query = applicationDbContext.AddAsync(imgs);

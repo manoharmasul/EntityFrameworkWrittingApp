@@ -23,7 +23,7 @@ namespace EntityFrameworkWrittingApp.Models
         public long Id { get; set; }
         public string PostContaint { get; set; }
         public long ImagesId { get; set; }
-        public List<ImageModel> Imagelist { get; set; }
+        public List<ImagesBackground> Imagelist { get; set; }
 
     }
     public class GetAllPostsModel
@@ -39,6 +39,7 @@ namespace EntityFrameworkWrittingApp.Models
         public List<LikeModel> likemodel { get; set; }
         public List<GetCommentsModel> commentsmodel { get; set; }
         public byte[]? ImageData { get; set; }
+        public byte[]? ImageDatabg { get; set; }
         public long NoOfLikes { get; set; }
         public long NoOfComments { get; set; }
 

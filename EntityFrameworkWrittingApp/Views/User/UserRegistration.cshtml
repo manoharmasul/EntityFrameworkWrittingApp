@@ -8,65 +8,88 @@
 @{
     List<User> userlist = new List<User>();
     userlist = Model.userlists;
-
 }
+<style>
+    .bg-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 90vh;
+        z-index: -1;
+    }
 
-<section class=" bg-image"
-         style="background-image: url('https://cdn.dribbble.com/users/345970/screenshots/13926958/media/93d6ebb655508b996cb90671486b208d.png?compress=1&resize=768x576&vertical=top');">
-    <div class="mask d-flex align-items-center gradient-custom-3 ">
+    .card {
+        margin-top: 60px;
+        padding: 20px;
+        margin-bottom: 60px;
+        border-radius: 15px;
+    }
+
+    .col-class {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .sec {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: top center;
+    }
+</style>
+
+<section class="bg-image" style="background-image: url('https://cdn.dribbble.com/users/345970/screenshots/13926958/media/93d6ebb655508b996cb90671486b208d.png?compress=1&resize=768x576&vertical=top');">
+    <div class="mask d-flex align-items-center gradient-custom-3">
         <div class="container">
-            <div class="row d-flex justify-content-center align-items-center mt-5 mb-5">
-                <div class="col-12 col-md-8 col-lg-7 col-xl-6">
-                    <div class="card" style="border-radius: 15px;">
-                        <div class="card-body p-5">
-                            <h2 class="text-uppercase text-center mb-4">Create an account</h2>
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-2 col-md-2 co col-xl-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="text-uppercase text-center">Create an account</h6>
 
                             <form asp-action="UserRegistration" class="">
-
-                                <div class="form-outline mb-4">
-                                    <input type="text" id="UserName" name="UserName" class="form-control form-control-lg" placeholder="Enter user name"/>
+                                <div class="form-outline mb">
+                                    <input type="text" id="UserName" name="UserName" class="form-control form-control-lg" placeholder="Enter user name" />
                                     <label class="form-label" for="UserName">User Name</label>
                                 </div>
 
-                                <div class="form-outline mb-4">
+                                <div class="form-outline mb">
                                     <input type="email" id="EmailId" name="EmailId" class="form-control form-control-lg" placeholder="Enter emailid" />
                                     <label class="form-label" for="EmailId">Your Email</label>
                                 </div>
-                                <div class="form-outline mb-4">
-                                    <input type="" id="MobileNo" name="MobileNo" class="form-control form-control-lg" placeholder="Enter mobile number"/>
+
+                                <div class="form-outline">
+                                    <input type="" id="MobileNo" name="MobileNo" class="form-control form-control-lg" placeholder="Enter mobile number" />
                                     <label class="form-label" for="MobileNo">MobileNo</label>
                                 </div>
-                                <div class="form-outline mb-4">
+
+                                <div class="form-outline">
                                     <input type="password" id="password" name="Password" class="form-control form-control-lg" placeholder="Enter password" />
                                     <label class="form-label" for="Password">Password</label>
                                 </div>
 
-                                <div class="form-outline mb-4">
+                                <div class="form-outline">
                                     <input type="password" id="confirm_password" name="confirm_password" class="form-control form-control-lg" placeholder="Enter password" />
                                     <label class="form-label" for="confirm_password">Repeat your password</label>
                                 </div>
 
-                                <div class="form-check d-flex justify-content-center mb-5">
+                                <div class="form-check d-flex justify-content-center">
                                     <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
                                     <label class="form-check-label" for="form2Example3g">
-                                        I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+                                        I agree to all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
                                     </label>
                                 </div>
 
                                 <div class="d-flex justify-content-center">
-                                    <button type="submit"
-                                            class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
+                                    <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">
                                         Register
                                     </button>
                                 </div>
 
-                                <p class="text-center text-muted mt-5 ">
-                                    Have already an account? <a asp-controller="User" asp-action="LogIn"
-                                                                class="fw-bold text-body"><u>Login here</u></a>
+                                <p class="text-center text-muted">
+                                    Already have an account? <a asp-controller="User" asp-action="LogIn" class="fw-bold text-body"><u>Login here</u></a>
                                 </p>
-
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -80,38 +103,26 @@
     var unameInput = document.getElementById("UserName");
 
     function validateUserName() {
-  
-            userlist.forEach(function (item) {
+        userlist.forEach(function (item) {
             console.log(item);
             var uname = document.getElementById('UserName').value;
-                if (uname == item.userName) 
-                {
+            if (uname == item.userName) {
                 console.log(item);
-                  unameInput.setCustomValidity("username is already in user");
-                }
-                else 
-                {
-                   unameInput.setCustomValidity('');
-                }
-            });
-       
-
-
-       
+                unameInput.setCustomValidity("Username is already in use");
+            } else {
+                unameInput.setCustomValidity('');
+            }
+        });
     }
-   
+
     unameInput.onkeyup = validateUserName;
 
-
-
-
-
-    var password = document.getElementById("password")
-        , confirm_password = document.getElementById("confirm_password");
+    var password = document.getElementById("password"),
+        confirm_password = document.getElementById("confirm_password");
 
     function validatePassword() {
         if (password.value != confirm_password.value) {
-            confirm_password.setCustomValidity("Passwords Don't Match");
+            confirm_password.setCustomValidity("Passwords don't match");
         } else {
             confirm_password.setCustomValidity('');
         }
@@ -119,9 +130,10 @@
 
     password.onchange = validatePassword;
     confirm_password.onkeyup = validatePassword;
-
 </script>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
