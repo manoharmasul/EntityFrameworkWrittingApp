@@ -11,12 +11,7 @@ namespace EntityFrameworkWrittingApp.Models
         public long ImagesId { get; set; } 
         
     }
-    [Table("tblImages")]
-    public class ImageModel:BaseModel
-    {
-        public long Id { get; set; }
-        public string ImageUrl { get; set; }
-    }
+  
     public class GetImagePostModel : BaseModel
     {
         //Id,PostContaint,ImageId

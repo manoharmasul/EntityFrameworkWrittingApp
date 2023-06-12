@@ -40,11 +40,24 @@ namespace EntityFrameworkWrittingApp.Controllers
             return View(image);
 
         }
-
-
-        public ActionResult UploadBackgroundImages()
+        public async Task<IActionResult> GetBackgroundImages()
         {
-            return View();
+            var image = await imagesAsync.GetAllBackgroundImages();
+            if (image == null)
+            {
+                return NotFound();
+            }
+
+
+            return View(image);
+
+        }
+
+
+        public async Task<ActionResult> UploadBackgroundImages()
+        {
+            var image = await imagesAsync.GetAllBackgroundImages();
+            return View(image);
         }
         [HttpPost]
         public async Task<ActionResult> UploadBackgroundImages(IFormFile imageFile)
@@ -70,8 +83,8 @@ namespace EntityFrameworkWrittingApp.Controllers
                     // Replace 'SaveImageToDatabase' with the appropriate logic to save the image
                     var result = await imagesAsync.UpLoadBackgroundImages(image);
                 }
-
-                return RedirectToAction("GetAllBackgroundImages"); // Redirect to a view or action after successful upload
+                var images = await imagesAsync.GetAllBackgroundImages();
+                return View(images); // Redirect to a view or action after successful upload
             }
 
             return View();
