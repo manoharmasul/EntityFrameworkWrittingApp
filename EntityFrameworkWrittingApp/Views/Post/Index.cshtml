@@ -16,6 +16,17 @@
     }
 }
 <style>
+     .msg-container .msg-bubble {
+    margin-left: 10px;
+  }
+    .actions-container {
+  display: flex;
+}
+
+.action {
+  margin-right: 10px;
+}
+
     .parent111 {
         width: 680px;
         scroll-snap-type: y mandatory;
@@ -122,7 +133,7 @@
     }
 
     .msg-bubble {
-        max-width: 30%;
+        width: 220px;
         padding: 15px;
         border-radius: 15px;
         background: var(--left-msg-bg);
@@ -373,22 +384,22 @@
 
                             var iteId = @ite.PostId;
 
-                            <div class="row">
-                               <div class="col">
+                                <div class="row">
+                                   <div class="col">
 
-                                  <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
-                                   <spam class="ms-1" style="font-size: 25px;">@ite.NoOfComments</spam>
+                                      <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
+                                       <spam class="ms-1" style="font-size: 25px;">@ite.NoOfComments</spam>
 
-                               </div>
-                            </div>
+                                   </div>
+                                </div>
 
-                             <div class="row">
-                                 <div class="col">
-                                     <i class="fa fa-save " style="font-size:36px; "></i>
-                                      <spam class="" style="font-size: 25px;">Save</spam>
+                                 <div class="row">
+                                     <div class="col">
+                                         <i class="fa fa-save " style="font-size:36px; "></i>
+                                          <spam class="" style="font-size: 25px;">Save</spam>
 
-                                  </div>
-                             </div>                                                   
+                                      </div>
+                                 </div>                                                   
                                 
                             }
                         </div>
@@ -419,7 +430,7 @@
 
     <div class="card" style="width: 370px; height: 550px; display: flex; flex-direction: column;">
         <button type="button" onclick="chengefunction()" class="btn-close" aria-label="Close" style="align-self: flex-end; margin-top: 10px;"></button>
-        <div style="flex-grow: 1; height: 550px;" id="getid" class="parent111 mb-5">
+        <div style="flex-grow: 1; height: 550px;width:380px;" id="getid" class="parent111 mb-5">
             <!-- Content goes here -->
         </div>
         <div class="row" style="position: absolute; bottom: 0; left: 0; width: 85%;">
@@ -501,6 +512,11 @@
                             ht += '</div>';
                             ht += '</div>';
                             ht += '</main>';
+                            ht += '<div>likes</div><div>replay</div>';
+                             html += `<div class="actions-container">
+                                     <div class="action" style="padding-inline-start:75px;">likes</div>
+                                <div class="action" style="padding-inline-start:120px;">reply</div>
+                            </div>`;
                         }
                     }
                     else {
@@ -508,7 +524,6 @@
 
                             ht += '<main class="msger-chat">';
                             ht += '<div class="msg left-msg">';
-                            ht += '<div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"></div>';
                             ht += '<div class="msg-bubble">';
                             ht += '<div class="msg-info">';
                             ht += '<div class="msg-info-name">' + elet.userName + '</div>';
@@ -520,6 +535,10 @@
                             ht += '</div>';
                             ht += '</div>';
                             ht += '</main>';
+                            html += `<div class="actions-container">
+                                   <div class="action" style="padding-inline-start:75px;">likes</div>
+                                            <div class="action" style="padding-inline-start:120px;">reply</div>
+                                </div>`;
                         }
                     }
                 });
@@ -614,6 +633,10 @@
                     html += '</div>';
                     html += '</div>';
                     html += '</main>';
+                    html += `<div class="actions-container">
+                                 <div class="action" style="padding-inline-start:75px;">likes</div>
+                                  <div class="action" style="padding-inline-start:120px;">reply</div>
+                            </div>`;
                 }
             }
             else {
@@ -633,6 +656,10 @@
                     html += '</div>';
                     html += '</div>';
                     html += '</main>';
+                    html += `<div class="actions-container">
+                                  <div class="action" style="padding-inline-start:75px;">likes</div>
+                                 <div class="action" style="padding-inline-start:120px;">reply</div>
+                                </div>`;
                 }
             }
         });
