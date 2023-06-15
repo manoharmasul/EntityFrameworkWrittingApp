@@ -354,27 +354,28 @@
                         </div>
                         <div class="bottom-info">
                             @if (myvar == 1)
-                            {
+                            { var likeid = "l" + btnId;
                                 
                                <div class="row">                                   
                               
                                    <div class="col">
 
                                        <i id="@btnId" class="fa fa-heart" onclick="likefunction('@btnId')" style="font-size: 36px;color:red"></i>
-                                       <spam class="ms-1" style="font-size: 25px;">@ite.NoOfLikes</spam>
+                                       <spam class="ms-1" style="font-size: 25px;" id="@likeid">@ite.NoOfLikes</spam>
 
                                   </div>                                                                    
                                   
-                               </div>
-                            
+                                </div>
+
                             }
                             else
                             {
-                               <div class="row">                                   
+                                var likeid = "l" + btnId;
+                                <div class="row">                                   
                                   <div class="col">
-
+                                    
                                     <i id="@btnId" class="fa fa-heart-o" onclick="likefunction('@btnId')" style="font-size: 36px;"></i>
-                                    <spam style="font-size: 25px;">@ite.NoOfLikes</spam>
+                                    <spam style="font-size: 25px;" id="@likeid">@ite.NoOfLikes</spam>
  
                                   </div>                                                                                                     
                                </div>
@@ -383,23 +384,24 @@
                             @{
 
                             var iteId = @ite.PostId;
+               
+                            <div class="row">
+                               <div class="col">
 
-                                <div class="row">
-                                   <div class="col">
+                                  <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
+                                  <spam class="ms-1" style="font-size: 25px;">@ite.NoOfComments</spam>
 
-                                      <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
-                                       <spam class="ms-1" style="font-size: 25px;">@ite.NoOfComments</spam>
+                               </div>
+                            </div>
 
-                                   </div>
-                                </div>
+                            <div class="row">
+                               <div class="col">
 
-                                 <div class="row">
-                                     <div class="col">
-                                         <i class="fa fa-save " style="font-size:36px; "></i>
-                                          <spam class="" style="font-size: 25px;">Save</spam>
+                                  <i class="fa fa-save " style="font-size:36px; "></i>
+                                  <spam class="" style="font-size: 25px;">Save</spam>
 
-                                      </div>
-                                 </div>                                                   
+                               </div>
+                            </div>                                                   
                                 
                             }
                         </div>
@@ -422,6 +424,7 @@
 
 
 <div id="hidden11" hidden>
+
 </div>
 
 <div id="xid"></div>
@@ -511,9 +514,8 @@
                             ht += '</div>';
                             ht += '</div>';
                             ht += '</div>';
-                            ht += '</main>';
-                            ht += '<div>likes</div><div>replay</div>';
-                             html += `<div class="actions-container">
+                            ht += '</main>';                  
+                            ht += `<div class="actions-container">
                                      <div class="action" style="padding-inline-start:75px;">likes</div>
                                 <div class="action" style="padding-inline-start:120px;">reply</div>
                             </div>`;
@@ -535,7 +537,7 @@
                             ht += '</div>';
                             ht += '</div>';
                             ht += '</main>';
-                            html += `<div class="actions-container">
+                            ht += `<div class="actions-container">
                                    <div class="action" style="padding-inline-start:75px;">likes</div>
                                             <div class="action" style="padding-inline-start:120px;">reply</div>
                                 </div>`;
@@ -705,17 +707,28 @@
     
 
     function likefunction(elemid) {
-        likefunction
-        var elem = document.getElementById(elemid);
-        if (elem.style.color === 'red') {
-            elem.style.color = 'black';
-            elem.className = "fa fa-heart-o";
-        }
-        else {
-            elem.className = "fa fa-heart";
-            elem.style.color = 'red';
+       
+       
+       var elem = document.getElementById(elemid);
+    var likeId = "l" + elemid;
 
-        }
+    if (elem.classList.contains("fa-heart")) {
+        elem.classList.remove("fa-heart");
+        elem.classList.add("fa-heart-o");
+        elem.style.color = 'black';
+
+        var lcount = document.getElementById(likeId).textContent;
+        document.getElementById(likeId).textContent = parseInt(lcount) - 1;
+        console.log(document.getElementById(likeId).textContent);
+    } else {
+        elem.classList.remove("fa-heart-o");
+        elem.classList.add("fa-heart");
+        elem.style.color = 'red';
+
+        var lcount = document.getElementById(likeId).textContent;
+        document.getElementById(likeId).textContent = parseInt(lcount) + 1;
+        console.log(document.getElementById(likeId).textContent);
+    }
 
 
 
