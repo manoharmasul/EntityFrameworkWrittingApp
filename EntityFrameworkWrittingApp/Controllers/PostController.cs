@@ -13,7 +13,32 @@ namespace EntityFrameworkWrittingApp.Controllers
             this.postAsync = postAsync;
         }
 
-            // GET: PostController
+        public async Task<ActionResult> GetAllFollowingPost()
+        {
+            try
+            {
+                try
+                {
+                    var uid = HttpContext.Session.GetString("userId");
+                    ViewBag.User = Int32.Parse(uid);
+                    var result = await postAsync.GetAllFollowingPosts(Int32.Parse(uid));
+                    return View(result);
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+
+
+        }
+        // GET: PostController
         public async Task<ActionResult> Index()
         {
            

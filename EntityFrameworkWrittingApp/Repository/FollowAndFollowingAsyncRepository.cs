@@ -66,7 +66,7 @@ namespace EntityFrameworkWrittingApp.Repository
 
                 var query = from u in dbContext.User
                             join f in dbContext.FollowerModel on u.Id equals f.FollowingId
-                            where u.IsDeleted == false && f.FollowedId == Id
+                            where u.IsDeleted == false && f.FollowedId == Id && f.IsFollow==true
                             select new GetUserFollowModel
                             {
                                 UserId = u.Id,
@@ -98,7 +98,7 @@ namespace EntityFrameworkWrittingApp.Repository
             {
                 var query = from u in dbContext.User
                             join f in dbContext.FollowerModel on u.Id equals f.FollowedId
-                            where u.IsDeleted == false && f.FollowingId == Id
+                            where u.IsDeleted == false && f.FollowingId == Id && f.IsFollow==true
                             select new GetUserFollowModel
                             {
                                 UserId = u.Id,

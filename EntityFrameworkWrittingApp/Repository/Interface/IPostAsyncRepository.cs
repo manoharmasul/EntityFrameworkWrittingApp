@@ -8,6 +8,7 @@ namespace EntityFrameworkWrittingApp.Repository.Interface
         Task<long> PostComments(CommentsModel comments);
         Task<long> PostLike(LikeModel likemodel);
         Task<List<GetAllPostsModel>> GetAllPosts();
+        Task<List<GetAllPostsModel>> GetAllFollowingPosts(long userid);
         Task<GetImagePostModel> GetImagesForPost();  
     }
 }

@@ -220,7 +220,7 @@ namespace EntityFrameworkWrittingApp.Controllers
                     long Role = rd;
                     if (loguser.RoleId ==1)
                     {
-                        return RedirectToAction("Index", "Post");
+                        return RedirectToAction("GetAllFollowingPost", "Post");
                     }
                   
                 }

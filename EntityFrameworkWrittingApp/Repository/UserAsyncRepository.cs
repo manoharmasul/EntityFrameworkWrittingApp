@@ -147,7 +147,7 @@ namespace EntityFrameworkWrittingApp.Repository
 
                 
 
-                var followingCountQuery =from f in dbContext.FollowerModel where f.FollowingId==userId  select f;    
+                var followingCountQuery =from f in dbContext.FollowerModel where f.FollowingId==userId && f.IsFollow==true select f;    
                 var followingresult=await followingCountQuery.ToListAsync();
 
                 var followingCount= followingresult.Count();

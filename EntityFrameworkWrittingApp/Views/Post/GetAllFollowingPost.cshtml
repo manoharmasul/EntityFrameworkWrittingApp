@@ -16,16 +16,17 @@
     }
 }
 <style>
-     .msg-container .msg-bubble {
-    margin-left: 10px;
-  }
-    .actions-container {
-  display: flex;
-}
+    .msg-container .msg-bubble {
+        margin-left: 10px;
+    }
 
-.action {
-  margin-right: 10px;
-}
+    .actions-container {
+        display: flex;
+    }
+
+    .action {
+        margin-right: 10px;
+    }
 
     .parent111 {
         width: 680px;
@@ -70,7 +71,7 @@
 
 
 
-     .msger {
+    .msger {
         display: flex;
         flex-flow: column wrap;
         justify-content: space-between;
@@ -321,15 +322,15 @@
 
                     <div class="card">
                         <div class="mails">
-                          
-                                @if (ite.ImageData != null)
-                                {
-                                    <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(ite.ImageData)" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
-                                }
-                                else
-                                {
-                                    <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
-                                }
+
+                            @if (ite.ImageData != null)
+                            {
+                                <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(ite.ImageData)" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
+                            }
+                            else
+                            {
+                                <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
+                            }
                             <div class="mail-names">
                                 @ite.UserName
                             </div>
@@ -354,55 +355,56 @@
                         </div>
                         <div class="bottom-info">
                             @if (myvar == 1)
-                            { var likeid = "l" + btnId;
-                                
-                               <div class="row">                                   
-                              
-                                   <div class="col">
+                            {
+                                var likeid = "l" + btnId;
 
-                                       <i id="@btnId" class="fa fa-heart" onclick="likefunction('@btnId')" style="font-size: 25px;color:red"></i>
-                                       <spam class="ms-1" style="font-size: 20px;" id="@likeid">@ite.NoOfLikes</spam>
+                                <div class="row">
 
-                                  </div>                                                                    
-                                  
+                                    <div class="col">
+
+                                        <i id="@btnId" class="fa fa-heart" onclick="likefunction('@btnId')" style="font-size: 25px;color:red"></i>
+                                        <spam class="ms-1" style="font-size: 20px;" id="@likeid">@ite.NoOfLikes</spam>
+
+                                    </div>
+
                                 </div>
 
                             }
                             else
                             {
                                 var likeid = "l" + btnId;
-                                <div class="row">                                   
-                                  <div class="col">
-                                    
-                                    <i id="@btnId" class="fa fa-heart-o" onclick="likefunction('@btnId')" style="font-size: 25px;"></i>
-                                    <spam style="font-size: 20px;" id="@likeid">@ite.NoOfLikes</spam>
- 
-                                  </div>                                                                                                     
-                               </div>
-                       
+                                <div class="row">
+                                    <div class="col">
+
+                                        <i id="@btnId" class="fa fa-heart-o" onclick="likefunction('@btnId')" style="font-size: 25px;"></i>
+                                        <spam style="font-size: 20px;" id="@likeid">@ite.NoOfLikes</spam>
+
+                                    </div>
+                                </div>
+
                             }
                             @{
 
                                 var iteId = @ite.PostId;
-                                var cidss ="c"+ite.PostId;
-                                    <div class="row">
-                                   <div class="col">
+                                var cidss = "c" + ite.PostId;
+                                <div class="row">
+                                    <div class="col">
 
-                                      <i class="fa fa-comments-o" style="font-size:25px;" onclick="setthisPostId('@iteId')"></i>
-                                      <spam class="ms-1" style="font-size: 20px;" id="@cidss">@ite.NoOfComments</spam>
+                                        <i class="fa fa-comments-o" style="font-size:25px;" onclick="setthisPostId('@iteId')"></i>
+                                        <spam class="ms-1" style="font-size: 20px;" id="@cidss">@ite.NoOfComments</spam>
 
-                                   </div>
+                                    </div>
                                 </div>
 
                                 <div class="row">
-                                   <div class="col">
+                                    <div class="col">
 
-                                      <i class="fa fa-save " style="font-size:25px; "></i>
-                                      <spam class="" style="font-size: 20px;">Save</spam>
+                                        <i class="fa fa-save " style="font-size:25px; "></i>
+                                        <spam class="" style="font-size: 20px;">Save</spam>
 
-                                   </div>
-                                </div>                                                   
-                                
+                                    </div>
+                                </div>
+
                             }
                         </div>
 
@@ -424,7 +426,6 @@
 
 
 <div id="hidden11" hidden>
-
 </div>
 
 <div id="xid"></div>
@@ -476,8 +477,8 @@
         document.getElementById('PostId').value = document.getElementById('xid').value;
         var eeeee = document.getElementById('PostId').value;
 
-        var ccids='c'+eeeee;
-         var cccount = document.getElementById(ccids).textContent;
+        var ccids = 'c' + eeeee;
+        var cccount = document.getElementById(ccids).textContent;
         document.getElementById(ccids).textContent = parseInt(cccount) + 1;
         console.log(document.getElementById(ccids).textContent);
 
@@ -499,8 +500,8 @@
                 var ht = '';
 
                 result.forEach(function (elet) {
-             console.log(elet);
-                    if (elet.imageData!=null) {
+                    console.log(elet);
+                    if (elet.imageData != null) {
                         var uprof = elet.imageData;
 
                         if (elet.postId == eeeee) {
@@ -518,11 +519,11 @@
                             ht += '</div>';
                             ht += '</div>';
                             ht += '</div>';
-                            ht += '</main>';                  
+                            ht += '</main>';
                             ht += `<div class="actions-container">
-                                     <div class="action" style="padding-inline-start:75px;">likes</div>
-                                <div class="action" style="padding-inline-start:120px;">reply</div>
-                            </div>`;
+                                         <div class="action" style="padding-inline-start:75px;">likes</div>
+                                    <div class="action" style="padding-inline-start:120px;">reply</div>
+                                </div>`;
                         }
                     }
                     else {
@@ -542,9 +543,9 @@
                             ht += '</div>';
                             ht += '</main>';
                             ht += `<div class="actions-container">
-                                   <div class="action" style="padding-inline-start:75px;">likes</div>
-                                            <div class="action" style="padding-inline-start:120px;">reply</div>
-                                </div>`;
+                                       <div class="action" style="padding-inline-start:75px;">likes</div>
+                                                <div class="action" style="padding-inline-start:120px;">reply</div>
+                                    </div>`;
                         }
                     }
                 });
@@ -620,7 +621,7 @@
 
         com.forEach(function (item) {
 
-            if (item.imageData!=null) {
+            if (item.imageData != null) {
                 var uprofile = item.imageData;
 
                 if (item.postId == id) {
@@ -640,9 +641,9 @@
                     html += '</div>';
                     html += '</main>';
                     html += `<div class="actions-container">
-                                 <div class="action" style="padding-inline-start:75px;">likes</div>
-                                  <div class="action" style="padding-inline-start:120px;">reply</div>
-                            </div>`;
+                                     <div class="action" style="padding-inline-start:75px;">likes</div>
+                                      <div class="action" style="padding-inline-start:120px;">reply</div>
+                                </div>`;
                 }
             }
             else {
@@ -663,9 +664,9 @@
                     html += '</div>';
                     html += '</main>';
                     html += `<div class="actions-container">
-                                  <div class="action" style="padding-inline-start:75px;">likes</div>
-                                 <div class="action" style="padding-inline-start:120px;">reply</div>
-                                </div>`;
+                                      <div class="action" style="padding-inline-start:75px;">likes</div>
+                                     <div class="action" style="padding-inline-start:120px;">reply</div>
+                                    </div>`;
                 }
             }
         });
@@ -705,31 +706,31 @@
         mid.innerHTML = elsolds.innerHTML;
     }
 
-   
+
 
     function likefunction(elemid) {
-       
-       
-       var elem = document.getElementById(elemid);
-    var likeId = "l" + elemid;
 
-    if (elem.classList.contains("fa-heart")) {
-        elem.classList.remove("fa-heart");
-        elem.classList.add("fa-heart-o");
-        elem.style.color = 'black';
 
-        var lcount = document.getElementById(likeId).textContent;
-        document.getElementById(likeId).textContent = parseInt(lcount) - 1;
-        console.log(document.getElementById(likeId).textContent);
-    } else {
-        elem.classList.remove("fa-heart-o");
-        elem.classList.add("fa-heart");
-        elem.style.color = 'red';
+        var elem = document.getElementById(elemid);
+        var likeId = "l" + elemid;
 
-        var lcount = document.getElementById(likeId).textContent;
-        document.getElementById(likeId).textContent = parseInt(lcount) + 1;
-        console.log(document.getElementById(likeId).textContent);
-    }
+        if (elem.classList.contains("fa-heart")) {
+            elem.classList.remove("fa-heart");
+            elem.classList.add("fa-heart-o");
+            elem.style.color = 'black';
+
+            var lcount = document.getElementById(likeId).textContent;
+            document.getElementById(likeId).textContent = parseInt(lcount) - 1;
+            console.log(document.getElementById(likeId).textContent);
+        } else {
+            elem.classList.remove("fa-heart-o");
+            elem.classList.add("fa-heart");
+            elem.style.color = 'red';
+
+            var lcount = document.getElementById(likeId).textContent;
+            document.getElementById(likeId).textContent = parseInt(lcount) + 1;
+            console.log(document.getElementById(likeId).textContent);
+        }
 
 
 
