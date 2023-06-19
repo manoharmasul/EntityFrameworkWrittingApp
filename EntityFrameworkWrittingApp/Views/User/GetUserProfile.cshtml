@@ -396,34 +396,39 @@
                             @if (myvar == 1)
                             {
 
-                                <div class="row">
-                                    <div class="col">
+                                 var likeid = "l" + pId;
+                                <div class="row">                                   
+                                  <div class="col">
 
                                         <i id="@pId" class="fa fa-heart" onclick="likefunction('@pId')" style="font-size: 36px;color:red"><span class="ms-1" style="font-size: 25px;"></i>
-                                        <spam class="ms-1" style="font-size: 25px;">@ite.NoOfLikes</spam>
-                                    </div>
-
-                                </div>
+                                       <spam style="font-size: 20px;" id="@likeid">@ite.NoOfLikes</spam>
+ 
+                                  </div>                                                                                                     
+                               </div>
+                              
                             }
                             else
                             {
-                                <div class="row">
-                                    <div class="col">
+                                var likeid = "l" + pId;
+                                <div class="row">                                   
+                                  <div class="col">
 
-                                        <i id="@pId" class="fa fa-heart-o" onclick="likefunction('@pId')" style="font-size: 36px;"></i>
-                                        <spam style="font-size: 25px;">@ite.NoOfLikes</spam>
-
-                                    </div>
-                                </div>
+                                        <i id="@pId" class="fa fa-heart-o" onclick="likefunction('@pId')" style="font-size: 25px;"></i>
+                                    <spam style="font-size: 20px;" id="@likeid">@ite.NoOfLikes</spam>
+ 
+                                  </div>                                                                                                     
+                               </div>
                             }
                             @{
-                                var iteId = @ite.PostId;
 
+                            
+                                var iteId = @ite.PostId;
+                                 var cidss ="c"+ite.PostId;
                                 <div class="row">
                                     <div class="col">
 
                                         <i class="fa fa-comments-o" style="font-size:36px;" onclick="setthisPostId('@iteId')"></i>
-                                        <spam class="ms-1" style="font-size: 25px;">@ite.NoOfComments</spam>
+                                        <spam id="@cidss" class="ms-1" style="font-size: 25px;">@ite.NoOfComments</spam>
 
                                     </div>
                                 </div>
@@ -574,8 +579,16 @@
     function submitForm() {
         document.getElementById('PostId').value = document.getElementById('xid').value;
         var eeeee = document.getElementById('PostId').value;
+         console.log('yesssssssssssss');
 
-
+          var ccids='c'+eeeee;
+          console.log('yesssssssssssss');
+         var cccount = document.getElementById(ccids).textContent;
+         console.log('yesssssssssssss');
+        document.getElementById(ccids).textContent = parseInt(cccount) + 1;
+        console.log('yesssssssssssss');
+        console.log(document.getElementById(ccids).textContent);
+        console.log('yesssssssssssss');
         // Send AJAX request to the desired action
 
 
@@ -698,6 +711,7 @@
 
 
     document.getElementById("mycardid").style.overflow = "scroll";
+
     function setthisPostId(id) {
         var thisids = id;
         var elemgetid = document.getElementById('xid');
@@ -770,7 +784,9 @@
 
         elemtchange.innerHTML = commentelem.innerHTML;
 
-        commentelem.innerHTML = oldele.innerHTML;
+
+
+
     }
 
 
@@ -790,15 +806,25 @@
 
 
     function likefunction(elemid) {
+
+        var elem = document.getElementById(elemid);
+    var likeId = "l" + elemid;
         console.log(elemid)
         var elem = document.getElementById(elemid);
         if (elem.style.color === 'red') {
             elem.style.color = 'black';
             elem.className = "fa fa-heart-o";
+
+            var lcount = document.getElementById(likeId).textContent;
+            document.getElementById(likeId).textContent = parseInt(lcount) - 1;
+            console.log(document.getElementById(likeId).textContent);
         }
         else {
             elem.className = "fa fa-heart";
             elem.style.color = 'red';
+               var lcount = document.getElementById(likeId).textContent;
+        document.getElementById(likeId).textContent = parseInt(lcount) + 1;
+        console.log(document.getElementById(likeId).textContent);
 
         }
 

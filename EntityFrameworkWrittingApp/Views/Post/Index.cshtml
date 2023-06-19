@@ -320,20 +320,22 @@
                     var btnId = $"likeButton_{con}"; // Generate unique IDs for each button
 
                     <div class="card">
-                        <div class="mails">
+                       <a asp-action="GetUserProfile" asp-controller="User">
+                            <div class="mails">
                           
-                                @if (ite.ImageData != null)
-                                {
-                                    <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(ite.ImageData)" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
-                                }
-                                else
-                                {
-                                    <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
-                                }
-                            <div class="mail-names">
-                                @ite.UserName
+                                    @if (ite.ImageData != null)
+                                    {
+                                        <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(ite.ImageData)" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
+                                    }
+                                    else
+                                    {
+                                        <img class="card-img-top" src="https://i.pinimg.com/564x/c6/ee/b7/c6eeb7d9889f11215a53ccf705a678df.jpg" alt="Card image" style="height:30px;width:30px;border-radius: 50%;" />
+                                    }
+                                <div class="mail-names">
+                            @ite.UserName  
+                                </div>
                             </div>
-                        </div>
+                       </a>
                         <div class="mail-info">
                             <div class="card-image">
                                 <div class="image-container">
